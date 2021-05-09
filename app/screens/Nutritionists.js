@@ -2,6 +2,7 @@ import React from 'react';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import Card from '../assets/Card';
 import {
   Text,
   SafeAreaView,
@@ -22,9 +23,10 @@ const Nutritionists = ({navigation}) => (
       <Text style={styles.textheader}> Contact Our Nutritionists</Text>
     </View>
     <View style={styles.footer}>
-      <Text style={styles.textfooter}>Nutritionists Name: xyz</Text>
-      <Text style={styles.textfooter}> Contact No: xyz</Text>
-      <Text style={styles.textfooter}> Email: xyz@xyz.com</Text>
+    <Card leftText="Nutritionist Name " rightText= "xyz" />
+    <Card leftText="Contact No" rightText= "xyz" />
+    <Card leftText="Email" rightText= "xyz@xyz.com" />
+    
     </View>
   </View>
 );

@@ -37,10 +37,9 @@ class Profile extends Component {
   readData = async () => {
     try {
       const predict = await asyncStorage.getItem('prediction');
-      // const dietPlan = await asyncStorage.getItem('dietPlan');
       this.setState({prediction: JSON.parse(predict)});
-      // this.setState({dietPlan: JSON.parse(dietPlan)});
-      // console.log(this.state.prediction);
+      console.log("=======");
+      console.log(this.state.prediction);
     } catch (e) {
       alert('Failed to fetch the data from storage');
     }
@@ -51,11 +50,12 @@ class Profile extends Component {
       await asyncStorage.setItem('age', this.state.user.age);
       await asyncStorage.setItem('height', this.state.user.height);
       await asyncStorage.setItem('weight', this.state.user.weight);
-      await asyncStorage.setItem('BMI', this.state.BMI);
-      await asyncStorage.setItem('calorieCount', this.state.calorieCount);
-      await asyncStorage.setItem('IBF', this.state.IBF);
-      await asyncStorage.setItem('IBW', this.state.IBW);
-      await asyncStorage.setItem('WaterIntake', this.state.WaterIntake);
+      await asyncStorage.setItem('BMI', JSON.stringify(this.state.BMI));
+      await asyncStorage.setItem('calorieCount', JSON.stringify(this.state.calorieCount));
+      console.log(JSON.stringify(this.state.calorieCount));
+      await asyncStorage.setItem('IBF', JSON.stringify(this.state.IBF));
+      await asyncStorage.setItem('IBW', JSON.stringify(this.state.IBW));
+      await asyncStorage.setItem('WaterIntake', JSON.stringify(this.state.WaterIntake));
     } catch (e) {
       alert('Failed to save the data to the storage');
     }
@@ -69,6 +69,7 @@ class Profile extends Component {
   }
   getUser = async () => {
     this.readData();
+    
     const email = auth().currentUser.email;
     const userdoc = await firestore()
       .collection('Users')
@@ -127,7 +128,7 @@ class Profile extends Component {
     let k = j + 1500;
     var WaterIntake = Math.floor(k / 250);
 
-    if (this.state.user.gender == 'Female') {
+    if (gender == 'Female') {
       //IBF for Females (fat percentage).....
       var IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 5.4, 2);
 
@@ -146,7 +147,7 @@ class Profile extends Component {
       );
     }
 
-    if (this.state.user.gender == 'Male') {
+    if (gender == 'Male') {
       //IBF for Males (fat percentage):
       IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 16.2, 2);
       // .....for IBW....
@@ -161,14 +162,15 @@ class Profile extends Component {
         2,
       );
     }
+    // console.log(this.state.prediction.lifestyle);
     // Sedentary Lifestyle:
-    if (this.state.prediction.lifeStyle == 1)
+    if (this.state.prediction.lifestyle == 1)
       var calorieCount = Math.round(BMR * 1.2, 2);
     // Light Exercise:
-    else if (this.state.prediction.lifeStyle == 2)
+    else if (this.state.prediction.lifestyle == 2)
       calorieCount = Math.round(BMR * 1.375, 2);
     //Moderate Exercise (3-5 days):
-    else if (this.state.prediction.lifeStyle == 3)
+    else if (this.state.prediction.lifestyle == 3)
       calorieCount = Math.round(BMR * 1.55, 2);
     // Very Active:
     else calorieCount = Math.round(BMR * 1.725, 2);
@@ -190,7 +192,8 @@ class Profile extends Component {
       BMI,
       calorieCount,
     });
-
+    this.saveData();
+    // console.log(this.state.user.BMR);
   };
   //....
 
@@ -207,14 +210,15 @@ class Profile extends Component {
         <Card leftText="Name: " rightText={this.state.user.name} />
         <Card leftText="Age: " rightText={this.state.user.age} />
         <Card leftText="Weight: " rightText={this.state.user.weight} />
+        
         <Card leftText="Height: " rightText={this.state.user.height} />
         <Card leftText="Gender: " rightText={this.state.user.gender} />
         <Card leftText="Email: " rightText={this.state.user.email} />
-        <Card leftText="BMR: " rightText={this.state.user.BMR} />
-        <Card leftText="IBF: " rightText={this.state.user.IBF} />
-        <Card leftText="BMI: " rightText={this.state.user.BMI} />
-        <Card leftText="Water Intake: " rightText={this.state.user.WaterIntake} />
-        <Card leftText="IBW: " rightText={this.state.user.ibw} />
+        <Card leftText="IBF: " rightText={this.state.IBF} />
+        <Card leftText="BMI: " rightText={this.state.BMI} />
+        <Card leftText="Status"  rightText={this.state.userStatus} />
+        <Card leftText="Water Intake: " rightText={this.state.WaterIntake} />
+        <Card leftText="IBW: " rightText={this.state.IBW} />
 
         <View style={styles.button}>
               <TouchableOpacity  onPress={() => this.props.navigation.navigate('DietPlan')}>
@@ -228,6 +232,7 @@ class Profile extends Component {
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
+              {/* <Text> {this.state.calorieCount}</Text> */}
             </View>
       </View>
       </ScrollView>
