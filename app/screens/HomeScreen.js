@@ -8,7 +8,7 @@ import auth from '@react-native-firebase/auth';
 import asyncStorage from '@react-native-community/async-storage';
 
 // import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
-// import Feather from 'react-native-vector-icons/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 // import LinearGradient from 'react-native-linear-gradient';
 import {
   Text,
@@ -103,7 +103,7 @@ const HomeScreen = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image source={require('../assets/images/chatbot.png')} /> */}
+                  <Image source={require('../assets/images/chatbot.png')} />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     ChatBot
@@ -116,7 +116,7 @@ const HomeScreen = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image source={require('../assets/images/bot.png')} /> */}
+                  <Image source={require('../assets/images/profile.png')} />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Profile{' '}
@@ -131,7 +131,7 @@ const HomeScreen = ({navigation}) => {
                   style={styles.login}>
                   <Image
                     style={{width: 40, height: 40}}
-                    // source={require('../assets/images/bot.png')}
+                    source={require('../assets/images/workout.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -147,7 +147,7 @@ const HomeScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   <Image
-                  // source={require('../assests/images/nutritionist.png')}
+                  source={require('../assets/images/nutritionist.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -162,7 +162,7 @@ const HomeScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   <Image
-                  // source={require('../assests/images/blogs.png')}
+                  source={require('../assets/images/blogs.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -177,7 +177,7 @@ const HomeScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   <Image
-                  // source={require('../assests/images/recepie.png')}
+                  source={require('../assets/images/recepie.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -191,8 +191,8 @@ const HomeScreen = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  <Image
-                  // source={require('../assests/images/recepie.png')}
+                  <Feather name
+                  ="book" size ={20}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -207,7 +207,7 @@ const HomeScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   <Image
-                  // source={require('../assests/images/recepie.png')}
+                  source={require('../assets/images/recepie.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -223,74 +223,74 @@ const HomeScreen = ({navigation}) => {
   );
 };
 export default HomeScreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5f9ea0',
+const styles= StyleSheet.create({
+  container : {
+    flex :1,
+    backgroundColor : '#5f9ea0'
   },
-  header: {
-    flex: 1,
-    justifyContent: 'flex-end',
+header: {
+    flex : 2,
+    justifyContent : 'flex-end',
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom :10
   },
-  footer: {
-    flex: 3,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 45,
-    borderTopRightRadius: 45,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+footer: {
+  flex :1, 
+  backgroundColor : 'white',
+  borderTopLeftRadius : 45,
+  borderTopRightRadius : 45,
+  paddingHorizontal: 20,
+  paddingVertical : 30
   },
   textheader: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 30,
+    color : 'black',
+    fontWeight : 'bold',
+    fontSize : 30
   },
   textfooter: {
-    color: 'black',
-    fontSize: 18,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
-    paddingBottom: 5,
-  },
-  textInput: {
-    flex: 1,
-    //height: Platform.OS === 'android' ? 76 : 50,
-    paddingLeft: 10,
-    color: 'black',
-  },
-  button: {
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  login: {
-    flexDirection: 'row',
-    width: '100%',
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginTop: 30,
-  },
-  textSign: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  signUp: {
-    width: '100%',
-    height: 30,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    borderRadius: 5,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#5f9ea0',
-  },
+    color : 'black',
+    fontSize : 18
+  }, 
+action: {
+flexDirection : 'row',
+marginTop: 0,
+borderBottomWidth: 1,
+borderBottomColor : '#5f9ea0',
+paddingBottom :5
+},
+textInput : {
+  flex :1, 
+  //height: Platform.OS === 'android' ? 76 : 50,
+  paddingLeft :10,
+  color : 'black'
+},
+button :{
+  alignItems : 'center',
+  marginTop : 50
+},
+login: {
+  flexDirection: 'row',
+  width : '100%',
+  height : 100,
+  justifyContent : 'center',
+  alignItems: 'center',
+  borderRadius : 10,
+  marginTop : 30,
+},
+textSign : {
+  fontSize : 18,
+  fontWeight : 'bold'
+},
+signUp: {
+  width : '100%',
+  height : 30,
+  justifyContent : 'flex-end',
+  alignItems: 'flex-end',
+  borderRadius : 5
+},
+text : {
+  fontSize : 18,
+  fontWeight: 'bold',
+  color :'#5f9ea0'
+},
 });

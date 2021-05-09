@@ -12,7 +12,9 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
+  
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from '../../Setup';
 import asyncStorage from '@react-native-community/async-storage';
 import {handleScheduleNotification} from '../../src/notification.ios';
@@ -68,13 +70,18 @@ export default function Blogs({navigation}) {
       .finally(setLoading(false));
   }, []);
   return (
-    <SafeAreaView
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
+        <View style = {styles.container}>
+        <View style = {styles.header}></View>
+      
+      <Animatable.View 
+      animation = 'fadeInUpBig'
+      style= {styles.footer}>
         {loading ? (
           <ActivityIndicator />
         ) : (
@@ -83,17 +90,19 @@ export default function Blogs({navigation}) {
             keyExtractor={({id}, index) => id}
             renderItem={({item}) => (
               <Text>
-                <Text>
+              {isAdmin? <Text>
                   id: {item._id} {'\n'}
-                </Text>
+                </Text>: undefined}
+                
 
-                <Text>
-                  Title: {item.title}
+                <Text style={styles.textSign}>
+                  {item.title}
                   {'\n'}
                 </Text>
 
-                <Text>
-                  Paragraph: {item.paragraph}
+                <Text style ={styles.InputField}>
+                
+                   {item.paragraph}
                   {'\n'}
                 </Text>
 
@@ -125,18 +134,94 @@ export default function Blogs({navigation}) {
         ) : (
           <Text> </Text>
         )}
+        </Animatable.View>
+      </View>
       </ScrollView>
-    </SafeAreaView>
+   
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#5f9ea0',
   },
-  scrollView: {
+  header: {
     flex: 1,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  footer: {
+    flex: 3,
     backgroundColor: 'white',
+    borderTopLeftRadius: 45,
+    borderTopRightRadius: 45,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  textheader: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  textfooter: {
+    color: 'black',
+    fontSize: 18,
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#5f9ea0',
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    //height: Platform.OS === 'android' ? 76 : 50,
+    paddingLeft: 10,
+    color: 'black',
+  },
+  button: {
+  alignItems : 'center',
+  marginTop : 5,
+  marginLeft: 50,
+  justifyContent: 'center',
+  paddingRight: 35,
+  },
+  login: {
+    flexDirection: 'row',
+    width: '50%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 30,
+  },
+  textSign: {
+    fontSize: 20,
+    fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 20, 
+    marginBottom:30,
   },
+  signUp: {
+    width: '100%',
+    height: 30,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#5f9ea0',
+  },
+  InputFields :{
+   fontSize: 18,
+   marginTop: 40,
+   marginBottom:30,
+   marginLeft: 30
+
+  }
 });

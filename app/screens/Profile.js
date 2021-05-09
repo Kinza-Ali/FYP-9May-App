@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet,TouchableOpacity,ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import asyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Breakfast from './Breakfast';
-// import { saveData } from '../../Setup';
+import { LinearGradient } from '../../Setup';
+import Card from '../assets/Card';
 
 class Profile extends Component {
   state = {
@@ -190,109 +191,46 @@ class Profile extends Component {
       calorieCount,
     });
 
-    // this.post('https://dietplan-model.herokuapp.com/dietplan', {
-    //   gender: this.state.user.gender,
-    //   age: this.state.user.age,
-    //   user: this.state.user.height,
-    //   weight: this.state.user.weight,
-    //   diabetesType: this.state.prediction.diabetesType,
-    //   insulin: this.state.prediction.insulin,
-    //   lifeStyle: this.state.prediction.lifeStyle,
-    //   symtomsHB: this.state.prediction.symtomsHB,
-    //   styleOfEating: this.state.prediction.styleOfEating,
-    //   BMI: this.state.BMI,
-    //   IBF: this.state.IBF,
-    //   WaterIntake: this.state.WaterIntake,
-    //   IBW: this.state.IBW,
-    //   calorieCount: this.state.calorieCount,
-    // });
   };
   //....
 
-  //... post command
-  post = (url, data) =>
-    new Promise((resolve, reject) => {
-      axios
-        .post(url, data)
-        .then((res) => {
-          resolve(res.data);
-          // console.log('________________');
-          // console.log( this.state.user.email);
-
-          // this.saveData(JSON.stringify(res.data));
-
-          var arrayPlan = [];
-          arrayPlan.push(res.data.Breakfast);
-          arrayPlan.push(res.data.Lunch);
-          arrayPlan.push(res.data.Dinner);
-          arrayPlan.push(res.data.Snacks);
-          var joined = this.state.completeDietPlan.concat(arrayPlan);
-          JSON.stringify(
-            this.state.completeDietPlan.forEach(function (itm) {
-              // console.log(JSON.stringify(itm));
-            }),
-          );
-          this.setState({
-            Breakfast: res.data.Breakfast,
-            Lunch: res.data.Lunch,
-            Snacks: res.data.Snacks,
-            Dinner: res.data.Dinner,
-            completeDietPlan: joined,
-          });
-        //   firestore()
-        //     .collection('DietPlan')
-        //     .doc(auth().currentUser.id)
-        //     .collection('userDietPlan')
-        //     .add({
-        //       // token: auth().currentUser.accessToken,
-        //       email: this.state.user.email,
-        //       DietPlan: this.state.completeDietPlan,
-        //       createdAt: new Date().getTime(),
-        //     });
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  // dietPlan filter non zero values
-  // let temp =
 
   //-------
   render() {
     return (
+      <ScrollView>
       <View style={styles.container}>
-        <Text> Name: {this.state.user.name}</Text>
-        <Text> Age: {this.state.user.age}</Text>
-        <Text> Weight: {this.state.user.weight}</Text>
-        <Text> Height: {this.state.user.height}</Text>
-        <Text> Gender: {this.state.user.gender}</Text>
-        <Text> Email: {this.state.user.email}</Text>
-        <Text> BMR: {this.state.BMR}</Text>
-        <Text> IBF: {this.state.IBF} </Text>
-        <Text> Calorie Count: {this.state.calorieCount} </Text>
-        <Text>
-          {' '}
-          BMI:{this.state.BMI} {'-'}
-          {this.state.userStatus}
-        </Text>
-        <Text> Water Intake: {this.state.WaterIntake} </Text>
-        <Text> IBW:{this.state.IBW} </Text>
-        <Button
-          title="Diet Plan"
-          onPress={() => this.props.navigation.navigate('DietPlan')}
-        />
-        {/* <Text>Diet Plan: {this.state.dietPlan}</Text> */}
-        {/* <Breakfast BreakfastVals={this.state.Breakfast} /> */}
-        {/* <Button
-          title="Genrate New diet Plan"
-          onPress={() =>
-            navigation.navigate('Chatbot', {
-              name: auth().currentUser.displayName,
-              id: auth().currentUser.uid,
-            })
-          }
-        /> */}
+
+        {/* <Card leftText = "Name: " rightText = {this.state.user.name} style={styles.InputFields}/> 
+        <Text> {this.state.user.name}</Text> */}
+      
+        <Card leftText="Name: " rightText={this.state.user.name} />
+        <Card leftText="Age: " rightText={this.state.user.age} />
+        <Card leftText="Weight: " rightText={this.state.user.weight} />
+        <Card leftText="Height: " rightText={this.state.user.height} />
+        <Card leftText="Gender: " rightText={this.state.user.gender} />
+        <Card leftText="Email: " rightText={this.state.user.email} />
+        <Card leftText="BMR: " rightText={this.state.user.BMR} />
+        <Card leftText="IBF: " rightText={this.state.user.IBF} />
+        <Card leftText="BMI: " rightText={this.state.user.BMI} />
+        <Card leftText="Water Intake: " rightText={this.state.user.WaterIntake} />
+        <Card leftText="IBW: " rightText={this.state.user.ibw} />
+
+        <View style={styles.button}>
+              <TouchableOpacity  onPress={() => this.props.navigation.navigate('DietPlan')}>
+                <LinearGradient
+                  colors={['#5f9ea0', '#5f9ea0']}
+                  style={styles.login}>
+                
+             <Text style={[styles.textSign, {color: 'white'}]}>
+                    {' '}
+                    Diet Plan{' '}
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -300,7 +238,84 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  header: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  footer: {
+    flex: 3,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 45,
+    borderTopRightRadius: 45,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  textheader: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  textfooter: {
+    color: 'black',
+    fontSize: 18,
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#5f9ea0',
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    //height: Platform.OS === 'android' ? 76 : 50,
+    paddingLeft: 10,
+    color: 'black',
+  },
+  button: {
+  alignItems : 'center',
+  marginTop : 5,
+  marginLeft: 50,
+  justifyContent: 'center',
+  paddingRight: 35,
+  },
+  login: {
+    flexDirection: 'row',
+    width: '50%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 30,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 20, 
   },
+  signUp: {
+    width: '100%',
+    height: 30,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#5f9ea0',
+  },
+  InputFields :{
+   fontSize: 15,
+   fontWeight: 'bold',
+   marginTop: 5,
+   marginLeft: 30
+
+  }
 });

@@ -34,10 +34,10 @@ const HomePage = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image */}
-                    {/* // style={{width: 40, height: 40}}
-                    // source={require('../assets/images/nutritionist.png')}
-                  // /> */}
+                  <Image
+                    //  {style={{width: 40, height: 40}}
+                    source={require('../assets/images/nutritionist.png')}
+                  /> 
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Nutritionists{' '}
@@ -50,10 +50,10 @@ const HomePage = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image
+                  <Image
                     style={{width: 40, height: 40}}
-                    source={require('../assests/images/workout.png')}
-                  /> */}
+                    source={require('../assets/images/workout.png')}
+                  />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Workouts{' '}
@@ -66,7 +66,7 @@ const HomePage = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image source={require('../assests/images/blogs.png')} /> */}
+                  <Image source={require('../assets/images/blogs.png')} />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Blogs{' '}
@@ -79,7 +79,7 @@ const HomePage = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image source={require('../assests/images/recepie.png')} /> */}
+                  <Image source={require('../assets/images/recepie.png')} />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Recipes{' '}
@@ -92,7 +92,9 @@ const HomePage = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image source={require('../assests/images/recepie.png')} /> */}
+                  <Feather name
+                  ="book" size ={20}
+                  />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Success Stories{' '}

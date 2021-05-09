@@ -22,6 +22,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import AdminSuccessStories from './app/screens/AdminSuccessStories';
 import SuccessStories from './app/screens/SuccessStories';
+import * as Animatable from 'react-native-animatable';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -31,6 +32,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AdminScreen from './app/screens/AdminScreen';
 import asyncStorage from '@react-native-community/async-storage';
+// import MaterialCommunityIcon from 'react-native-vector-icons';
 //.......saveData
 const saveData = async (key, keyVal) => {
   try {
@@ -52,6 +54,8 @@ const readData = async (key) => {
 
 // import NotificationScreen from './app/screens/Notifications'
 export {
+  Animatable,
+  // MaterialCommunityIcon,
   AdminSuccessStories,
   SuccessStories,
   asyncStorage,

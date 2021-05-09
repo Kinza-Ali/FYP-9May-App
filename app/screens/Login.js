@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import notification, { handleScheduleNotification } from '../../src/notification.ios';
+import * as Animatable from 'react-native-animatable';
 import {
   Feather,
   LinearGradient,
@@ -146,10 +147,6 @@ export default function Login({navigation}) {
     // });
   };
   return (
-    <>
-      <SafeAreaView>
-        <View
-          style={{justifyContent: 'center', alignItems: 'center', height: 500}}>
           <View style={styles.container}>
             {/* <StatusBar backgroundColor="#5f9ea0" barStyle="Light-content" /> */}
             <View style={styles.header}>
@@ -157,7 +154,10 @@ export default function Login({navigation}) {
                 Welcome to Health & Nutrition!
               </Text>
             </View>
-            <View style={styles.footer}>
+            <Animatable.View style={styles.footer}
+            animation = "fadeInUpBig"
+
+            >
               <Text style={styles.textfooter}>Email</Text>
               <View style={styles.action}>
                 <FontAwesomeIcons name="user-o" color="black" size={20} />
@@ -193,7 +193,7 @@ export default function Login({navigation}) {
                   )}
                 </TouchableOpacity>
               </View>
-              <View style={styles.Button}>
+              <View style={[styles.Button, {marginTop : 20}]}>
                 <TouchableOpacity onPress={this.signInUser}>
                   <LinearGradient
                     colors={['#5f9ea0', '#5f9ea0']}
@@ -235,71 +235,75 @@ export default function Login({navigation}) {
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
-            </View>
+            </Animatable.View>
           </View>
-        </View>
-      </SafeAreaView>
-    </>
+       
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5f9ea0',
+
+const styles= StyleSheet.create({
+  container : {
+    flex :1,
+    backgroundColor : '#5f9ea0'
   },
   header: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    flex : 1,
+    justifyContent : 'flex-end',
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom :10
   },
-  footer: {
-    flex: 3,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-  },
+footer: {
+  flex :3, 
+  backgroundColor : 'white',
+  borderTopLeftRadius : 35,
+  borderTopRightRadius : 35,
+  paddingHorizontal: 20,
+  paddingVertical : 30,
+},
   textheader: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 30,
-    fontFamily: 'times new Roman',
+    color : 'white',
+    fontWeight : 'bold',
+    fontSize : 30,
+    fontFamily: 'times new Roman'
   },
   textfooter: {
-    color: 'black',
-    fontSize: 18,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
-    paddingBottom: 5,
-    justifyContent: 'center',
-  },
-  textInput: {
-    flex: 1,
-    //height: Platform.OS === 'android' ? 76 : 50,
-    paddingLeft: 10,
-    color: 'black',
-  },
-  button: {
-    alignItems: 'center',
-    marginTop: 60,
-    marginLeft: 50,
-    justifyContent: 'center',
-  },
-  login: {
-    width: '100%',
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
-  },
-  textSign: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+    color : 'black',
+    fontSize : 18
+  }, 
+action: {
+flexDirection : 'row',
+marginTop: 2,
+borderBottomWidth: 1,
+borderBottomColor : '#01ab9d',
+paddingBottom :5,
+justifyContent: 'center'
+},
+textInput : {
+  flex :1, 
+  //height: Platform.OS === 'android' ? 76 : 50,
+  paddingLeft :10,
+  color : 'black'
+},
+button :{
+  alignItems : 'center',
+  marginTop : 60,
+  marginLeft: 50,
+  justifyContent: 'center'
+},
+login: {
+  width : '100%',
+  height : 60,
+  justifyContent : 'center',
+  alignItems: 'center',
+  borderRadius : 20
+},
+errorMsg: {
+  color: '#FF0000',
+  fontSize: 14,
+},
+textSign : {
+  fontSize : 18,
+  fontWeight : 'bold'
+ 
+}
 });

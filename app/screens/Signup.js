@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
 import {
+  MaterialCommunityIcon,
   FontAwesomeIcons,
   Feather,
   LinearGradient,
@@ -11,9 +12,10 @@ import {
   firestore,
 } from '../../Setup';
 import asyncStorage from '@react-native-community/async-storage';
-
+import * as Animatable from 'react-native-animatable';
 // import auth from '@react-native-firebase/auth'
 import {Picker} from '@react-native-picker/picker';
+
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   Text,
@@ -151,10 +153,12 @@ export default function SignUp({navigation}) {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.footer}>
+      <Animatable.View 
+animation="fadeInUpBig"
+style= {styles.footer}>
           <Text style={styles.textfooter}> Full Name </Text>
           <View style={styles.action}>
-            <FontAwesomeIcons name="user-circle" color="black" size={20} />
+            <FontAwesomeIcons name="user-circle" color="black" size={25} />
             <TextInput
               placeholder="Your Full Name"
               style={styles.textInput}
@@ -165,7 +169,7 @@ export default function SignUp({navigation}) {
           </View>
           <Text style={styles.textfooter}>Email</Text>
           <View style={styles.action}>
-            <FontAwesomeIcons name="user-o" color="black" size={20} />
+            <FontAwesomeIcons name="user-o" color="black" size={25} />
             <TextInput
               placeholder="Your Email"
               style={styles.textInput}
@@ -174,14 +178,15 @@ export default function SignUp({navigation}) {
               onChangeText={(email) => textInputchange(email)}
             />
             {checkTextInputChange ? (
-              <Feather name="check-circle" color="blue" size={20} />
+              <Feather name="check-circle" color="blue" size={25} />
             ) : null}
           </View>
           <Text style={styles.textfooter}> Age </Text>
           <View style={styles.action}>
-            <FontAwesomeIcons name="calendar-check-o" color="black" size={20} />
+            <FontAwesomeIcons name="calendar-check-o" color="black" size={25} />
             <TextInput
               placeholder="Your Age"
+              keyboardType= "numeric"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(age) => {
@@ -191,9 +196,11 @@ export default function SignUp({navigation}) {
           </View>
           <Text style={styles.textfooter}> Weight </Text>
           <View style={styles.action}>
+           {/* <MaterialCommunityIcon name="ruler-vertical" color="black" size={25} /> */}
             <TextInput
               placeholder="Your Weight"
               style={styles.textInput}
+              keyboardType= "numeric"
               autoCapitalize="none"
               onChangeText={(weight) => {
                 setWeight(weight);
@@ -202,8 +209,10 @@ export default function SignUp({navigation}) {
           </View>
           <Text style={styles.textfooter}> Height </Text>
           <View style={styles.action}>
+          <FontAwesomeIcons name="ruler-vertical" color="black" size={25} />
             <TextInput
               placeholder="Height"
+              keyboardType= "numeric"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={setHeight}
@@ -213,16 +222,17 @@ export default function SignUp({navigation}) {
           <View style={styles.action}>
             <Picker
               style={styles.picker}
+              // style={{ height: 10, width: 300 }}
               selectedValue={gender}
               onValueChange={(itemValue) => setGender(itemValue)}>
               <Picker.Item label="Male" value="Male" />
               <Picker.Item label="Female" value="Female" />
             </Picker>
           </View>
-          <Text style={[styles.textfooter, {marginTop: 35}]}> Password</Text>
+          <Text style={[styles.textfooter, {marginTop: 20}]}> Password</Text>
 
           <View style={styles.action}>
-            <FontAwesomeIcons name="lock" color="black" size={20} />
+            <FontAwesomeIcons name="lock" color="black" size={25} />
             <TextInput
               placeholder="Your Password"
               secureTextEntry={secureTextEntry ? true : false}
@@ -232,29 +242,6 @@ export default function SignUp({navigation}) {
               onChangeText={(password) => handllePasswordChange(password)}
             />
             <TouchableOpacity onPress={UpdateSecureTextEntry}>
-              {secureTextEntry ? (
-                <Feather name="eye-off" color="blue" size={20} />
-              ) : (
-                <Feather name="eye" color="blue" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          <Text style={[styles.textfooter, {marginTop: 35}]}>
-            {' '}
-            Confirm Password
-          </Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="lock" color="black" size={20} />
-            <TextInput
-              placeholder="Confirm Password"
-              secureTextEntry={confirmSecureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) =>
-                handleConfirmPasswordChange(confirmPassword)
-              }
-            />
-            <TouchableOpacity onPress={UpdateConfirmSecureTextEntry}>
               {secureTextEntry ? (
                 <Feather name="eye-off" color="blue" size={20} />
               ) : (
@@ -274,85 +261,85 @@ export default function SignUp({navigation}) {
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[styles.signUp, {borderColor: '#5f9ea0', marginTop: 2}]}>
-              <LinearGradient
-                colors={['#5f9ea0', '#5f9ea0']}
-                style={styles.login}>
-                <Text style={[styles.textSign, {color: 'black'}]}>
-                  {' '}
-                  Already a User?LOGIN
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <TouchableOpacity 
+            onPress = {()=> navigation.goBack() }
+            style = {[styles.signUp, {borderColor : '#5f9ea0',
+            marginTop: 2}]}
+            >
+          <Text style= {[styles.textSign, {color: 'grey'}]}> Already a Registered User?LOGIN</Text>
+          </TouchableOpacity>
           </View>
-        </View>
+        </Animatable.View>
       </View>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5f9ea0',
+const styles= StyleSheet.create({
+  container : {
+    flex :1,
+    backgroundColor : '#5f9ea0'
   },
   header: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    flex : 1,
+    justifyContent : 'flex-end',
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom :10
   },
-  footer: {
-    flex: 3,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+footer: {
+  flex :3, 
+  backgroundColor : 'white',
+  borderTopLeftRadius : 35,
+  borderTopRightRadius : 35,
+  paddingHorizontal: 25,
+  paddingVertical : 30
   },
   textheader: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 30,
+    color : 'white',
+    fontWeight : 'bold',
+    fontSize : 30
   },
   textfooter: {
-    color: 'black',
-    fontSize: 18,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
-    paddingBottom: 2,
-  },
-  textInput: {
-    flex: 1,
-    //height: Platform.OS === 'android' ? 76 : 50,
-    paddingLeft: 10,
-    color: 'black',
-  },
-  button: {
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  login: {
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  textSign: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  picker: {
-    height: 45,
-    width: 300,
-    borderColor: 'blue',
-    borderWidth: 3,
-  },
-});
+    color : 'black',
+    fontSize : 18,
+    marginTop: 5
+  }, 
+action: {
+flexDirection : 'row',
+marginTop: 5,
+borderBottomWidth: 1,
+borderBottomColor : '#5f9ea0',
+paddingBottom : 2,
+// paddingTop:40
+},
+textInput : {
+  flex :1, 
+  //height: Platform.OS === 'android' ? 76 : 50,
+  paddingLeft :10,
+  color : 'black',
+  marginTop : 20,
+},
+button :{
+  alignItems : 'center',
+  marginTop : 50
+},
+login: {
+  width : '100%',
+  height : 50,
+  justifyContent : 'center',
+  alignItems: 'center',
+  borderRadius : 10,
+  marginTop:20
+},
+textSign : {
+  fontSize : 18,
+  fontWeight : 'bold',
+  marginTop : 0,
+},
+picker :{
+height:45,
+width: 300,
+borderColor: 'grey',
+borderWidth : 3
+}
+  });

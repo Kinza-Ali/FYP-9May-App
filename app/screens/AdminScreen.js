@@ -7,7 +7,7 @@ import {
   asyncStorage,
 } from '../../Setup';
 // import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
-// import Feather from 'react-native-vector-icons/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 // import LinearGradient from 'react-native-linear-gradient';
 import {
   Text,
@@ -72,7 +72,7 @@ const AdminScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   <Image
-                  // source={require('../assests/images/blogs.png')}
+                  source={require('../assets/images/blogs.png')}
                   />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -86,9 +86,9 @@ const AdminScreen = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image
-                  // source={require('../assests/images/recepie.png')}
-                  /> */}
+                  <Image
+                  source={require('../assets/images/recepie.png')}
+                  />
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
                     Recipes{' '}
@@ -101,8 +101,8 @@ const AdminScreen = ({navigation}) => {
                 <LinearGradient
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
-                  {/* <Image
-                  // source={require('../assests/images/recepie.png')}
+                   {/* <Image
+                  source={require('../assets/images/Stories.jpeg')}
                   /> */}
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}
@@ -117,7 +117,7 @@ const AdminScreen = ({navigation}) => {
                   colors={['#5f9ea0', '#5f9ea0']}
                   style={styles.login}>
                   {/* <Image
-                  // source={require('../assests/images/recepie.png')}
+                  source={require('../assets/images/logout.png')} 
                   /> */}
                   <Text style={[styles.textSign, {color: 'white'}]}>
                     {' '}

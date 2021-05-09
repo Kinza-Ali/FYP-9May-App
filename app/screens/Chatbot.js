@@ -165,7 +165,7 @@ class Chatbot extends Component {
             .add({
               // token: auth().currentUser.accessToken,
               email: auth().currentUser.email,
-              DietPlan: this.state.completeDietPlan,
+              DietPlan: this.state.dietPlan,
               createdAt: new Date().getTime(),
             });
           // console.log(this.state.Breakfast);

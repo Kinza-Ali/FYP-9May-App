@@ -1,5 +1,5 @@
 #import <Firebase.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "AppDelegate.h"
 //pushnotification
 #import <UserNotifications/UserNotifications.h>
@@ -156,3 +156,4 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 }
 
 @end
+
