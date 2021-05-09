@@ -39,6 +39,12 @@ class Chatbot extends Component {
     prediction: {},
     Breakfastupd: {},
     dietPlan: {},
+    age:'',
+    weight:'',
+    height:'',
+    gender:'',
+
+
   };
 
   //.......................
@@ -109,14 +115,14 @@ class Chatbot extends Component {
   getDietPLan = async () => {
     this.readData();
     // post request....
-    await this.post('https://dietplan-model.herokuapp.com/dietplan', {
-      gender: this.state.gender,
+    await this.post('http://ab136cbc771d.ngrok.io/dietplan', {
+      gender: this.state.gender, 
       age: this.state.age,
       height: this.state.height,
       weight: this.state.weight,
       diabetesType: this.state.prediction.diabetesType,
       insulin: this.state.prediction.insulin,
-      lifeStyle: this.state.prediction.lifeStyle,
+      lifeStyle: this.state.prediction.lifestyle,
       symtomsHB: this.state.prediction.symtomsHB,
       styleOfEating: this.state.prediction.styleOfEating,
       BMI: this.state.BMI,
@@ -212,7 +218,8 @@ class Chatbot extends Component {
       const IBF = await asyncStorage.getItem('IBF');
       const WaterIntake = await asyncStorage.getItem('Waterintake');
       const calorieCount = await asyncStorage.getItem('calorieCount');
-
+      console.log("==========")
+      console.log(calorieCount);
       this.setState({
         age: age,
         weight: weight,
@@ -224,6 +231,8 @@ class Chatbot extends Component {
         WaterIntake: WaterIntake,
         calorieCount: calorieCount,
       });
+      console.log("_+++++++++++++");
+      console.log(this.state.age);
     } catch (e) {
       alert('Failed to fetch the data from storage');
     }
@@ -480,11 +489,6 @@ class Chatbot extends Component {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, [msg]),
     }));
-    //  {
-    //   console.log(this.state.answers[0].split('*')[0]);
-    //   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    //   console.log(this.state.answers[0].split('*')[1]);
-    // }
     if (this.state.answers.length == 5) {
       var prediction = {};
       this.state.answers.forEach(function (itm) {
@@ -536,7 +540,7 @@ class Chatbot extends Component {
             break;
         }
       });
-      // console.log(JSON.stringify(prediction));
+      console.log(JSON.stringify(prediction));
       this.setState({prediction: prediction});
       this.saveData();
     } else {
