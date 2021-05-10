@@ -2,25 +2,15 @@ import React from 'react';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  Text,
-  SafeAreaView,
-  View,
-  Button,
-  TouchableOpacity,
-  Dimensions,
-  StyleSheet,
-  TextInput,
-  Platform,
-  StatusBar,
-  ScrollView,
-  Image,
+import {Text, SafeAreaView, View, Button, TouchableOpacity,Dimensions,
+StyleSheet, TextInput, Platform, StatusBar, ScrollView, Image
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 const Workouts = ({navigation}) => {
   return(
     <ScrollView>
     <View style = {styles.container}>
+    {/* <StatusBar backgroundColor ='#5f9ea0' barStyle="Light-content"/> */}
     <View style = {styles.header}>
     <Text style = {styles.textheader}> Pick your Today's Workout
     </Text>
@@ -107,8 +97,7 @@ export default Workouts;
 const styles= StyleSheet.create({
   container : {
     flex :1,
-    backgroundColor : '#5f9ea0'
-  },
+    backgroundColor : '#5f9ea0' },
 header: {
     flex : 1,
     justifyContent : 'flex-end',
@@ -138,7 +127,7 @@ flexDirection : 'row',
 marginTop: 0,
 borderBottomWidth: 1,
 borderBottomColor : '#5f9ea0',
-paddingBottom :5
+paddingBottom :5,
 },
 textInput : {
   flex :1, 
@@ -174,7 +163,6 @@ signUp: {
 text : {
   fontSize : 18,
   fontWeight: 'bold',
-  color :'#5f9ea0'
-},
+  color :'#5f9ea0'},
 
   });
