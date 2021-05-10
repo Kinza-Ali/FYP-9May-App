@@ -732,6 +732,10 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
+  - YoutubePlayerView (1.2.1)
+  - YouTubeSdk (1.0.12):
+    - React
+    - YoutubePlayerView
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -802,6 +806,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+  - YouTubeSdk (from `../node_modules/react-native-youtube-sdk`)
 
 SPEC REPOS:
   trunk:
@@ -839,6 +844,7 @@ SPEC REPOS:
     - OpenSSL-Universal
     - PromisesObjC
     - YogaKit
+    - YoutubePlayerView
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -935,6 +941,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
+  YouTubeSdk:
+    :path: "../node_modules/react-native-youtube-sdk"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -1018,6 +1026,8 @@ SPEC CHECKSUMS:
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
+  YoutubePlayerView: 3870fc10f2db3f54156697757f44d304203bdc7e
+  YouTubeSdk: 704322bd91d3f81b3c1ce97baa1fd0a89913de01
 
 PODFILE CHECKSUM: 377920bc0aea0232f0dfc137e4fa83fe21cb3485
 

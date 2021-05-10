@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Text, SafeAreaView, View, Button,StatusBar,StyleSheet} from 'react-native';
-// import YoutubePlayer from 'react-native-youtube-sdk';
+import YoutubePlayer from 'react-native-youtube-sdk';
 const FullBody=({navigation})=> {
 return(
   <View style = {styles.container}>
-  {/* <StatusBar backgroundColor ='#009387' barStyle="Light-content"/>
+  {/* <StatusBar backgroundColor ='#009387' barStyle="Light-content"/> */}
     <View style = {styles.header}>
 <Text style ={styles.textheader}> Try this Full Body Workout!</Text>
 </View>
@@ -21,7 +21,7 @@ return(
     onChangeState={e=> console.log(e)}
     onChangeFullScreen ={e=> console.log(e)}
     />
- </View> */}
+ </View>
  </View>
   
   );
@@ -30,7 +30,7 @@ export default FullBody;
 const styles= StyleSheet.create({
   container : {
     flex :1,
-    backgroundColor : '#01ab9d'
+    backgroundColor : '#5f9ea0'
   },
   text: {
     fontSize : 18,
@@ -43,7 +43,7 @@ const styles= StyleSheet.create({
     paddingBottom :10
   },
 footer: {
-  flex :3, 
+  flex :5, 
   backgroundColor : 'white',
   borderTopLeftRadius : 35,
   borderTopRightRadius : 35,
@@ -55,7 +55,7 @@ footer: {
     fontWeight : 'bold',
     fontSize : 30,
     fontFamily: 'times new Roman',
-    marginTop:40
+    marginTop:10
   },
   textfooter: {
     color : 'black',
@@ -65,7 +65,7 @@ action: {
 flexDirection : 'row',
 marginTop: 2,
 borderBottomWidth: 1,
-borderBottomColor : '#01ab9d',
+borderBottomColor : '#5f9ea0',
 paddingBottom :5,
 justifyContent: 'center'
 },

@@ -6728,6 +6728,11 @@ react-native-voice@^0.3.0:
   resolved "https://registry.yarnpkg.com/react-native-voice/-/react-native-voice-0.3.0.tgz#2ca3ff8f8f6fc6d087e10b6d3ecd50af8e01a166"
   integrity sha512-puSrXCNn1MM03UZkY8q+GW931OqBCEBCiupNK4vD8i49esGqRDDmzv8sRYyEgXj5ScVDKe6lnlKCmJSn5Wo2UA==
 
+react-native-youtube-sdk@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/react-native-youtube-sdk/-/react-native-youtube-sdk-1.0.12.tgz#cf671b069bf43bcb03d9441246809a4f61599662"
+  integrity sha512-MuyDVu1+FSjFrQvHg1PNsYhNQ+kXUj5D+sF9TC4dQFZ9p3cHwVEpTuSGaj0kwVcQLrquVX3SEtcpz7vhIVfYtw==
+
 react-native@0.63.4:
   version "0.63.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.63.4.tgz#2210fdd404c94a5fa6b423c6de86f8e48810ec36"
