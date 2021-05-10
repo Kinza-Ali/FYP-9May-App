@@ -30,7 +30,7 @@ export default FullBody;
 const styles= StyleSheet.create({
   container : {
     flex :1,
-    backgroundColor : '#01ab9d'
+    backgroundColor : '#5f9ea0'
   },
   text: {
     fontSize : 18,
@@ -65,7 +65,7 @@ action: {
 flexDirection : 'row',
 marginTop: 2,
 borderBottomWidth: 1,
-borderBottomColor : '#01ab9d',
+borderBottomColor : '#5f9ea0',
 paddingBottom :5,
 justifyContent: 'center'
 },
