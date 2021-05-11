@@ -32,6 +32,13 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AdminScreen from './app/screens/AdminScreen';
 import asyncStorage from '@react-native-community/async-storage';
+import AdminBlog from './app/screens/AdminBlog';
+import AdminRecipe from './app/screens/AdminRecipe';
+import Start from './app/screens/Start';
+import DietPlan from './app/screens/DietPlan';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import AboutUs from './app/screens/AboutUs';
+
 // import MaterialCommunityIcon from 'react-native-vector-icons';
 //.......saveData
 const saveData = async (key, keyVal) => {
@@ -55,7 +62,11 @@ const readData = async (key) => {
 // import NotificationScreen from './app/screens/Notifications'
 export {
   Animatable,
-  // MaterialCommunityIcon,
+  AdminBlog,
+  AdminRecipe,
+  Start,
+  Icon,
+  DietPlan,
   AdminSuccessStories,
   SuccessStories,
   asyncStorage,
@@ -65,6 +76,7 @@ export {
   SignUpScreen,
   Recipes,
   Workouts,
+  AboutUs,
   Profile,
   Nutritionists,
   Blogs,

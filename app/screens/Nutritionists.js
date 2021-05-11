@@ -19,6 +19,13 @@ import {NavigationContainer} from '@react-navigation/native';
 
 const Nutritionists = ({navigation}) => (
   <View style={styles.container}>
+    <View style={{ marginTop:20, backgroundColor:'#5f9ea0',height:33}} >
+    <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
+      
+    }>
+    <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
+    </TouchableOpacity>
+    </View> 
     <View style={styles.header}>
       <Text style={styles.textheader}> Contact Our Nutritionists</Text>
     </View>

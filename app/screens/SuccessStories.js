@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import {LinearGradient} from '../../Setup';
 import * as Animatable from 'react-native-animatable';
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import asyncStorage from '@react-native-community/async-storage';
 import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
@@ -69,6 +70,14 @@ export default function Blogs({navigation}) {
       .finally(setLoading(false));
   }, []);
   return (
+    <View>
+    <View style={{ marginTop:20, backgroundColor:'#5f9ea0',height:33}} >
+    <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
+      
+    }>
+    <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
+    </TouchableOpacity>
+    </View> 
     <ScrollView
     contentContainerStyle={styles.scrollView}
     refreshControl={
@@ -134,6 +143,7 @@ export default function Blogs({navigation}) {
         </Animatable.View>
       </View>
       </ScrollView>
+      </View>
   );
 }
 const styles = StyleSheet.create({
