@@ -25,6 +25,11 @@ class Profile extends Component {
       height: "",
       gender: "",
       email: "",
+      BMI: "",
+      IBF: "",
+      IBW: "",
+      BMR: "",
+      WaterIntake: "",
     },
     BMI: 0,
     IBF: 0,
@@ -100,10 +105,25 @@ class Profile extends Component {
               height: docSnap.data().height,
               gender: docSnap.data().gender,
               email: docSnap.data().email,
+              BMI: docSnap.data().BMI,
+              IBF: docSnap.data().IBF,
+              IBW: docSnap.data().IBW,
+              BMR: docSnap.data().BMR,
+              WaterIntake: docSnap.data().WaterIntake,
             },
           });
         });
       });
+    if (this.state.user.BMI < 18.5) {
+      this.setState({ userStatus: "Under Weight" });
+    } else if ((BMI = 18.5 || BMI <= 24.5)) {
+      this.setState({ userStatus: "Normal Weight" });
+    } else if ((BMI = 25 || BMI <= 29.5)) {
+      this.setState({ userStatus: "Over Weight" });
+    } else if (BMI >= 30) {
+      this.setState({ userStatus: "Obese" });
+    }
+    // console.log(this.state.userStatus);
     // const dietPlanDoc = await firestore()
     //   .collection('DietPlan')
     //   .where('email', '==', email)
@@ -120,94 +140,86 @@ class Profile extends Component {
     //   });
     // this.saveData(JSON.stringify(this.state.dietPlan));
     // console.log(this.state.dietPlan);
-    this.formula(this.state.user.gender);
+    // this.formula(this.state.user.gender);
   };
 
   // Formula
   formula = (gender) => {
     // console.log(this.state.prediction.diabetesType);
-
-    var heightFeet = this.state.user.height.split(".");
-    var heightInch = this.state.user.height.split(".")[1];
-
-    var heightInCm = Math.round(this.state.user.height * 30.48);
-
-    var heightInM = heightInCm / 100;
-
-    //............... BMI.......
-    var BMI = Math.round(this.state.user.weight / (heightInM * heightInM), 2);
-
-    // ........Water Intake.......
-    let i = this.state.user.weight - 25;
-    let j = i * 25;
-    let k = j + 1500;
-    var WaterIntake = Math.floor(k / 250);
-
-    if (gender == "Female") {
-      //IBF for Females (fat percentage).....
-      var IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 5.4, 2);
-
-      // for IBW
-      if (heightFeet == 4) {
-        var IBW = 45.5 - 2.3 * heightInch;
-      } else if (heightFeet == 5) {
-        IBW = 45.5 + 2.3 * heightInch;
-      } else {
-        IBW = 45.5 + 25.3 + 2.3 * heightInch;
-      }
-      // ......for BMR.......
-      var BMR = Math.round(
-        655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * this.state.user.age,
-        2
-      );
-    }
-
-    if (gender == "Male") {
-      //IBF for Males (fat percentage):
-      IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 16.2, 2);
-      // .....for IBW....
-      if (heightFeet == 4) IBW = 50 - 2.3 * heightInch;
-      else if (heightFeet == 5) IBW = 50 + 2.3 * heightInch;
-      else {
-        IBW = 50 + 25.3 + 2.3 * heightInch;
-      }
-      // .....for BMR...
-      BMR = Math.round(
-        66.5 + 13.75 * IBW + 5.003 * heightInCm - 6.755 * this.state.user.age,
-        2
-      );
-    }
+    // var heightFeet = this.state.user.height.split(".");
+    // var heightInch = this.state.user.height.split(".")[1];
+    // var heightInCm = Math.round(this.state.user.height * 30.48);
+    // var heightInM = heightInCm / 100;
+    // //............... BMI.......
+    // var BMI = Math.round(this.state.user.weight / (heightInM * heightInM), 2);
+    // // ........Water Intake.......
+    // let i = this.state.user.weight - 25;
+    // let j = i * 25;
+    // let k = j + 1500;
+    // var WaterIntake = Math.floor(k / 250);
+    // if (gender == "Female") {
+    //   //IBF for Females (fat percentage).....
+    //   var IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 5.4, 2);
+    //   // for IBW
+    //   if (heightFeet == 4) {
+    //     var IBW = 45.5 - 2.3 * heightInch;
+    //   } else if (heightFeet == 5) {
+    //     IBW = 45.5 + 2.3 * heightInch;
+    //   } else {
+    //     IBW = 45.5 + 25.3 + 2.3 * heightInch;
+    //   }
+    //   // ......for BMR.......
+    //   var BMR = Math.round(
+    //     655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * this.state.user.age,
+    //     2
+    //   );
+    // }
+    // if (gender == "Male") {
+    //   //IBF for Males (fat percentage):
+    //   IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 16.2, 2);
+    //   // .....for IBW....
+    //   if (heightFeet == 4) IBW = 50 - 2.3 * heightInch;
+    //   else if (heightFeet == 5) IBW = 50 + 2.3 * heightInch;
+    //   else {
+    //     IBW = 50 + 25.3 + 2.3 * heightInch;
+    //   }
+    //   // .....for BMR...
+    //   BMR = Math.round(
+    //     66.5 + 13.75 * IBW + 5.003 * heightInCm - 6.755 * this.state.user.age,
+    //     2
+    //   );
+    // }
     // console.log(this.state.prediction.lifestyle);
     // Sedentary Lifestyle:
-    if (this.state.prediction.lifestyle == 1)
-      var calorieCount = Math.round(BMR * 1.2, 2);
-    // Light Exercise:
-    else if (this.state.prediction.lifestyle == 2)
-      calorieCount = Math.round(BMR * 1.375, 2);
-    //Moderate Exercise (3-5 days):
-    else if (this.state.prediction.lifestyle == 3)
-      calorieCount = Math.round(BMR * 1.55, 2);
-    // Very Active:
-    else calorieCount = Math.round(BMR * 1.725, 2);
-    if (BMI < 18.5) {
-      this.setState({ userStatus: "Under Weight" });
-    } else if ((BMI = 18.5 || BMI <= 24.5)) {
-      this.setState({ userStatus: "Normal Weight" });
-    } else if ((BMI = 25 || BMI <= 29.5)) {
-      this.setState({ userStatus: "Over Weight" });
-    } else if (BMI >= 30) {
-      this.setState({ userStatus: "Obese" });
-    }
-    IBW = Math.round(IBW, 2);
-    this.setState({
-      BMR: BMR,
-      IBW: IBW,
-      IBF,
-      WaterIntake,
-      BMI,
-      calorieCount,
-    });
-    this.saveData();
+    // if (this.state.prediction.lifestyle == 1)
+    //   var calorieCount = Math.round(BMR * 1.2, 2);
+    // // Light Exercise:
+    // else if (this.state.prediction.lifestyle == 2)
+    //   calorieCount = Math.round(BMR * 1.375, 2);
+    // //Moderate Exercise (3-5 days):
+    // else if (this.state.prediction.lifestyle == 3)
+    //   calorieCount = Math.round(BMR * 1.55, 2);
+    // // Very Active:
+    // else calorieCount = Math.round(BMR * 1.725, 2);
+    // if (BMI < 18.5) {
+    //   this.setState({ userStatus: "Under Weight" });
+    // } else if ((BMI = 18.5 || BMI <= 24.5)) {
+    //   this.setState({ userStatus: "Normal Weight" });
+    // } else if ((BMI = 25 || BMI <= 29.5)) {
+    //   this.setState({ userStatus: "Over Weight" });
+    // } else if (BMI >= 30) {
+    //   this.setState({ userStatus: "Obese" });
+    // }
+    // IBW = Math.round(IBW, 2);
+    // this.setState({
+    //   BMR: BMR,
+    //   IBW: IBW,
+    //   IBF,
+    //   WaterIntake,
+    //   BMI,
+    //   calorieCount,
+    // });
+    // this.saveData();
     // console.log(this.state.user.BMR);
   };
   //....
@@ -252,14 +264,14 @@ class Profile extends Component {
                 <Card leftText="Height: " rightText={this.state.user.height} />
                 <Card leftText="Gender: " rightText={this.state.user.gender} />
                 <Card leftText="Email: " rightText={this.state.user.email} />
-                <Card leftText="IBF: " rightText={this.state.IBF} />
-                <Card leftText="BMI: " rightText={this.state.BMI} />
+                <Card leftText="IBF: " rightText={this.state.user.IBF} />
+                <Card leftText="BMI: " rightText={this.state.user.BMI} />
                 <Card leftText="Status" rightText={this.state.userStatus} />
                 <Card
                   leftText="Water Intake: "
-                  rightText={this.state.WaterIntake}
+                  rightText={this.state.user.WaterIntake}
                 />
-                <Card leftText="IBW: " rightText={this.state.IBW} />
+                <Card leftText="IBW: " rightText={this.state.user.IBW} />
 
                 <View style={styles.button}>
                   <TouchableOpacity

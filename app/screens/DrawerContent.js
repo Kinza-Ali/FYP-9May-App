@@ -25,6 +25,7 @@ export function DrawerContent(props) {
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
+  //------ read Data---
   const readData = async () => {
     try {
       const name = await asyncStorage.getItem("name");
@@ -36,6 +37,7 @@ export function DrawerContent(props) {
     }
   };
   readData();
+  //--- signOut-------
   signOut = async () => {
     try {
       auth()
@@ -44,14 +46,19 @@ export function DrawerContent(props) {
       console.log("signOut");
       clearStorage();
     } catch (error) {
-      console.log("************");
-      // alert(error);
       console.log(error);
     }
-    // props.navigation.navigate("Start");
     props.navigation.navigate("Start");
   };
-
+  /// --------Clear Storage
+  const clearStorage = async () => {
+    try {
+      await asyncStorage.clear();
+    } catch (e) {
+      alert("Failed to clear the async storage.");
+    }
+  };
+  //----------------------
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>

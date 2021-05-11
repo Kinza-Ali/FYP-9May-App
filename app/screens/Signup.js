@@ -43,7 +43,6 @@ export default function SignUp({ navigation }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState([]);
   const [checkTextInputChange, setcheckTextInputChange] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
@@ -57,6 +56,11 @@ export default function SignUp({ navigation }) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [ageError, setAgeError] = useState("");
+  const [BMI, setBMI] = useState();
+  const [IBF, setIBF] = useState();
+  const [IBW, setIBW] = useState();
+  const [BMR, setBMR] = useState();
+  const [WaterIntake, setWaterIntake] = useState();
   //------------  Sign-In Configuration
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -80,8 +84,8 @@ export default function SignUp({ navigation }) {
 
         navigation.navigate("HomeScreen");
 
+        this.formula(gender);
         //---------- firetstore collection
-
         firestore().collection("Users").add({
           // token: auth().currentUser.accessToken,
           uid: auth().currentUser.uid,
@@ -92,7 +96,13 @@ export default function SignUp({ navigation }) {
           height: height,
           gender: gender,
           role: "user",
+          BMI: BMI,
+          IBF: IBF,
+          IBW: IBW,
+          BMR: BMR,
+          WaterIntake: WaterIntake,
         });
+        // this.formula();
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -171,7 +181,7 @@ export default function SignUp({ navigation }) {
       setEmptyField(" ");
     }
   };
-  //---- register ---
+  //---- register -------
   const onRegister = () => {
     let regx = /^[a-zA-Z]+$/;
     let eregx = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
@@ -192,7 +202,115 @@ export default function SignUp({ navigation }) {
       this.createUser();
     }
   };
-  const [pickerValue, setPickerValue] = useState();
+  // const [pickerValue, setPickerValue] = useState();
+  //--------------- Formulae Calculation ------------
+  formula = (gender) => {
+    // // console.log(this.state.prediction.diabetesType);
+    // console.log(gender);
+    var heightFeet = height.split(".");
+    var heightInch = height.split(".")[1];
+
+    var heightInCm = Math.round(height * 30.48);
+
+    var heightInM = heightInCm / 100;
+
+    //............... BMI.......
+    var BMI = Math.round(weight / (heightInM * heightInM), 2);
+
+    // ........Water Intake.......
+    let i = weight - 25;
+    let j = i * 25;
+    let k = j + 1500;
+    var WaterIntake = Math.floor(k / 250);
+
+    if (gender === "Female") {
+      //IBF for Females (fat percentage).....
+      var IBF = Math.round(1.2 * BMI + 0.23 * age - 5.4, 2);
+
+      // for IBW
+      if (heightFeet == 4) {
+        var IBW = 45.5 - 2.3 * heightInch;
+      } else if (heightFeet == 5) {
+        IBW = 45.5 + 2.3 * heightInch;
+      } else {
+        IBW = 45.5 + 25.3 + 2.3 * heightInch;
+      }
+      // ......for BMR.......
+      var BMR = Math.round(
+        655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * tage,
+        2
+      );
+    }
+
+    if (gender === "Male") {
+      //IBF for Males (fat percentage):
+      IBF = Math.round(1.2 * BMI + 0.23 * age - 16.2, 2);
+      // .....for IBW....
+      if (heightFeet == 4) IBW = 50 - 2.3 * heightInch;
+      else if (heightFeet == 5) IBW = 50 + 2.3 * heightInch;
+      else {
+        IBW = 50 + 25.3 + 2.3 * heightInch;
+      }
+      // .....for BMR...
+      BMR = Math.round(
+        66.5 + 13.75 * IBW + 5.003 * heightInCm - 6.755 * age,
+        2
+      );
+    }
+    //...... for calorieCount
+    // console.log(this.state.prediction.lifestyle);
+    // Sedentary Lifestyle:
+    // if (this.state.prediction.lifestyle == 1)
+    //   var calorieCount = Math.round(BMR * 1.2, 2);
+    // // Light Exercise:
+    // else if (this.state.prediction.lifestyle == 2)
+    //   calorieCount = Math.round(BMR * 1.375, 2);
+    // //Moderate Exercise (3-5 days):
+    // else if (this.state.prediction.lifestyle == 3)
+    //   calorieCount = Math.round(BMR * 1.55, 2);
+    // // Very Active:
+    // else calorieCount = Math.round(BMR * 1.725, 2);
+    // if (BMI < 18.5) {
+    //   this.setState({ userStatus: "Under Weight" });
+    // } else if ((BMI = 18.5 || BMI <= 24.5)) {
+    //   this.setState({ userStatus: "Normal Weight" });
+    // } else if ((BMI = 25 || BMI <= 29.5)) {
+    //   this.setState({ userStatus: "Over Weight" });
+    // } else if (BMI >= 30) {
+    //   this.setState({ userStatus: "Obese" });
+    // }
+    IBW = Math.round(IBW, 2);
+    setIBW(IBW);
+    setBMR(BMR);
+    setIBF(IBF);
+    setWaterIntake(WaterIntake);
+    setBMI(BMI);
+
+    this.saveData();
+  };
+  // -------- Save Data ---------------------------
+  saveData = async () => {
+    try {
+      await asyncStorage.setItem("name", userName);
+      await asyncStorage.setItem("gender", gender);
+      await asyncStorage.setItem("age", age);
+      await asyncStorage.setItem("height", height);
+      await asyncStorage.setItem("weight", weight);
+      await asyncStorage.setItem("BMI", JSON.stringify(BMI));
+      // await asyncStorage.setItem(
+      //   "calorieCount",
+      //   JSON.stringify(this.state.calorieCount)
+      // );
+      console.log(JSON.stringify(calorieCount));
+      await asyncStorage.setItem("IBF", JSON.stringify(IBF));
+      await asyncStorage.setItem("IBW", JSON.stringify(IBW));
+      await asyncStorage.setItem("WaterIntake", JSON.stringify(WaterIntake));
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
+
+  //-------------------------------------------------
   return (
     <View>
       <ScrollView>

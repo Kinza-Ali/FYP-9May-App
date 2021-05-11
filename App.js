@@ -10,6 +10,7 @@ import Start from "./app/screens/Start";
 import MainTabScreen from "./app/screens/MainTabScreen";
 import asyncStorage from "@react-native-community/async-storage";
 import {
+  DietPlan,
   ChatbotScreen,
   Workouts,
   LoginScreen,
@@ -184,8 +185,8 @@ export default function App() {
     try {
       const loggedIn = await asyncStorage.getItem("loggedIn");
       setLoggedIn(loggedIn);
-      console.log("========");
-      console.log(loggedIn);
+      // console.log("========");
+      // console.log(loggedIn);
     } catch (e) {
       alert("Failed to fetch the data from storage");
     }
@@ -225,6 +226,9 @@ export default function App() {
             component={AdminScreen}
             options={({ title: "AdminScreen" }, { headerLeft: null })}
           />
+
+          <Drawer.Screen name="DietPlan" component={DietPlan} />
+
           {/* <Drawer.Screen name="Settings" component={Settingscreen} /> */}
         </Drawer.Navigator>
       ) : (
