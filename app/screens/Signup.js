@@ -13,6 +13,8 @@ import {
 } from "../../Setup";
 import asyncStorage from "@react-native-community/async-storage";
 import * as Animatable from "react-native-animatable";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
 // import auth from '@react-native-firebase/auth'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Picker } from "@react-native-picker/picker";
@@ -192,158 +194,195 @@ export default function SignUp({ navigation }) {
   };
   const [pickerValue, setPickerValue] = useState();
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-          <Text style={styles.textfooter}> Full Name </Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="user-circle" color="black" size={25} />
-            <TextInput
-              placeholder="Jane Doe"
-              style={styles.textInput}
-              autoCapitalize="words"
-              autoCorrect={false}
-              onChangeText={(username) => displayName(username)}
-              onBlur={() => emptyFieldVlidator(userName)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-          </View>
-          <Text style={{ color: "red" }}> {nameError}</Text>
-          <Text style={styles.textfooter}>Email</Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="user-o" color="black" size={25} />
-            <TextInput
-              placeholder="xyz@xyz.com"
-              style={styles.textInput}
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={(email) => textInputchange(email)}
-              onBlur={() => emptyFieldVlidator(email)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-            {checkTextInputChange ? (
-              <Feather name="check-circle" color="blue" size={25} />
-            ) : null}
-          </View>
-          <Text style={{ color: "red" }}> {emailError}</Text>
-          <Text style={styles.textfooter}> Age </Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="calendar-check-o" color="black" size={25} />
-            <TextInput
-              placeholder="Your Age"
-              keyboardType="numeric"
-              // type = "number"
-              min="18"
-              max="70"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(age) => {
-                setAge(age);
-              }}
-              onBlur={() => emptyFieldVlidator(age)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-          </View>
-          <Text style={{ color: "red" }}> {ageError}</Text>
-          <Text style={styles.textfooter}> Weight </Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="smile-o" color="black" size={25} />
-
-            <TextInput
-              placeholder="Your Weight"
-              style={styles.textInput}
-              keyboardType="numeric"
-              autoCapitalize="none"
-              onChangeText={(weight) => {
-                setWeight(weight);
-              }}
-              onBlur={() => emptyFieldVlidator(weight)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-          </View>
-          <Text style={styles.textfooter}> Height </Text>
-          <View style={styles.action}>
-            <FontAwesomeIcons name="street-view" color="black" size={25} />
-
-            <TextInput
-              placeholder="5.3"
-              keyboardType="numeric"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={setHeight}
-              onBlur={() => emptyFieldVlidator(height)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-          </View>
-          <Text style={styles.textfooter}> Gender </Text>
-          <Text style={styles.textfooter}> {gender} </Text>
-          <Pressable onPress={() => setShowModal(true)}>
-            <Text>Select</Text>
-          </Pressable>
-          <Modal visible={showModal} transparent={false}>
-            <View style={[styles.action, { width: "80%", height: "30%" }]}>
-              <Picker
-                style={styles.picker}
-                // style={{ height: 10, width: 300 }}
-                selectedValue={gender}
-                onValueChange={(itemValue) => setGender(itemValue)}
-              >
-                <Picker.Item label="Male" value="Male" />
-                <Picker.Item label="Female" value="Female" />
-              </Picker>
-            </View>
-            <Pressable onPress={() => setShowModal(false)}>
-              <Text>Submit</Text>
-            </Pressable>
-          </Modal>
-          <Text style={[styles.textfooter, { marginTop: 20 }]}> Password</Text>
-
-          <View style={styles.action}>
-            <FontAwesomeIcons name="lock" color="black" size={25} />
-            <TextInput
-              placeholder="Your Password"
-              secureTextEntry={secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              // eslint-disable-next-line no-shadow
-              onChangeText={(password) => handllePasswordChange(password)}
-              onBlur={() => emptyFieldVlidator(password)}
-            />
-            <Text style={{ color: "red" }}> {emptyField} </Text>
-            <TouchableOpacity onPress={UpdateSecureTextEntry}>
-              {secureTextEntry ? (
-                <Feather name="eye-off" color="blue" size={20} />
-              ) : (
-                <Feather name="eye" color="blue" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          <Text style={{ color: "red" }}> {passwordError} </Text>
-          <View style={styles.Button}>
-            <TouchableOpacity onPress={onRegister}>
-              <LinearGradient
-                colors={["#5f9ea0", "#5f9ea0"]}
-                style={styles.login}
-              >
-                <Text style={[styles.textSign, { color: "black" }]}>
-                  {" "}
-                  REGISTER{" "}
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+    <View>
+      <ScrollView>
+        <View style={styles.container}>
+          <View
+            style={{
+              marginHorizontal: 10,
+              marginTop: 40,
+              marginBottom: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}
+              onPress={() => {
+                navigation.goBack();
+              }}
             >
-              <Text style={[styles.textSign, { color: "grey" }]}>
-                {" "}
-                Already a Registered User?LOGIN
-              </Text>
+              <FontAwesome name="chevron-left" size={20} color="#fff" />
             </TouchableOpacity>
+            <Text style={{ color: "#fff", fontSize: 20, paddingRight: 160 }}>
+              SignUp
+            </Text>
           </View>
-        </Animatable.View>
-      </View>
-    </ScrollView>
+          <ScrollView>
+            <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+              <Text style={styles.textfooter}> Full Name </Text>
+              <View style={styles.action}>
+                <FontAwesomeIcons name="user-circle" color="black" size={25} />
+                <TextInput
+                  placeholder="Jane Doe"
+                  style={styles.textInput}
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  onChangeText={(username) => displayName(username)}
+                  onBlur={() => emptyFieldVlidator(userName)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+              </View>
+              <Text style={{ color: "red" }}> {nameError}</Text>
+              <Text style={styles.textfooter}>Email</Text>
+              <View style={styles.action}>
+                <FontAwesomeIcons name="user-o" color="black" size={25} />
+                <TextInput
+                  placeholder="xyz@xyz.com"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  onChangeText={(email) => textInputchange(email)}
+                  onBlur={() => emptyFieldVlidator(email)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+                {checkTextInputChange ? (
+                  <Feather name="check-circle" color="blue" size={25} />
+                ) : null}
+              </View>
+              <Text style={{ color: "red" }}> {emailError}</Text>
+              <Text style={styles.textfooter}> Age </Text>
+              <View style={styles.action}>
+                <FontAwesomeIcons
+                  name="calendar-check-o"
+                  color="black"
+                  size={25}
+                />
+                <TextInput
+                  placeholder="Your Age"
+                  keyboardType="numeric"
+                  // type = "number"
+                  min="18"
+                  max="70"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={(age) => {
+                    setAge(age);
+                  }}
+                  onBlur={() => emptyFieldVlidator(age)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+              </View>
+              <Text style={{ color: "red" }}> {ageError}</Text>
+              <Text style={styles.textfooter}> Weight </Text>
+              <View style={styles.action}>
+                <FontAwesomeIcons name="smile-o" color="black" size={25} />
+
+                <TextInput
+                  placeholder="Your Weight"
+                  style={styles.textInput}
+                  keyboardType="numeric"
+                  autoCapitalize="none"
+                  onChangeText={(weight) => {
+                    setWeight(weight);
+                  }}
+                  onBlur={() => emptyFieldVlidator(weight)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+              </View>
+              <Text style={styles.textfooter}> Height </Text>
+              <View style={styles.action}>
+                <FontAwesomeIcons name="street-view" color="black" size={25} />
+
+                <TextInput
+                  placeholder="5.3"
+                  keyboardType="numeric"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={setHeight}
+                  onBlur={() => emptyFieldVlidator(height)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+              </View>
+              <Text style={styles.textfooter}> Gender </Text>
+              <Text style={styles.textfooter}> {gender} </Text>
+              <Pressable onPress={() => setShowModal(true)}>
+                <Text>Select</Text>
+              </Pressable>
+              <Modal visible={showModal} transparent={false}>
+                <View style={[styles.action, { width: "80%", height: "30%" }]}>
+                  <Picker
+                    style={styles.picker}
+                    // style={{ height: 10, width: 300 }}
+                    selectedValue={gender}
+                    onValueChange={(itemValue) => setGender(itemValue)}
+                  >
+                    <Picker.Item label="Male" value="Male" />
+                    <Picker.Item label="Female" value="Female" />
+                  </Picker>
+                </View>
+                <Pressable onPress={() => setShowModal(false)}>
+                  <Text>Submit</Text>
+                </Pressable>
+              </Modal>
+              <Text style={[styles.textfooter, { marginTop: 20 }]}>
+                {" "}
+                Password
+              </Text>
+
+              <View style={styles.action}>
+                <FontAwesomeIcons name="lock" color="black" size={25} />
+                <TextInput
+                  placeholder="Your Password"
+                  secureTextEntry={secureTextEntry ? true : false}
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  // eslint-disable-next-line no-shadow
+                  onChangeText={(password) => handllePasswordChange(password)}
+                  onBlur={() => emptyFieldVlidator(password)}
+                />
+                <Text style={{ color: "red" }}> {emptyField} </Text>
+                <TouchableOpacity onPress={UpdateSecureTextEntry}>
+                  {secureTextEntry ? (
+                    <Feather name="eye-off" color="blue" size={20} />
+                  ) : (
+                    <Feather name="eye" color="blue" size={20} />
+                  )}
+                </TouchableOpacity>
+              </View>
+              <Text style={{ color: "red" }}> {passwordError} </Text>
+              <View style={styles.Button}>
+                <TouchableOpacity onPress={onRegister}>
+                  <LinearGradient
+                    colors={["#5f9ea0", "#5f9ea0"]}
+                    style={styles.login}
+                  >
+                    <Text style={[styles.textSign, { color: "black" }]}>
+                      {" "}
+                      REGISTER{" "}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={[
+                    styles.signUp,
+                    { borderColor: "#5f9ea0", marginTop: 2 },
+                  ]}
+                >
+                  <Text style={[styles.textSign, { color: "grey" }]}>
+                    {" "}
+                    Already a Registered User?LOGIN
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </Animatable.View>
+
+            {/* </View> */}
+          </ScrollView>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -353,13 +392,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#5f9ea0",
   },
   header: {
-    flex: 1,
+    flex: 5,
     justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
   footer: {
-    flex: 3,
+    flex: 8,
     backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
