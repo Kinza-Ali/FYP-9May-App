@@ -124,6 +124,11 @@ class Chatbot extends Component {
         console.log(err);
       });
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.calorieCount !== this.state.calorieCount) {
+      this.saveData();
+    }
+  }
   constructor(props) {
     super(props);
     this.getUser();
@@ -157,14 +162,12 @@ class Chatbot extends Component {
   };
   //....
   getDietPLan = async () => {
-    // var genderVal = 0;
     if (this.state.gender == "Male") {
       var genderVal = 1;
     } else {
       genderVal = 0;
     }
-    console.log("calCount:::::" + this.state.calorieCount);
-    // this.readData();
+
     // post request....
     await this.post("http://26d501ed987f.ngrok.io/dietplan", {
       gender: genderVal,
@@ -217,6 +220,7 @@ class Chatbot extends Component {
               email: auth().currentUser.email,
               DietPlan: this.state.dietPlan,
               createdAt: new Date().getTime(),
+              calorieCount: this.state.calorieCount,
             });
           console.log(res.data);
           this.sendBotResponse(JSON.stringify(res.data));
@@ -229,27 +233,18 @@ class Chatbot extends Component {
         });
     });
   //...........................
-  // saveData = async () => {
-  //   try {
-  //     // await asyncStorage.setItem(
-  //     //   "prediction",
-  //     //   JSON.stringify(this.state.prediction)
-  //     // );
-  //     await asyncStorage.setItem(
-  //       "Breakfast",
-  //       JSON.stringify(this.state.Breakfast)
-  //     );
-  //     await asyncStorage.setItem(
-  //       "dietPlan",
-  //       JSON.stringify(this.state.dietPlan)
-  //     );
-  //     await asyncStorage.setItem("Lunch", JSON.stringify(this.state.Lunch));
-  //     await asyncStorage.setItem("Dinner", JSON.stringify(this.state.Dinner));
-  //     await asyncStorage.setItem("Snacks", JSON.stringify(this.state.Snacks));
-  //   } catch (e) {
-  //     alert("Failed to save the data to the storage");
-  //   }
-  // };
+  saveData = async () => {
+    try {
+      await asyncStorage.setItem(
+        "calorieCount",
+        JSON.stringify(this.state.calorieCount)
+      );
+      console.log("#######");
+      console.log(calorieCount);
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
   // //..........................
   // readData = async () => {
   //   try {

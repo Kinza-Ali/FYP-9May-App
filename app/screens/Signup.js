@@ -257,28 +257,7 @@ export default function SignUp({ navigation }) {
         2
       );
     }
-    //...... for calorieCount
-    // console.log(this.state.prediction.lifestyle);
-    // Sedentary Lifestyle:
-    // if (this.state.prediction.lifestyle == 1)
-    //   var calorieCount = Math.round(BMR * 1.2, 2);
-    // // Light Exercise:
-    // else if (this.state.prediction.lifestyle == 2)
-    //   calorieCount = Math.round(BMR * 1.375, 2);
-    // //Moderate Exercise (3-5 days):
-    // else if (this.state.prediction.lifestyle == 3)
-    //   calorieCount = Math.round(BMR * 1.55, 2);
-    // // Very Active:
-    // else calorieCount = Math.round(BMR * 1.725, 2);
-    // if (BMI < 18.5) {
-    //   this.setState({ userStatus: "Under Weight" });
-    // } else if ((BMI = 18.5 || BMI <= 24.5)) {
-    //   this.setState({ userStatus: "Normal Weight" });
-    // } else if ((BMI = 25 || BMI <= 29.5)) {
-    //   this.setState({ userStatus: "Over Weight" });
-    // } else if (BMI >= 30) {
-    //   this.setState({ userStatus: "Obese" });
-    // }
+
     IBW = Math.round(IBW, 2);
     setIBW(IBW);
     setBMR(BMR);
@@ -286,7 +265,7 @@ export default function SignUp({ navigation }) {
     setWaterIntake(WaterIntake);
     setBMI(BMI);
 
-    this.saveData();
+    // this.saveData();
   };
   // -------- Save Data ---------------------------
   saveData = async () => {

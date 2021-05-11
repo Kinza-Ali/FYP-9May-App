@@ -50,9 +50,13 @@ class Profile extends Component {
   readData = async () => {
     try {
       const predict = await asyncStorage.getItem("prediction");
-      this.setState({ prediction: JSON.parse(predict) });
-      console.log("=======");
-      console.log(this.state.prediction);
+      const calorie = await asyncStorage.getItem("calorieCount");
+      this.setState({
+        prediction: JSON.parse(predict),
+        calorieCount: JSON.parse(calorie),
+      });
+      // console.log("=======");
+      // console.log(this.state.prediction);
     } catch (e) {
       alert("Failed to fetch the data from storage");
     }
@@ -88,8 +92,6 @@ class Profile extends Component {
     // console.log(email);
   }
   getUser = async () => {
-    this.readData();
-
     const email = auth().currentUser.email;
     const userdoc = await firestore()
       .collection("Users")
@@ -111,6 +113,19 @@ class Profile extends Component {
               BMR: docSnap.data().BMR,
               WaterIntake: docSnap.data().WaterIntake,
             },
+          });
+        });
+      });
+    await firestore()
+      .collection("DietPlan")
+      .doc(auth().currentUser.uid)
+      .collection("userDietPlan")
+      .where("email", "==", email)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((docSnap) => {
+          this.setState({
+            calorieCount: docSnap.data().calorieCount,
           });
         });
       });
@@ -272,6 +287,10 @@ class Profile extends Component {
                   rightText={this.state.user.WaterIntake}
                 />
                 <Card leftText="IBW: " rightText={this.state.user.IBW} />
+                <Card
+                  leftText="calorieCount: "
+                  rightText={this.state.calorieCount}
+                />
 
                 <View style={styles.button}>
                   <TouchableOpacity
@@ -341,10 +360,11 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    marginTop: 5,
+    marginTop: 0,
     marginLeft: 50,
     justifyContent: "center",
     paddingRight: 35,
+    marginBottom: 15,
   },
   login: {
     flexDirection: "row",

@@ -30,7 +30,7 @@ const MainTabScreen = () => (
       component={Profile}
       options={{
         tabBarLabel: "Profile",
-        tabBarColor: "#01ab9d",
+        tabBarColor: "#5f9ea0",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
@@ -41,7 +41,7 @@ const MainTabScreen = () => (
       component={Recipes}
       options={{
         tabBarLabel: "Recipes",
-        tabBarColor: "#009387",
+        tabBarColor: "#5f9ea0",
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="chef-hat" color={color} size={26} />
         ),
@@ -52,7 +52,7 @@ const MainTabScreen = () => (
       component={Blogs}
       options={{
         tabBarLabel: "Blogs",
-        tabBarColor: "#01ab9d",
+        tabBarColor: "#5f9ea0",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-book" color={color} size={26} />
         ),

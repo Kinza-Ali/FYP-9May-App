@@ -98,7 +98,9 @@ export default function Blogs({ navigation }) {
             >
               <FontAwesome name="chevron-left" size={20} color="#fff" />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontSize: 20 }}>Recipes</Text>
+            <Text style={{ color: "#fff", fontSize: 20, marginRight: 160 }}>
+              Recipes
+            </Text>
           </View>
 
           <ScrollView
