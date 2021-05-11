@@ -8,6 +8,14 @@ StyleSheet, TextInput, Platform, StatusBar, ScrollView, Image
 import { NavigationContainer } from '@react-navigation/native';
 const Workouts = ({navigation}) => {
   return(
+    <View>
+    <View style={{ marginTop:20, backgroundColor:'#5f9ea0',height:33}} >
+    <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
+      
+    }>
+    <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
+    </TouchableOpacity>
+    </View> 
     <ScrollView>
     <View style = {styles.container}>
     {/* <StatusBar backgroundColor ='#5f9ea0' barStyle="Light-content"/> */}
@@ -91,6 +99,7 @@ const Workouts = ({navigation}) => {
 </View>
 </View>
 </ScrollView>
+</View>
 );
 };
 export default Workouts;

@@ -39,7 +39,15 @@ export default function Login({navigation}) {
   const saveData = async () => {
     try {
       await asyncStorage.setItem('isAdmin', 'true');
+      // await asyncStorage.setItem('loggedIn', 'true');
+    } catch (e) {
+      alert('Failed to save the data to the storage')
+    }
+  };
+  const logIn = async () => {
+    try {
       await asyncStorage.setItem('loggedIn', 'true');
+      console.log("@@@@@@@@@@@");
     } catch (e) {
       alert('Failed to save the data to the storage')
     }
@@ -88,10 +96,12 @@ export default function Login({navigation}) {
       })
       .catch((error) => {
         if (error.code === 'auth/invalid-email') {
+          alert('That email address or password is invalid!');
           console.log('That email address is invalid!');
         }
         console.error(error);
       });
+      logIn();
     setLoggedIn(true);
   };
   //--------------- ON Auth State Change ----------------------

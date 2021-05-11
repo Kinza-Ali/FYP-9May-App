@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView,TouchableOpacity} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {dialogflowConfig} from '../env';
@@ -8,9 +8,11 @@ import uuid from 'react-native-uuid';
 import asyncStorage from '@react-native-community/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
+import HomeScreen from './HomeScreen';
 import axios from 'axios';
 import Breakfast from './Breakfast';
+import { color } from 'react-native-reanimated';
 //Bot Image
 const botAvatar = require('../assets/images/bot.png');
 //Bot User
@@ -110,6 +112,12 @@ class Chatbot extends Component {
       .catch(function (err) {
         console.log(err);
       });
+  }
+  constructor(props) {
+    super(props);
+   
+
+    // console.log(email);
   }
   //....
   getDietPLan = async () => {
@@ -557,6 +565,14 @@ class Chatbot extends Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
+            <View style={{ marginTop:20, backgroundColor:'#5f9ea0',height:33 ,borderTopLeftRadius:5, borderBottomRightRadius:7}} >
+      <TouchableOpacity title ="ChatBot" onPress = {()=> this.props.navigation.goBack()
+        
+      }>
+      <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
+      </TouchableOpacity>
+      </View> 
+     
         <GiftedChat
           messages={this.state.messages}
           onSend={(message) => this.onSend(message)}
