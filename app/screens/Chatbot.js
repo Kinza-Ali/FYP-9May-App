@@ -28,11 +28,11 @@ class Chatbot extends Component {
     id: 1,
     name: "",
     answers: [],
-    Breakfast: {},
-    Dinner: {},
-    Lunch: {},
-    Snacks: {},
-    completeDietPlan: [],
+    // Breakfast: {},
+    // Dinner: {},
+    // Lunch: {},
+    // Snacks: {},
+    // completeDietPlan: [],
     // BMI: 0,
     // IBF: 0,
     calorieCount: 0,
@@ -41,10 +41,10 @@ class Chatbot extends Component {
     prediction: {},
     Breakfastupd: {},
     dietPlan: {},
-    age: "",
-    weight: "",
-    height: "",
-    gender: "",
+    // age: "",
+    // weight: "",
+    // height: "",
+    // gender: "",
     //new addition
     user: {
       name: "",
@@ -126,7 +126,7 @@ class Chatbot extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.calorieCount !== this.state.calorieCount) {
-      this.saveData();
+      console.log("New cal " + this.state.calorieCount);
     }
   }
   constructor(props) {
@@ -167,7 +167,8 @@ class Chatbot extends Component {
     } else {
       genderVal = 0;
     }
-
+    // Push Notifications
+    handleScheduleNotification();
     // post request....
     await this.post("http://26d501ed987f.ngrok.io/dietplan", {
       gender: genderVal,
@@ -185,7 +186,6 @@ class Chatbot extends Component {
       IBW: this.state.user.IBW,
       calorieCount: this.state.calorieCount,
     });
-    // this.saveData();
   };
   // ... post command
   post = (url, data) =>
@@ -194,21 +194,21 @@ class Chatbot extends Component {
         .post(url, data)
         .then((res) => {
           resolve(res.data);
-          var arrayPlan = [];
-          arrayPlan.push(res.data.Breakfast);
-          arrayPlan.push(res.data.Lunch);
-          arrayPlan.push(res.data.Dinner);
-          arrayPlan.push(res.data.Snacks);
-          var joined = this.state.completeDietPlan.concat(arrayPlan);
-          JSON.stringify(
-            this.state.completeDietPlan.forEach(function (itm) {})
-          );
+          // var arrayPlan = [];
+          // arrayPlan.push(res.data.Breakfast);
+          // arrayPlan.push(res.data.Lunch);
+          // arrayPlan.push(res.data.Dinner);
+          // arrayPlan.push(res.data.Snacks);
+          // var joined = this.state.completeDietPlan.concat(arrayPlan);
+          // JSON.stringify(
+          //   this.state.completeDietPlan.forEach(function (itm) {})
+          // );
           this.setState({
-            Breakfast: res.data.Breakfast,
-            Lunch: res.data.Lunch,
-            Snacks: res.data.Snacks,
-            Dinner: res.data.Dinner,
-            completeDietPlan: joined,
+            // Breakfast: res.data.Breakfast,
+            // Lunch: res.data.Lunch,
+            // Snacks: res.data.Snacks,
+            // Dinner: res.data.Dinner,
+            // completeDietPlan: joined,
             dietPlan: res.data,
           });
           firestore()
@@ -224,27 +224,25 @@ class Chatbot extends Component {
             });
           console.log(res.data);
           this.sendBotResponse(JSON.stringify(res.data));
-
-          // this.handleGoogleResponse(res.data.Breakfast)
-          this.setState({ Breakfastupd: this.state.Breakfast });
+          // this.setState({ Breakfastupd: this.state.Breakfast });
         })
         .catch((err) => {
           reject(err);
         });
     });
   //...........................
-  saveData = async () => {
-    try {
-      await asyncStorage.setItem(
-        "calorieCount",
-        JSON.stringify(this.state.calorieCount)
-      );
-      console.log("#######");
-      console.log(calorieCount);
-    } catch (e) {
-      alert("Failed to save the data to the storage");
-    }
-  };
+  // saveData = async () => {
+  //   try {
+  //     await asyncStorage.setItem(
+  //       "calorieCount",
+  //       JSON.stringify(this.state.calorieCount)
+  //     );
+  //     console.log("#######");
+  //     console.log(calorieCount);
+  //   } catch (e) {
+  //     alert("Failed to save the data to the storage");
+  //   }
+  // };
   // //..........................
   // readData = async () => {
   //   try {
@@ -443,14 +441,13 @@ class Chatbot extends Component {
       text ==
       "Thank you for your response, you will be getting your diet plan in a while."
     ) {
+      msg = {
+        //     //   // _id: this.state.messages.length + 1,
+        text: "You will be getting your Diet plan in a while",
+        createdAt: new Date().getTime(),
+        user: BOT,
+      };
       this.getDietPLan();
-      // msg = {
-      //   //     //   // _id: this.state.messages.length + 1,
-      //   text: 'Breakfast:', // add diet plan here
-      //   createdAt: new Date().getTime(),
-      //   user: BOT,
-
-      // };
     } else {
       msg = {
         // _id: this.state.messages.length + 1,
@@ -577,9 +574,7 @@ class Chatbot extends Component {
       });
       this.setState({ prediction: prediction });
       this.calulateCalorieCount();
-      console.log("stateCalorie" + this.state.calorieCount);
-      console.log(prediction);
-      // this.saveData();
+      // console.log("stateCalorie" + this.state.calorieCount);
     } else {
       var joined = this.state.answers.concat(message);
       this.setState({ answers: joined });
@@ -607,12 +602,6 @@ class Chatbot extends Component {
     console.log("calorieCount" + calorieCount);
     this.setState({ calorieCount: calorieCount });
   };
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.calorieCount !== this.state.calorieCount) {
-  //     console.log
-  //     console.log(this.state.calorieCount);
-  //   }
-  // }
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>

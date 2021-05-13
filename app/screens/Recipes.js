@@ -79,7 +79,11 @@ export default function Blogs({ navigation }) {
 
   return (
     <View>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.container}>
           <View
             style={{
@@ -103,12 +107,7 @@ export default function Blogs({ navigation }) {
             </Text>
           </View>
 
-          <ScrollView
-            contentContainerStyle={styles.scrollView}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+          <ScrollView contentContainerStyle={styles.scrollView}>
             {/* <View style={styles.container}> */}
             <View style={styles.header}></View>
 
