@@ -227,7 +227,12 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={[styles.Button, { marginTop: 20 }]}>
-          <TouchableOpacity onPress={this.signInUser}>
+          <TouchableOpacity
+            onPress={
+              // this.signInUser
+              handleScheduleNotification()
+            }
+          >
             <LinearGradient
               colors={["#5f9ea0", "#5f9ea0"]}
               style={styles.login}
@@ -235,12 +240,12 @@ export default function Login({ navigation }) {
               <Text style={[styles.textSign, { color: "black" }]}> LOGIN </Text>
             </LinearGradient>
           </TouchableOpacity>
-          <GoogleSigninButton
+          {/* <GoogleSigninButton
             style={{ width: 192, height: 48, marginLeft: 70, marginTop: 20 }}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={this._signIn}
-          />
+          /> */}
           <TouchableOpacity
             onPress={() => navigation.navigate("SignUp")}
             style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}

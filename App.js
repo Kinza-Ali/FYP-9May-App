@@ -15,6 +15,7 @@ import {
   Workouts,
   LoginScreen,
   Icon,
+  Recipes,
   Nutritionists,
   AboutUs,
   SuccessStories,
@@ -228,6 +229,7 @@ export default function App() {
           />
 
           <Drawer.Screen name="DietPlan" component={DietPlan} />
+          <Drawer.Screen name="Recipes" component={Recipes} />
 
           {/* <Drawer.Screen name="Settings" component={Settingscreen} /> */}
         </Drawer.Navigator>
