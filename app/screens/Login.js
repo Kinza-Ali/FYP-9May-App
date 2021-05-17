@@ -57,6 +57,12 @@ export default function Login({ navigation }) {
   //------------ Google Sign-In Configuration
 
   useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ["email"],
+      webClientId:
+        "111595640287-rd4lobg73o37ljn63qb92pvo6hl9h5o8.apps.googleusercontent.com",
+      offlineAccess: true,
+    });
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   });
@@ -92,7 +98,7 @@ export default function Login({ navigation }) {
           .then(() => {
             // console.log(auth().currentUser);
           });
-        handleScheduleNotification();
+        // handleScheduleNotification();
       })
       .catch((error) => {
         if (error.code === "auth/invalid-email") {
@@ -104,6 +110,30 @@ export default function Login({ navigation }) {
       });
     logIn();
     setLoggedIn(true);
+  };
+  //--------------- Google Sign In -------
+  _signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const { accessToken, idToken } = await GoogleSignin.signIn();
+
+      setLoggedIn(true);
+
+      const credential = auth.GoogleAuthProvider.credential(
+        idToken,
+        accessToken
+      );
+      await auth().signInWithCredential(credential);
+      navigation.navigate("HomeScreen");
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        alert("cancel");
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        alert("Signin in Progress");
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        alert("Play Services not available");
+      }
+    }
   };
   //--------------- ON Auth State Change ----------------------
   function onAuthStateChanged(user) {
@@ -205,6 +235,12 @@ export default function Login({ navigation }) {
               <Text style={[styles.textSign, { color: "black" }]}> LOGIN </Text>
             </LinearGradient>
           </TouchableOpacity>
+          <GoogleSigninButton
+            style={{ width: 192, height: 48, marginLeft: 70, marginTop: 20 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={this._signIn}
+          />
           <TouchableOpacity
             onPress={() => navigation.navigate("SignUp")}
             style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}

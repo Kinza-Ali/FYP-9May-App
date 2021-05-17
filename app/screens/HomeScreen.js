@@ -3,6 +3,7 @@ import {
   FontAwesomeIcons,
   // FontAwesomeIcons,
   // Feather,
+  GoogleSignin,
   LinearGradient,
 } from "../../Setup";
 import auth from "@react-native-firebase/auth";
@@ -64,8 +65,8 @@ const HomeScreen = ({ navigation }) => {
   //----------- Google Sign Out -----------
   signOut = async () => {
     try {
-      // await GoogleSignin.revokeAccess();
-      // await GoogleSignin.signOut();
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
       auth()
         .signOut()
         .then(() => alert("You are signed Out! "));
@@ -99,11 +100,7 @@ const HomeScreen = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            >
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <FontAwesome name="bars" size={20} color="#fff" />
             </TouchableOpacity>
             <Text style={{ color: "#fff", fontSize: 20 }}>Home</Text>
