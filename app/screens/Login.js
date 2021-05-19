@@ -229,8 +229,8 @@ export default function Login({ navigation }) {
         <View style={[styles.Button, { marginTop: 20 }]}>
           <TouchableOpacity
             onPress={
-              // this.signInUser
-              handleScheduleNotification()
+              this.signInUser
+              // handleScheduleNotification()
             }
           >
             <LinearGradient

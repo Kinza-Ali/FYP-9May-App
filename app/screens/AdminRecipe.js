@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import asyncStorage from '@react-native-community/async-storage';
-import methods from '../connect/index';
+import React, { useState, useEffect } from "react";
+import asyncStorage from "@react-native-community/async-storage";
+import methods from "../connect/index";
 import {
   Text,
   SafeAreaView,
@@ -11,32 +11,32 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-} from 'react-native';
-import {LinearGradient} from '../../Setup';
-import {get} from 'react-native/Libraries/Utilities/PixelRatio';
+} from "react-native";
+import { LinearGradient } from "../../Setup";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 // import AsyncStorage from '@react-native-community/async-storage';
 // const blogUrl = 'http://192.168.18.3:3001/api/blogs';
 
-export default function AdminRecipe({navigation, props}) {
+export default function AdminRecipe({ navigation, props }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [isAdmin, setAdmin] = useState(true);
-  const [id, setId] = useState('');
-  const [dishName, setDishName] = useState('');
-  const [newDishName, setNewDishName] = useState('');
+  const [id, setId] = useState("");
+  const [dishName, setDishName] = useState("");
+  const [newDishName, setNewDishName] = useState("");
   const [method, setMethod] = React.useState(null);
   const [newMethod, setNewMethod] = React.useState(null);
   const [dishUrl, setDishUrl] = React.useState(null);
   const [newDishUrl, setNewDishUrl] = React.useState(null);
-  const [imgUrl, setImgUrl] = useState('');
-  const [newImgUrl, setNewImgUrl] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [newIngredients, setNewIngredients] = useState('');
+  const [imgUrl, setImgUrl] = useState("");
+  const [newImgUrl, setNewImgUrl] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [newIngredients, setNewIngredients] = useState("");
 
-  let currentData = {_id: '12345', title: 'food', paragraph: 'sbfcjhdsbvh'};
+  let currentData = { _id: "12345", title: "food", paragraph: "sbfcjhdsbvh" };
   const readData = async () => {
     try {
-      const currentItem = await asyncStorage.getItem('Recipe');
+      const currentItem = await asyncStorage.getItem("Recipe");
       currentData = JSON.parse(currentItem);
       setNewDishName(currentData.dishName);
       setId(currentData._id);
@@ -50,19 +50,19 @@ export default function AdminRecipe({navigation, props}) {
       // var currentTime = date.toLocaleTimeString();
       // console.log(currentTime);
     } catch (e) {
-      alert('Failed to fetch the data from storage');
+      // alert("Failed to fetch the data from storage");
     }
   };
   readData();
   // const {id, title, paragraph} = this.navigation.props;
   getRecipe = async () => {
-    var response = await methods.get('recipes', {id: '1'});
+    var response = await methods.get("recipes", { id: "1" });
     // console.log('==================');
     // console.log(response);
   };
   // //-------------- Add Story Method
   addRecipe = async () => {
-    var response = await methods.post('recipes', {
+    var response = await methods.post("recipes", {
       dishName,
       ingredients,
       method,
@@ -71,49 +71,34 @@ export default function AdminRecipe({navigation, props}) {
     });
   };
   updateRecipe = async () => {
-    var response = await methods.put('recipes/' + id, {
+    var response = await methods.put("recipes/" + id, {
       dishName,
       ingredients,
       method,
       dishUrl,
       imgUrl,
     });
-    // console.log('==================');
-    // console.log(response);
-    // console.log('============' + title + '==========' + paragraph + id);
-    // console.log(response);
   };
   deletRecipe = async () => {
-    var response = await methods.delete('recipes/' + id, {});
-    alert('Successfully deleted');
+    var response = await methods.delete("recipes/" + id, {});
+    alert("Successfully deleted");
     // console.log('==================');
     // console.log(response);
   };
-  // updateStory = (id) => {};
-  // //----------- delte Method
-  // // Delete Method
-  // deleteStory = (id) => {};
-//   getParagraph = () => {
-//     readData();
-//     setParagraph(currentData.paragraph);
-//     // return currentData.paragraph;
-//   };
-//   onTextChangeParagraph = (text) => {
-//     setParagraph(text);
-//   };
+
   return (
     <SafeAreaView
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <ScrollView>
         <Text> Add Recipe</Text>
         <TextInput
           placeholder="Add DishName"
-          //   style={styles.textInput}
           autoCapitalize="none"
           onChangeText={(text) => {
             setDishName(text);
@@ -121,46 +106,35 @@ export default function AdminRecipe({navigation, props}) {
         />
         <TextInput
           placeholder="Add Ingredients"
-          // style={styles.textInput}
-          // secureextEntry={true}
           onChangeText={setIngredients}
-          // onChangeText={textsetParagraph(text)}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Add Method"
-          // style={styles.textInput}
-          // secureextEntry={true}
           onChangeText={setMethod}
-          // onChangeText={textsetParagraph(text)}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Add DishUrl"
-          // style={styles.textInput}
-          // secureextEntry={true}
           onChangeText={setDishUrl}
-          // onChangeText={textsetParagraph(text)}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Add Image Url"
-          // style={styles.textInput}
-          // secureextEntry={true}
           onChangeText={setImgUrl}
-          // onChangeText={textsetParagraph(text)}
           autoCapitalize="none"
         />
         <TouchableOpacity
           onPress={this.addRecipe}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Add Recipe{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Add Recipe{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -170,7 +144,7 @@ export default function AdminRecipe({navigation, props}) {
         <Text> Update Recipe</Text>
         <TextInput
           placeholder="Enter Id"
-          value={id}
+          defaultValue={id}
           //   style={styles.textInput}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -180,7 +154,6 @@ export default function AdminRecipe({navigation, props}) {
         <TextInput
           placeholder="Add Recipe"
           onChangeText={setDishName}
-          //   style={styles.textInput}
           defaultValue={newDishName}
           autoCapitalize="none"
         />
@@ -216,12 +189,13 @@ export default function AdminRecipe({navigation, props}) {
           onPress={this.updateRecipe}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Update Recipe{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Update Recipe{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -241,27 +215,31 @@ export default function AdminRecipe({navigation, props}) {
           onPress={this.deletRecipe}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Delete Recipe{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Delete Recipe{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
       <ScrollView>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Recipe', {option: 'update'})}
+          onPress={() =>
+            navigation.navigate("AdminScreen", { option: "update" })
+          }
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Go to Recipe{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Go to HomeScreen{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -272,61 +250,61 @@ export default function AdminRecipe({navigation, props}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5f9ea0',
+    backgroundColor: "#5f9ea0",
   },
   header: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
   footer: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
   textheader: {
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold",
     fontSize: 30,
-    fontFamily: 'times new Roman',
+    fontFamily: "times new Roman",
   },
   textfooter: {
-    color: 'black',
+    color: "black",
     fontSize: 18,
   },
   action: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
+    borderBottomColor: "#5f9ea0",
     paddingBottom: 5,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   textInput: {
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
-    color: 'black',
+    color: "black",
   },
   button: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 60,
     marginLeft: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   login: {
-    width: '100%',
+    width: "100%",
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
   },
   textSign: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

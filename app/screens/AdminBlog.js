@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import asyncStorage from '@react-native-community/async-storage';
-import methods from '../connect/index';
+import React, { useState, useEffect } from "react";
+import asyncStorage from "@react-native-community/async-storage";
+import methods from "../connect/index";
 import {
   Text,
   SafeAreaView,
@@ -11,26 +11,26 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-} from 'react-native';
-import {LinearGradient} from '../../Setup';
-import {get} from 'react-native/Libraries/Utilities/PixelRatio';
+} from "react-native";
+import { LinearGradient } from "../../Setup";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 // import AsyncStorage from '@react-native-community/async-storage';
-const blogUrl = 'http://192.168.18.3:3001/api/blogs';
+const blogUrl = "http://192.168.18.3:3001/api/blogs";
 
-export default function AdminBlog({navigation, props}) {
+export default function AdminBlog({ navigation, props }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [isAdmin, setAdmin] = useState(true);
-  const [id, setId] = useState('');
-  const [title, setTitle] = useState('');
-  const [newTitle, setNewTitle] = useState('');
-  const [paragraph, setParagraph] = React.useState(null);
-  const [newParagraph, setNewParagraph] = React.useState(null);
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [paragraph, setParagraph] = React.useState("");
+  const [newParagraph, setNewParagraph] = React.useState("");
 
-  let currentData = {_id: '12345', title: 'food', paragraph: 'sbfcjhdsbvh'};
+  let currentData = { _id: "12345", title: "food", paragraph: "sbfcjhdsbvh" };
   const readData = async () => {
     try {
-      const currentItem = await asyncStorage.getItem('currentItem');
+      const currentItem = await asyncStorage.getItem("currentItem");
       currentData = JSON.parse(currentItem);
       setNewParagraph(currentData.paragraph);
       setId(currentData._id);
@@ -42,38 +42,37 @@ export default function AdminBlog({navigation, props}) {
       // var currentTime = date.toLocaleTimeString();
       // console.log(currentTime);
     } catch (e) {
-      alert('Failed to fetch the data from storage');
+      alert("Failed to fetch the data from storage");
     }
   };
   readData();
   // const {id, title, paragraph} = this.navigation.props;
   getStory = async () => {
-    var response = await methods.get('blogs', {id: '1'});
+    var response = await methods.get("blogs", { id: "1" });
     // console.log('==================');
     // console.log(response);
   };
   // //-------------- Add Story Method
   addStory = async () => {
-    var response = await methods.post('blogs', {title, paragraph});
+    var response = await methods.post("blogs", { title, paragraph });
 
-    console.log('============' + title + '==========' + paragraph);
+    console.log("============" + title + "==========" + paragraph);
     // console.log('==================');
     // console.log(response);
   };
   updateStory = async () => {
-
-    var response = await methods.put('blogs/' + id, {
+    var response = await methods.put("blogs/" + id, {
       title,
       paragraph,
     });
-    console.log('==================');
+    console.log("==================");
     console.log(response);
-        console.log('============' + title + '==========' + paragraph + id);
+    console.log("============" + title + "==========" + paragraph + id);
     // console.log(response);
   };
   deleteStory = async () => {
-    var response = await methods.delete('blogs/' + id, {});
-    alert('Successfully deleted');
+    var response = await methods.delete("blogs/" + id, {});
+    alert("Successfully deleted");
     // console.log('==================');
     // console.log(response);
   };
@@ -94,9 +93,10 @@ export default function AdminBlog({navigation, props}) {
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <ScrollView>
         <Text> Add Story</Text>
         <TextInput
@@ -119,10 +119,14 @@ export default function AdminBlog({navigation, props}) {
           onPress={this.addStory}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}> Add Story </Text>
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Add Story{" "}
+            </Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
@@ -131,7 +135,7 @@ export default function AdminBlog({navigation, props}) {
         <Text> Update Story</Text>
         <TextInput
           placeholder="Enter Id"
-          value={id}
+          defaultValue={id}
           //   style={styles.textInput}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -144,7 +148,6 @@ export default function AdminBlog({navigation, props}) {
           //   style={styles.textInput}
           defaultValue={newTitle}
           autoCapitalize="none"
-         
         />
         <TextInput
           placeholder="Add paragraph"
@@ -159,12 +162,13 @@ export default function AdminBlog({navigation, props}) {
           onPress={this.updateStory}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Update Story{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Update Story{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -184,27 +188,31 @@ export default function AdminBlog({navigation, props}) {
           onPress={this.deleteStory}
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Delete Story{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Delete Story{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
       <ScrollView>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Blogs', {option: 'update'})}
+          onPress={() =>
+            navigation.navigate("AdminScreen", { option: "update" })
+          }
           style={[
             styles.signUp,
-            {borderColor: '#5f9ea0', borderWidth: 0, marginTop: 0},
-          ]}>
-          <LinearGradient colors={['#5f9ea0', '#5f9ea0']} style={styles.login}>
-            <Text style={[styles.textSign, {color: 'black'}]}>
-              {' '}
-              Go to Blogs{' '}
+            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+          ]}
+        >
+          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "black" }]}>
+              {" "}
+              Go to HomeScreen{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -215,61 +223,61 @@ export default function AdminBlog({navigation, props}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5f9ea0',
+    backgroundColor: "#5f9ea0",
   },
   header: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
   footer: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
   textheader: {
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold",
     fontSize: 30,
-    fontFamily: 'times new Roman',
+    fontFamily: "times new Roman",
   },
   textfooter: {
-    color: 'black',
+    color: "black",
     fontSize: 18,
   },
   action: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
+    borderBottomColor: "#5f9ea0",
     paddingBottom: 5,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   textInput: {
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
-    color: 'black',
+    color: "black",
   },
   button: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 60,
     marginLeft: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   login: {
-    width: '100%',
+    width: "100%",
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
   },
   textSign: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

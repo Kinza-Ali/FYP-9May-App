@@ -137,10 +137,7 @@ export default function Blogs({ navigation }) {
               <View>
                 <Button
                   title="Edit Stories"
-                  // onPress={() => navigation.navigate('AdminBlog')}
-                  onPress={() => {
-                    handleScheduleNotification();
-                  }}
+                  onPress={() => navigation.navigate("AdminSuccessStories")}
                 />
               </View>
             ) : (

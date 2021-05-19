@@ -84,7 +84,8 @@ export default function SignUp({ navigation }) {
 
         navigation.navigate("HomeScreen");
 
-        this.formula(gender);
+        var value = this.formula(gender);
+        console.log(BMI + "BMI");
         //---------- firetstore collection
         firestore().collection("Users").add({
           // token: auth().currentUser.accessToken,
@@ -96,11 +97,11 @@ export default function SignUp({ navigation }) {
           height: height,
           gender: gender,
           role: "user",
-          BMI: BMI,
-          IBF: IBF,
-          IBW: IBW,
-          BMR: BMR,
-          WaterIntake: WaterIntake,
+          BMI: value.BMI,
+          IBF: value.IBF,
+          IBW: value.IBW,
+          BMR: value.BMR,
+          WaterIntake: value.WaterIntake,
         });
         // this.formula();
       })
@@ -197,7 +198,7 @@ export default function SignUp({ navigation }) {
     } else if (password.length < 8) {
       setPasswordError("Pasword must be 8 character long");
     } else if (age < 18) {
-      setAgeError("Pasword must be greater than 18");
+      setAgeError("Age must be greater than 18");
     } else {
       this.createUser();
     }
@@ -237,7 +238,7 @@ export default function SignUp({ navigation }) {
       }
       // ......for BMR.......
       var BMR = Math.round(
-        655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * tage,
+        655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * age,
         2
       );
     }
@@ -259,12 +260,13 @@ export default function SignUp({ navigation }) {
     }
 
     IBW = Math.round(IBW, 2);
-    setIBW(IBW);
-    setBMR(BMR);
-    setIBF(IBF);
-    setWaterIntake(WaterIntake);
-    setBMI(BMI);
-
+    return { IBW, IBF, BMR, WaterIntake, BMI };
+    // setIBW(IBW);
+    // setBMR(BMR);
+    // setIBF(IBF);
+    // setWaterIntake(WaterIntake);
+    // setBMI(BMI);
+    // console.log("BMI" + BMI);
     // this.saveData();
   };
   // -------- Save Data ---------------------------
@@ -317,7 +319,7 @@ export default function SignUp({ navigation }) {
           </View>
           <ScrollView>
             <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-              <Text style={styles.textfooter}> Full Name </Text>
+              <Text style={styles.textfooter}> Name </Text>
               <View style={styles.action}>
                 <FontAwesomeIcons name="user-circle" color="black" size={25} />
                 <TextInput
