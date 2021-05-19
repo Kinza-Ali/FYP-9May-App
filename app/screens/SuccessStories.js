@@ -99,11 +99,11 @@ export default function Blogs({ navigation }) {
                 keyExtractor={({ id }, index) => id}
                 renderItem={({ item }) => (
                   <Text>
-                    {isAdmin ? (
+                    {/* {isAdmin ? (
                       <Text>
                         id: {item._id} {"\n"}
                       </Text>
-                    ) : undefined}
+                    ) : undefined} */}
 
                     <Text style={styles.textSign}>
                       {item.title}
