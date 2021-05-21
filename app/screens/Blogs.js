@@ -56,7 +56,7 @@ export default function Blogs({ navigation }) {
         setAdmin(adminState);
       }
     } catch (e) {
-      alert("Failed to fetch the data from storage");
+      // alert("Failed to fetch the data from storage");
     }
   };
   readData();

@@ -30,8 +30,8 @@ export function DrawerContent(props) {
     try {
       const name = await asyncStorage.getItem("name");
       setName(name);
-      console.log("=======");
-      console.log(name);
+      // console.log("=======");
+      // console.log(name);
     } catch (e) {
       alert("Failed to fetch the data from storage");
     }
@@ -40,9 +40,7 @@ export function DrawerContent(props) {
   //--- signOut-------
   signOut = async () => {
     try {
-      auth()
-        .signOut()
-        .then(() => alert("You are signed Out! "));
+      auth().signOut().then();
       console.log("signOut");
       clearStorage();
     } catch (error) {

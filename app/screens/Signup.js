@@ -61,6 +61,8 @@ export default function SignUp({ navigation }) {
   const [IBW, setIBW] = useState();
   const [BMR, setBMR] = useState();
   const [WaterIntake, setWaterIntake] = useState();
+  const [heightValid, setHeightValid] = useState("");
+  const [weightValid, setWeightValid] = useState("");
   //------------  Sign-In Configuration
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -85,7 +87,7 @@ export default function SignUp({ navigation }) {
         navigation.navigate("HomeScreen");
 
         var value = this.formula(gender);
-        console.log(BMI + "BMI");
+        // console.log(BMI + "BMI");
         //---------- firetstore collection
         firestore().collection("Users").add({
           // token: auth().currentUser.accessToken,
@@ -184,21 +186,29 @@ export default function SignUp({ navigation }) {
   };
   //---- register -------
   const onRegister = () => {
-    let regx = /^[a-zA-Z]+$/;
+    console.log;
+    let regx = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
     let eregx = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
-
+    let numregx = /^[0-9]+$/;
+    // let nregx = /^[0-9]+$/;
+    let heightregx = /\d+(\.\d{1})/;
     let isValid = regx.test(userName);
 
     let emailValid = eregx.test(email);
-    // let numValid = numregx.test(age);
+    let weightValid = numregx.test(weight);
+    let heightValid = heightregx.test(height);
     if (!isValid) {
-      setNameError("Name Must be alphabets");
+      setNameError("Name Must be alphabets and should be Full name");
     } else if (!emailValid) {
       setEmailError("Enter Correct Email");
     } else if (password.length < 8) {
       setPasswordError("Pasword must be 8 character long");
     } else if (age < 18) {
       setAgeError("Age must be greater than 18");
+    } else if (!weightValid) {
+      setWeightValid("Enter numbers only");
+    } else if (!heightValid) {
+      setHeightValid("Enet height in feet and inches");
     } else {
       this.createUser();
     }
@@ -319,7 +329,7 @@ export default function SignUp({ navigation }) {
           </View>
           <ScrollView>
             <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-              <Text style={styles.textfooter}> Name </Text>
+              <Text style={styles.textfooter}> Full Name </Text>
               <View style={styles.action}>
                 <FontAwesomeIcons name="user-circle" color="black" size={25} />
                 <TextInput
@@ -378,7 +388,7 @@ export default function SignUp({ navigation }) {
                 <FontAwesomeIcons name="smile-o" color="black" size={25} />
 
                 <TextInput
-                  placeholder="Your Weight"
+                  placeholder="Your Weight In KG"
                   style={styles.textInput}
                   keyboardType="numeric"
                   autoCapitalize="none"
@@ -389,6 +399,7 @@ export default function SignUp({ navigation }) {
                 />
                 <Text style={{ color: "red" }}> {emptyField} </Text>
               </View>
+              <Text style={{ color: "red" }}> {weightValid} </Text>
               <Text style={styles.textfooter}> Height </Text>
               <View style={styles.action}>
                 <FontAwesomeIcons name="street-view" color="black" size={25} />
@@ -403,6 +414,7 @@ export default function SignUp({ navigation }) {
                 />
                 <Text style={{ color: "red" }}> {emptyField} </Text>
               </View>
+              <Text style={{ color: "red" }}> {heightValid} </Text>
               <Text style={styles.textfooter}> Gender </Text>
               <Text style={styles.textfooter}> {gender} </Text>
               <Pressable onPress={() => setShowModal(true)}>

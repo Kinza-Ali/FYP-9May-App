@@ -42,7 +42,7 @@ export default function AdminBlog({ navigation, props }) {
       // var currentTime = date.toLocaleTimeString();
       // console.log(currentTime);
     } catch (e) {
-      alert("Failed to fetch the data from storage");
+      // alert("Failed to fetch the data from storage");
     }
   };
   readData();

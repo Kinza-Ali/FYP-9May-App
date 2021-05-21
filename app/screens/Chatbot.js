@@ -13,6 +13,8 @@ import HomeScreen from "./HomeScreen";
 import axios from "axios";
 import Breakfast from "./Breakfast";
 import { color } from "react-native-reanimated";
+import { handleScheduleNotification } from "../../src/notification.ios";
+
 //Bot Image
 const botAvatar = require("../assets/images/bot.png");
 //Bot User
@@ -170,7 +172,7 @@ class Chatbot extends Component {
     // Push Notifications
     handleScheduleNotification();
     // post request....
-    await this.post("http://26d501ed987f.ngrok.io/dietplan", {
+    await this.post("http://6609679828f1.ngrok.io/dietplan", {
       gender: genderVal,
       age: this.state.user.age,
       height: this.state.user.height,

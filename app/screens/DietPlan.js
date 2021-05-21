@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import Breakfast from "./Breakfast";
 import axios from "axios";
@@ -32,7 +33,9 @@ export default class DietPlan extends Component {
     // completeDietPlan: [],
     // firestoreDietPlan: {},
     dietPlan: {},
+    refreshing: false,
   };
+  // const [refreshing, setRefreshing] = React.useState(false);
   constructor(props) {
     super(props);
     // this.readData();
@@ -75,7 +78,11 @@ export default class DietPlan extends Component {
   render() {
     return (
       <View style={{ backgroundColor: "#5f9ea0" }}>
-        <ScrollView>
+        <ScrollView
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
+        >
           <View style={styles.container}>
             <View
               style={{

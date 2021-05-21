@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import auth from "@react-native-firebase/auth";
@@ -45,6 +46,7 @@ class Profile extends Component {
     Snacks: {},
     completeDietPlan: [],
     dietPlan: {},
+    refreshing: false,
     finalDietPlan: "",
   };
   readData = async () => {
@@ -243,7 +245,11 @@ class Profile extends Component {
   render() {
     return (
       <View style={{ backgroundColor: "#5f9ea0" }}>
-        <ScrollView>
+        <ScrollView
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
+        >
           <View style={styles.container}>
             <View
               style={{
@@ -283,7 +289,7 @@ class Profile extends Component {
                 <Card leftText="BMI: " rightText={this.state.user.BMI} />
                 <Card leftText="Status" rightText={this.state.userStatus} />
                 <Card
-                  leftText="Water Intake: "
+                  leftText="Water Intake (In glass):"
                   rightText={this.state.user.WaterIntake}
                 />
                 <Card leftText="IBW: " rightText={this.state.user.IBW} />
