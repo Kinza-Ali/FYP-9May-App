@@ -167,7 +167,7 @@ export default function SignUp({ navigation }) {
   };
   //-------- Update Security Text Entry -----
   const UpdateSecureTextEntry = () => {
-    if (setSecureTextEntry) {
+    if (secureTextEntry) {
       setSecureTextEntry(false);
     } else {
       setSecureTextEntry(true);
@@ -271,13 +271,6 @@ export default function SignUp({ navigation }) {
 
     IBW = Math.round(IBW, 2);
     return { IBW, IBF, BMR, WaterIntake, BMI };
-    // setIBW(IBW);
-    // setBMR(BMR);
-    // setIBF(IBF);
-    // setWaterIntake(WaterIntake);
-    // setBMI(BMI);
-    // console.log("BMI" + BMI);
-    // this.saveData();
   };
   // -------- Save Data ---------------------------
   saveData = async () => {

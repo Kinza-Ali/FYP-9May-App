@@ -11,6 +11,7 @@ import MainTabScreen from "./app/screens/MainTabScreen";
 import asyncStorage from "@react-native-community/async-storage";
 import {
   DietPlan,
+  HomeScreen,
   ChatbotScreen,
   Workouts,
   LoginScreen,
@@ -21,13 +22,6 @@ import {
   SuccessStories,
   SignUpScreen,
   Home,
-  Shoulders,
-  WarmUp,
-  Facial,
-  Arms,
-  Abs,
-  FullBody,
-  Legs,
   AdminBlog,
   AdminRecipe,
   AdminScreen,
@@ -182,12 +176,17 @@ const Drawer = createDrawerNavigator();
 // }
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
   const readData = async () => {
     try {
       const loggedIn = await asyncStorage.getItem("loggedIn");
+      const admin = await asyncStorage.getItem("isAdmin");
       setLoggedIn(loggedIn);
-      // console.log("========");
-      // console.log(loggedIn);
+      if (admin) {
+        setAdmin(admin);
+      }
+      console.log("========");
+      console.log(isAdmin);
     } catch (e) {
       alert("Failed to fetch the data from storage");
     }
@@ -199,37 +198,29 @@ export default function App() {
         <Drawer.Navigator
           drawerContent={(props) => <DrawerContent {...props} />}
         >
-          <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+          <Drawer.Screen name="MainTabScreen" component={MainTabScreen} />
           <Drawer.Screen name="AboutUs" component={AboutUs} />
-          <Drawer.Screen name="Chatbot" component={ChatbotScreen} />
-          <Drawer.Screen name="Nutritionists" component={Nutritionists} />
           <Drawer.Screen name="Start" component={Start} />
-          <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="SuccessStories" component={SuccessStories} />
-          <Drawer.Screen name="Workouts" component={Workouts} />
-          <Drawer.Screen name="SignUp" component={SignUpScreen} />
-          <Drawer.Screen name="HomePage" component={Home} />
-          <Drawer.Screen name="WarmUp" component={WarmUp} />
-          <Drawer.Screen name="Facial" component={Facial} />
-          <Drawer.Screen name="Legs" component={Legs} />
-          <Drawer.Screen name="Arms" component={Arms} />
-          <Drawer.Screen name="Shoulders" component={Shoulders} />
-          <Drawer.Screen name="Abs" component={Abs} />
-          <Drawer.Screen name="FullBody" component={FullBody} />
+
+          {/* <Drawer.Screen name="HomeScreen" component={HomeScreen} /> */}
+
           <Drawer.Screen name="AdminBlog" component={AdminBlog} />
           <Drawer.Screen name="AdminRecipe" component={AdminRecipe} />
           <Drawer.Screen
             name="AdminSuccessStories"
             component={AdminSuccessStories}
           />
+          {/* {isAdmin ? ( */}
           <Drawer.Screen
             name="AdminScreen"
             component={AdminScreen}
             options={({ title: "AdminScreen" }, { headerLeft: null })}
           />
-
+          {/* ) : ( */}
+          <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+          {/* )} */}
           <Drawer.Screen name="DietPlan" component={DietPlan} />
-          <Drawer.Screen name="Recipes" component={Recipes} />
+          {/* <Drawer.Screen name="Recipes" component={Recipes} /> */}
 
           {/* <Drawer.Screen name="Settings" component={Settingscreen} /> */}
         </Drawer.Navigator>

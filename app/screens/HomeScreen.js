@@ -63,28 +63,28 @@ const HomeScreen = ({ navigation }) => {
 
   // console.log('email is ' + email);
   //----------- Google Sign Out -----------
-  signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      auth()
-        .signOut()
-        .then(() => alert("You are signed Out! "));
-      console.log("signOut");
-      // setLoggedIn(false);
-      // setPassword(null);
-      clearStorage();
-      // console.log(password);
-      // setEmail('');
-      // setLoggedIn(false);
-    } catch (error) {
-      alert(error);
-      console.log(error);
-    }
-    // setUserName(null);
-    navigation.navigate("Login");
-    // setVerify(false);
-  };
+  // signOut = async () => {
+  //   try {
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //     auth()
+  //       .signOut()
+  //       .then(() => alert("You are signed Out! "));
+  //     console.log("signOut");
+  //     // setLoggedIn(false);
+  //     // setPassword(null);
+  //     clearStorage();
+  //     // console.log(password);
+  //     // setEmail('');
+  //     // setLoggedIn(false);
+  //   } catch (error) {
+  //     alert(error);
+  //     console.log(error);
+  //   }
+  //   // setUserName(null);
+  //   navigation.navigate("Login");
+  //   // setVerify(false);
+  // };
   return (
     <View>
       <ScrollView>

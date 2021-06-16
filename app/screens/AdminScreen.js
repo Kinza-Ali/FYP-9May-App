@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     fontSize: 30,
+    marginTop: 30,
   },
   textfooter: {
     color: "black",

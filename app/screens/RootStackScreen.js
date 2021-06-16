@@ -38,25 +38,25 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="Login" component={LoginScreen} />
     <RootStack.Screen name="SignUp" component={SignUpScreen} />
     <RootStack.Screen name="HomePage" component={Home} />
-    <RootStack.Screen
+    {/* <RootStack.Screen
       name="AdminScreen"
       component={AdminScreen}
       options={({ title: "AdminScreen" }, { headerLeft: null })}
-    />
+    /> */}
     <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-    <RootStack.Screen name="Workouts" component={Workouts} />
-    <RootStack.Screen name="DietPlan" component={DietPlan} />
-    <RootStack.Screen name="AdminBlog" component={AdminBlog} />
-    <RootStack.Screen
-      name="AdminSuccessStories"
+    {/* <RootStack.Screen name="Workouts" component={Workouts} /> */}
+    {/* <RootStack.Screen name="DietPlan" component={DietPlan} /> */}
+    {/* <RootStack.Screen name="AdminBlog" component={AdminBlog} /> */}
+    {/* <RootStack.Screen */}
+    {/* name="AdminSuccessStories" 
       component={AdminSuccessStories}
-    />
-    <RootStack.Screen name="Chatbot" component={ChatbotScreen} />
+    /> */}
+    {/* <RootStack.Screen name="Chatbot" component={ChatbotScreen} /> */}
     <RootStack.Screen name="SuccessStories" component={SuccessStories} />
     <RootStack.Screen name="Nutritionists" component={Nutritionists} />
     <RootStack.Screen name="Blogs" component={Blogs} />
     <RootStack.Screen name="Recipes" component={Recipes} />
-    <RootStack.Screen name="AdminRecipe" component={AdminRecipe} />
+    {/* <RootStack.Screen name="AdminRecipe" component={AdminRecipe} /> */}
     <RootStack.Screen name="WarmUp" component={WarmUp} />
     <RootStack.Screen name="Facial" component={Facial} />
     <RootStack.Screen name="Legs" component={Legs} />

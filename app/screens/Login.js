@@ -26,7 +26,7 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-
+import App from "../../App";
 export default function Login({ navigation }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
@@ -37,7 +37,7 @@ export default function Login({ navigation }) {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
   const [checkTextInputChange, setcheckTextInputChange] = useState(false);
-  const [isAdmin, setAdmin] = useState(false);
+  // const [isAdmin, setAdmin] = useState(false);
   const saveData = async () => {
     try {
       await asyncStorage.setItem("isAdmin", "true");
@@ -86,7 +86,7 @@ export default function Login({ navigation }) {
                 // setAdmin(true);
                 saveData();
               } else {
-                navigation.navigate("HomeScreen");
+                // navigation.navigate("HomeScreen");
               }
             });
           });
@@ -110,6 +110,7 @@ export default function Login({ navigation }) {
       });
     logIn();
     setLoggedIn(true);
+    loggedIn ? <App /> : undefined;
   };
   //--------------- Google Sign In -------
   _signIn = async () => {
@@ -177,7 +178,8 @@ export default function Login({ navigation }) {
     setPassword(password);
   };
   const UpdateSecureTextEntry = () => {
-    if (setSecureTextEntry) {
+    console.log("function called");
+    if (secureTextEntry) {
       setSecureTextEntry(false);
     } else {
       setSecureTextEntry(true);
