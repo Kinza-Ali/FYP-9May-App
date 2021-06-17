@@ -43,7 +43,7 @@ const RootStackScreen = ({ navigation }) => (
       component={AdminScreen}
       options={({ title: "AdminScreen" }, { headerLeft: null })}
     /> */}
-    <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+    {/* <RootStack.Screen name="HomeScreen" component={HomeScreen} /> */}
     {/* <RootStack.Screen name="Workouts" component={Workouts} /> */}
     {/* <RootStack.Screen name="DietPlan" component={DietPlan} /> */}
     {/* <RootStack.Screen name="AdminBlog" component={AdminBlog} /> */}

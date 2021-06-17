@@ -86,7 +86,7 @@ export default function Login({ navigation }) {
                 // setAdmin(true);
                 saveData();
               } else {
-                // navigation.navigate("HomeScreen");
+                navigation.navigate("HomeScreen");
               }
             });
           });
