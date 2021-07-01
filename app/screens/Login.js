@@ -252,7 +252,10 @@ export default function Login({ navigation }) {
               onPress={() => navigation.navigate("SignUp")}
               style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}
             >
-              <LinearGradient colors={["white", "white"]} style={styles.login}>
+              <LinearGradient
+                colors={["#EEEEEE", "#EEEEEE"]}
+                style={styles.login}
+              >
                 <Text style={[styles.textSign, { color: "#484C7F" }]}>
                   {" "}
                   Not a registered User?SIGN UP
@@ -284,7 +287,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#B9BBDF",
-    // opacity: 1,
+    // opacity: 0.8,
   },
   header: {
     flex: 1,
@@ -296,11 +299,12 @@ const styles = StyleSheet.create({
 
   footer: {
     flex: 3,
-    backgroundColor: "white",
+    backgroundColor: "#EEEEEE",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     paddingHorizontal: 20,
     paddingVertical: 30,
+    // opacity: 0.4,
   },
   textheader: {
     color: "black",
