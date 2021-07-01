@@ -1,5 +1,5 @@
 // import {json, response} from 'express';
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 // import Clipboard from '@react-native-community/clipboard';
 import {
   Text,
@@ -12,6 +12,7 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
+  Linking,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -24,7 +25,22 @@ const blogUrl = "http://192.168.18.3:3001/api/blogs";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
+const OpenURLButton = ({ url, children }) => {
+  const handlePress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
 
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }, [url]);
+
+  return <Button title={children} onPress={handlePress} />;
+};
 export default function Blogs({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -93,9 +109,17 @@ export default function Blogs({ navigation }) {
                 navigation.goBack();
               }}
             >
-              <FontAwesome name="chevron-left" size={20} color="#fff" />
+              <FontAwesome name="chevron-left" size={20} color="black" />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontSize: 20 }}>Blogs</Text>
+            <Text
+              style={{
+                color: "black",
+                fontSize: 20,
+                fontFamily: "IowanOldStyle-Roman",
+              }}
+            >
+              Blogs
+            </Text>
             <View />
           </View>
 
@@ -112,12 +136,6 @@ export default function Blogs({ navigation }) {
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
                       <Text>
-                        {/* {isAdmin ? (
-                          <Text>
-                            id: {item._id} {"\n"}
-                          </Text>
-                        ) : undefined} */}
-
                         <Text style={styles.textSign}>
                           {item.title}
                           {"\n"}
@@ -127,6 +145,9 @@ export default function Blogs({ navigation }) {
                           {item.paragraph}
                           {"\n"}
                         </Text>
+                        <OpenURLButton url={item.blogUrl}>
+                          Read More...
+                        </OpenURLButton>
 
                         {isAdmin ? (
                           <Button
@@ -167,7 +188,7 @@ export default function Blogs({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
@@ -228,6 +249,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 20,
     marginBottom: 30,
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",
@@ -241,10 +263,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#5f9ea0",
   },
-  InputFields: {
+  InputField: {
     fontSize: 18,
     marginTop: 40,
     marginBottom: 30,
     marginLeft: 30,
+    lineHeight: 25,
+    fontFamily: "IowanOldStyle-Roman",
   },
 });

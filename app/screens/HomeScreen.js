@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
     <View>
       <ScrollView>
         <View style={styles.container}>
-          {/* <StatusBar backgroundColor="#5f9ea0" barStyle="Light-content" /> */}
+          {/* <StatusBar backgroundColor="#484C7F" barStyle="Light-content" /> */}
           <View
             style={{
               marginHorizontal: 10,
@@ -101,16 +101,25 @@ const HomeScreen = ({ navigation }) => {
             }}
           >
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <FontAwesome name="bars" size={20} color="#fff" />
+              <FontAwesome name="bars" size={20} color="black" />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontSize: 20 }}>Home</Text>
+            <Text
+              style={{
+                color: "black",
+                fontFamily: "IowanOldStyle-Roman",
+                fontSize: 30,
+                paddingRight: 30,
+              }}
+            >
+              Home
+            </Text>
             <View />
           </View>
 
           <View style={styles.header}>
-            <Text style={styles.textheader}>
+            {/* <Text style={styles.textheader}>
               Welcome to Health & Nutrition!
-            </Text>
+            </Text> */}
           </View>
           <View style={styles.footer}>
             <ScrollView contentContainerStyle={{ alignSelf: "center" }}>
@@ -124,7 +133,7 @@ const HomeScreen = ({ navigation }) => {
                   }
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image source={require("../assets/images/chatbot.png")} />
@@ -138,7 +147,7 @@ const HomeScreen = ({ navigation }) => {
               {/* <View style={styles.Button}>
               <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                 <LinearGradient
-                  colors={['#5f9ea0', '#5f9ea0']}
+                  colors={['#484C7F', '#484C7F']}
                   style={styles.login}>
                   <Image source={require('../assets/images/profile.png')} />
                   <Text style={[styles.textSign, {color: 'white'}]}>
@@ -153,7 +162,7 @@ const HomeScreen = ({ navigation }) => {
                   onPress={() => navigation.navigate("Workouts")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -172,7 +181,7 @@ const HomeScreen = ({ navigation }) => {
                   onPress={() => navigation.navigate("Nutritionists")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -188,7 +197,7 @@ const HomeScreen = ({ navigation }) => {
               {/* <View style={styles.Button}>
               <TouchableOpacity onPress={() => navigation.navigate('Blogs')}>
                 <LinearGradient
-                  colors={['#5f9ea0', '#5f9ea0']}
+                  colors={['#484C7F', '#484C7F']}
                   style={styles.login}>
                   <Image
                   source={require('../assets/images/blogs.png')}
@@ -203,7 +212,7 @@ const HomeScreen = ({ navigation }) => {
               {/* <View style={styles.Button}>
               <TouchableOpacity onPress={() => navigation.navigate('Recipes')}>
                 <LinearGradient
-                  colors={['#5f9ea0', '#5f9ea0']}
+                  colors={['#484C7F', '#484C7F']}
                   style={styles.login}>
                   <Image
                   source={require('../assets/images/recepie.png')}
@@ -220,7 +229,7 @@ const HomeScreen = ({ navigation }) => {
                   onPress={() => navigation.navigate("SuccessStories")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -237,7 +246,7 @@ const HomeScreen = ({ navigation }) => {
               {/* <View style={styles.Button}>
                 <TouchableOpacity onPress={this.signOut}>
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image source={require("../assets/images/recepie.png")} />
@@ -259,7 +268,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 2,
@@ -276,9 +285,12 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "white",
-    fontWeight: "bold",
+    color: "black",
+    // fontWeight: "bold",
     fontSize: 30,
+    justifyContent: "center",
+    alignSelf: "center",
+    fontFamily: "IowanOldStyle-Roman",
   },
   textfooter: {
     color: "black",
@@ -288,7 +300,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#484C7F",
     paddingBottom: 5,
   },
   textInput: {
@@ -313,6 +325,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",
@@ -324,10 +337,86 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#5f9ea0",
+    color: "#484C7F",
   },
   image: {
     height: 35,
     width: 35,
   },
 });
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#484C7F",
+//   },
+//   header: {
+//     flex: 2,
+//     justifyContent: "flex-end",
+//     paddingHorizontal: 10,
+//     paddingBottom: 10,
+//   },
+//   footer: {
+//     flex: 1,
+//     backgroundColor: "white",
+//     borderTopLeftRadius: 45,
+//     borderTopRightRadius: 45,
+//     paddingHorizontal: 20,
+//     paddingVertical: 30,
+//   },
+//   textheader: {
+//     color: "white",
+//     fontWeight: "bold",
+//     fontSize: 30,
+//   },
+//   textfooter: {
+//     color: "black",
+//     fontSize: 18,
+//   },
+//   action: {
+//     flexDirection: "row",
+//     marginTop: 0,
+//     borderBottomWidth: 1,
+//     borderBottomColor: "#484C7F",
+//     paddingBottom: 5,
+//   },
+//   textInput: {
+//     flex: 1,
+//     //height: Platform.OS === 'android' ? 76 : 50,
+//     paddingLeft: 10,
+//     color: "black",
+//   },
+//   button: {
+//     alignItems: "center",
+//     marginTop: 50,
+//   },
+//   login: {
+//     flexDirection: "row",
+//     width: "100%",
+//     height: 100,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: 10,
+//     marginTop: 30,
+//   },
+//   textSign: {
+//     fontSize: 18,
+//     fontWeight: "bold",
+//   },
+//   signUp: {
+//     width: "100%",
+//     height: 30,
+//     justifyContent: "flex-end",
+//     alignItems: "flex-end",
+//     borderRadius: 5,
+//   },
+//   text: {
+//     fontSize: 18,
+//     fontWeight: "bold",
+//     color: "#484C7F",
+//   },
+//   image: {
+//     height: 35,
+//     width: 35,
+//   },
+// });

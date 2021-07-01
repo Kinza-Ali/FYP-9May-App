@@ -16,7 +16,7 @@ const FullBody = ({ navigation }) => {
     <View>
       <ScrollView>
         <View style={styles.container}>
-          <View
+          {/* <View
             style={{
               marginHorizontal: 10,
               marginTop: 40,
@@ -35,7 +35,7 @@ const FullBody = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={{ color: "#fff", fontSize: 20 }}>Full Body</Text>
             <View />
-          </View>
+          </View> */}
           {/* <View
         style={{
           marginTop: 20,
@@ -86,7 +86,7 @@ export default FullBody;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   text: {
     fontSize: 18,
@@ -107,11 +107,13 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "times new Roman",
     marginTop: 10,
+    fontFamily: "IowanOldStyle-Roman",
+    alignSelf: "center",
   },
   textfooter: {
     color: "black",

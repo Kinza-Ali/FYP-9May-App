@@ -1,8 +1,8 @@
-import React from 'react';
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import LinearGradient from 'react-native-linear-gradient';
-import Card from '../assets/Card';
+import React from "react";
+import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
+import LinearGradient from "react-native-linear-gradient";
+import Card from "../assets/Card";
 import {
   Text,
   SafeAreaView,
@@ -14,26 +14,28 @@ import {
   TextInput,
   Platform,
   StatusBar,
-} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
-const Nutritionists = ({navigation}) => (
+const Nutritionists = ({ navigation }) => (
   <View style={styles.container}>
-    <View style={{ marginTop:20, backgroundColor:'#5f9ea0',height:33}} >
-    <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
-      
-    }>
-    <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
-    </TouchableOpacity>
-    </View> 
+    <View style={{ marginTop: 20, backgroundColor: "#B9BBDF", height: 33 }}>
+      <TouchableOpacity title="ChatBot" onPress={() => navigation.goBack()}>
+        <FontAwesomeIcons
+          name="chevron-left"
+          color="black"
+          size={20}
+          style={{ marginTop: 7 }}
+        />
+      </TouchableOpacity>
+    </View>
     <View style={styles.header}>
-      <Text style={styles.textheader}> Contact Our Nutritionists</Text>
+      <Text style={styles.textheader}> Contact Our Nutritionist</Text>
     </View>
     <View style={styles.footer}>
-    <Card leftText="Nutritionist Name " rightText= "xyz" />
-    <Card leftText="Contact No" rightText= "xyz" />
-    <Card leftText="Email" rightText= "xyz@xyz.com" />
-    
+      <Card leftText="Name " rightText="Hareem Khan" />
+      <Card leftText="Contact No" rightText="09000078601" />
+      <Card leftText="Email" rightText="hareemkhan@gmail.com" />
     </View>
   </View>
 );
@@ -41,61 +43,63 @@ export default Nutritionists;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5f9ea0',
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
   footer: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
   textheader: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 30,
-    fontFamily: 'times new Roman',
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 25,
+    fontFamily: "IowanOldStyle-Roman",
+    marginBottom: 50,
+    alignSelf: "center",
   },
   textfooter: {
-    color: 'black',
+    color: "black",
     fontSize: 18,
   },
   action: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#5f9ea0',
+    borderBottomColor: "#5f9ea0",
     paddingBottom: 5,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   textInput: {
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
-    color: 'black',
+    color: "black",
   },
   button: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 60,
     marginLeft: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   login: {
-    width: '100%',
+    width: "100%",
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
   },
   textSign: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

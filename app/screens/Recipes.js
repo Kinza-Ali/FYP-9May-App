@@ -13,9 +13,12 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
+  Image,
+  Modal,
 } from "react-native";
+import { LinearGradient } from "../../Setup";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import { Picker } from "@react-native-picker/picker";
 import * as Animatable from "react-native-animatable";
 // import {LinearGradient} from '../../Setup';
 import asyncStorage from "@react-native-community/async-storage";
@@ -37,6 +40,7 @@ export default function Blogs({ navigation }) {
   const [method, setMethod] = useState("");
   const [dishUrl, setDishUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [showModal, setShowModal] = useState(false);
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -100,9 +104,16 @@ export default function Blogs({ navigation }) {
                 navigation.goBack();
               }}
             >
-              <FontAwesome name="chevron-left" size={20} color="#fff" />
+              <FontAwesome name="chevron-left" size={20} color="black" />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontSize: 20, marginRight: 160 }}>
+            <Text
+              style={{
+                color: "black",
+                fontSize: 20,
+                marginRight: 160,
+                fontFamily: "IowanOldStyle-Roman",
+              }}
+            >
               Recipes
             </Text>
           </View>
@@ -119,35 +130,122 @@ export default function Blogs({ navigation }) {
                   data={data}
                   keyExtractor={({ id }, index) => id}
                   renderItem={({ item }) => (
-                    <Text>
-                      {/* {isAdmin ? (
-                        <Text>
-                          id: {item._id} {"\n"}
-                        </Text>
-                      ) : undefined} */}
+                    <ScrollView>
+                      <Text style={styles.textSign}>{item.dishName}</Text>
+                      <Image
+                        style={{
+                          marginTop: -30,
+                          width: 200,
+                          height: 135,
+                          alignSelf: "center",
+                        }}
+                        source={{ uri: item.dishUrl }}
+                      />
+                      <View style={styles.button}>
+                        <TouchableOpacity onPress={() => setShowModal(true)}>
+                          <LinearGradient
+                            colors={["#484C7F", "#484C7F"]}
+                            style={styles.selectButton}
+                          >
+                            <Text style={[styles.textSign, { color: "white" }]}>
+                              Show Recipe
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                      </View>
 
-                      <Text style={styles.textSign}>
-                        {item.dishName}
-                        {"\n"}
-                      </Text>
-                      <Text style={styles.InputField}>
-                        Ingredients: {item.ingredients}
-                        {"\n"}
-                      </Text>
+                      <Modal visible={showModal} transparent={false}>
+                        <ScrollView
+                          style={{
+                            width: "100%",
+                            height: "30%",
+                            paddingLeft: 40,
+                          }}
+                        >
+                          <Text style={styles.textSignModal}>
+                            {item.dishName}
+                          </Text>
+                          <Image
+                            style={{
+                              marginTop: -30,
+                              width: 200,
+                              height: 135,
+                              alignSelf: "center",
+                            }}
+                            source={{ uri: item.dishUrl }}
+                          />
+                          <Text
+                            style={
+                              (styles.InputField,
+                              {
+                                fontFamily: "IowanOldStyle-Roman",
+                                fontWeight: "bold",
+                                fontSize: 16,
+                                marginBottom: 10,
+                              })
+                            }
+                          >
+                            {" "}
+                            Ingredients:{" "}
+                          </Text>
+                          <Text
+                            style={
+                              (styles.InputField,
+                              {
+                                fontFamily: "IowanOldStyle-Roman",
+                                paddingLeft: 30,
+                              })
+                            }
+                          >
+                            {item.ingredients}
+                            {"\n"}
+                          </Text>
+                          <Text
+                            style={
+                              (styles.InputField,
+                              {
+                                fontFamily: "IowanOldStyle-Roman",
+                                fontWeight: "bold",
+                                fontSize: 16,
+                                marginBottom: 10,
+                              })
+                            }
+                          >
+                            {" "}
+                            Method:{" "}
+                          </Text>
+                          <Text
+                            style={
+                              (styles.InputField,
+                              {
+                                fontFamily: "IowanOldStyle-Roman",
+                                paddingLeft: 30,
+                              })
+                            }
+                          >
+                            {item.method}
+                            {"\n"}
+                          </Text>
 
-                      <Text style={styles.InputField}>
-                        Method: {item.method}
-                        {"\n"}
-                      </Text>
-
-                      {/* <Text>
-                  Dish URl: {item.dishUrl}
-                  {'\n'}
-                </Text>
-                <Text>
-                  Image URl: {item.imgUrl}
-                  {'\n'}
-                </Text> */}
+                          <View style={styles.button}>
+                            <TouchableOpacity
+                              onPress={() => setShowModal(false)}
+                            >
+                              <LinearGradient
+                                colors={["#484C7F", "#484C7F"]}
+                                style={styles.modalButton}
+                              >
+                                <Text
+                                  style={[styles.textSign, { color: "white" }]}
+                                >
+                                  {" "}
+                                  Return{" "}
+                                </Text>
+                              </LinearGradient>
+                            </TouchableOpacity>
+                          </View>
+                        </ScrollView>
+                      </Modal>
 
                       {isAdmin ? (
                         <Button
@@ -163,7 +261,7 @@ export default function Blogs({ navigation }) {
                       ) : (
                         <Text></Text>
                       )}
-                    </Text>
+                    </ScrollView>
                   )}
                 />
               )}
@@ -189,7 +287,7 @@ export default function Blogs({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
@@ -249,7 +347,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingRight: 20,
-    marginBottom: 30,
+    marginBottom: 10,
+    marginTop: 5,
+    // alignSelf: "center",
+    fontFamily: "IowanOldStyle-Roman",
+  },
+  textSignModal: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 20,
+    marginBottom: 10,
+    marginTop: 35,
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",
@@ -263,10 +374,37 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#5f9ea0",
   },
-  InputFields: {
+  InputField: {
     fontSize: 18,
     marginTop: 40,
     marginBottom: 30,
     marginLeft: 30,
+    fontFamily: "IowanOldStyle-Roman",
+    lineHeight: 25,
+  },
+
+  button: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  modalButton: {
+    width: 120,
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  selectButton: {
+    width: 160,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 10,
+    alignSelf: "center",
+    paddingBottom: -80,
   },
 });

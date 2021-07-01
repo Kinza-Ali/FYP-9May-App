@@ -28,15 +28,15 @@ const Tab = createMaterialBottomTabNavigator();
 const MainTabScreen = () => (
   <Tab.Navigator
     initialRouteName="HomeScreen"
-    activeColor="white"
-    barStyle={{ backgroundColor: "blue" }}
+    activeColor="#484C7F"
+    barStyle={{ backgroundColor: "black" }}
   >
     <Tab.Screen
       name="HomeScreen"
       component={HomeStackScreen}
       options={{
         tabBarLabel: "Home",
-        tabBarColor: "#5f9ea0",
+        tabBarColor: "#B9BBDF",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
@@ -47,7 +47,7 @@ const MainTabScreen = () => (
       component={Profile}
       options={{
         tabBarLabel: "Profile",
-        tabBarColor: "#5f9ea0",
+        tabBarColor: "#B9BBDF",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
@@ -58,7 +58,7 @@ const MainTabScreen = () => (
       component={Recipes}
       options={{
         tabBarLabel: "Recipes",
-        tabBarColor: "#5f9ea0",
+        tabBarColor: "#B9BBDF",
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="chef-hat" color={color} size={26} />
         ),
@@ -69,7 +69,7 @@ const MainTabScreen = () => (
       component={Blogs}
       options={{
         tabBarLabel: "Blogs",
-        tabBarColor: "#5f9ea0",
+        tabBarColor: "#B9BBDF",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-book" color={color} size={26} />
         ),
@@ -86,8 +86,8 @@ const HomeStackScreen = ({ navigation }) => (
       headerTintColor: "white",
       headerTitleStyle: {
         alignItems: "center",
-
         fontWeight: "bold",
+        fontFamily: "IowanOldStyle-Roman",
       },
     }}
   >

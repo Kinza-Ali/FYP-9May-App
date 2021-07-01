@@ -13,6 +13,7 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
+import { Avatar } from "react-native-paper";
 import { LinearGradient } from "../../Setup";
 import * as Animatable from "react-native-animatable";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
@@ -71,7 +72,17 @@ export default function Blogs({ navigation }) {
   }, []);
   return (
     <View>
-      <View style={{ marginTop: 20, backgroundColor: "#5f9ea0", height: 33 }}>
+      {/* <View
+        style={{
+          marginHorizontal: 10,
+          marginTop: 40,
+          marginBottom: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#B9BBDF",
+        }}
+      >
         <TouchableOpacity title="ChatBot" onPress={() => navigation.goBack()}>
           <FontAwesomeIcons
             name="chevron-left"
@@ -80,7 +91,17 @@ export default function Blogs({ navigation }) {
             style={{ marginTop: 7 }}
           />
         </TouchableOpacity>
-      </View>
+        <Text
+          style={{
+            color: "black",
+            fontSize: 20,
+            marginRight: 160,
+            fontFamily: "IowanOldStyle-Roman",
+          }}
+        >
+          Success Stories
+        </Text>
+      </View> */}
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -88,62 +109,106 @@ export default function Blogs({ navigation }) {
         }
       >
         <View style={styles.container}>
-          <View style={styles.header}></View>
+          <View
+            style={{
+              marginHorizontal: 10,
+              marginTop: 40,
+              marginBottom: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <FontAwesomeIcons name="chevron-left" size={20} color="black" />
+            </TouchableOpacity>
+            <Text
+              style={{
+                color: "black",
+                fontSize: 20,
+                marginRight: 120,
+                fontFamily: "IowanOldStyle-Roman",
+              }}
+            >
+              Success Stories
+            </Text>
+          </View>
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.header}></View>
 
-          <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <FlatList
-                data={data}
-                keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                  <Text>
-                    {/* {isAdmin ? (
+            <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+              {loading ? (
+                <ActivityIndicator />
+              ) : (
+                <FlatList
+                  data={data}
+                  keyExtractor={({ id }, index) => id}
+                  renderItem={({ item }) => (
+                    <Text>
+                      {/* {isAdmin ? (
                       <Text>
                         id: {item._id} {"\n"}
                       </Text>
                     ) : undefined} */}
 
-                    <Text style={styles.textSign}>
-                      {item.title}
-                      {"\n"}
-                    </Text>
-
-                    <Text style={styles.InputField}>
-                      {item.paragraph}
-                      {"\n"}
-                    </Text>
-
-                    {isAdmin ? (
-                      <Button
-                        onPress={() => {
-                          asyncStorage.setItem(
-                            "currentItem",
-                            JSON.stringify(item)
-                          );
-                          navigation.navigate("AdminSuccessStories", item);
+                      <Avatar.Image
+                        source={{
+                          uri:
+                            "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
                         }}
-                        title="edit"
+                        size={30}
+                        backgroundColor="#B9BBDF"
+                        containerStyle={{
+                          // flex: 3,
+                          // marginLeft: 20,
+                          // marginTop: 115,
+                          marginBottom: 200,
+                        }}
                       />
-                    ) : (
-                      <Text></Text>
-                    )}
-                  </Text>
-                )}
-              />
-            )}
-            {isAdmin ? (
-              <View>
-                <Button
-                  title="Edit Stories"
-                  onPress={() => navigation.navigate("AdminSuccessStories")}
+
+                      <Text style={styles.textSign}>{item.title}</Text>
+                      {"\n"}
+                      {"\n"}
+                      <Text style={styles.InputField}>
+                        {item.paragraph}
+                        {"\n"}
+                      </Text>
+
+                      {isAdmin ? (
+                        <Button
+                          onPress={() => {
+                            asyncStorage.setItem(
+                              "currentItem",
+                              JSON.stringify(item)
+                            );
+                            navigation.navigate("AdminSuccessStories", item);
+                          }}
+                          title="edit"
+                        />
+                      ) : (
+                        <Text></Text>
+                      )}
+                      {"\n"}
+                    </Text>
+                  )}
                 />
-              </View>
-            ) : (
-              <Text> </Text>
-            )}
-          </Animatable.View>
+              )}
+              {isAdmin ? (
+                <View>
+                  <Button
+                    title="Edit Stories"
+                    onPress={() => navigation.navigate("AdminSuccessStories")}
+                  />
+                </View>
+              ) : (
+                <Text> </Text>
+              )}
+            </Animatable.View>
+          </ScrollView>
         </View>
       </ScrollView>
     </View>
@@ -152,7 +217,7 @@ export default function Blogs({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
@@ -211,8 +276,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     justifyContent: "center",
-    paddingRight: 20,
     marginBottom: 30,
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",
@@ -231,5 +296,6 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 30,
     marginLeft: 30,
+    fontFamily: "IowanOldStyle-Roman",
   },
 });

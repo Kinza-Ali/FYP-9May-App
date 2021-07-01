@@ -22,6 +22,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
+  ImageBackground,
   TextInput,
   Platform,
   StatusBar,
@@ -192,92 +193,89 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor="#5f9ea0" barStyle="Light-content" /> */}
-      <View style={styles.header}>
-        <Text style={styles.textheader}>Welcome to Health & Nutrition!</Text>
-      </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.textfooter}>Email</Text>
-        <View style={styles.action}>
-          <FontAwesomeIcons name="user-o" color="black" size={20} />
-          <TextInput
-            placeholder="Your Email"
-            style={styles.textInput}
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={(email) => textInputchange(email)}
-          />
-          {checkTextInputChange ? (
-            <Feather name="check-circle" color="blue" size={20} />
-          ) : null}
-        </View>
-        <Text style={[styles.textfooter, { marginTop: 35 }]}> Password</Text>
-        <View style={styles.action}>
-          <FontAwesomeIcons name="lock" color="black" size={20} />
-          <TextInput
-            placeholder="Your Password"
-            secureTextEntry={secureTextEntry ? true : false}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(password) => handllePasswordChange(password)}
-          />
-          <TouchableOpacity onPress={UpdateSecureTextEntry}>
-            {secureTextEntry ? (
-              <Feather name="eye-off" color="blue" size={20} />
-            ) : (
-              <Feather name="eye" color="blue" size={20} />
-            )}
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.Button, { marginTop: 20 }]}>
-          <TouchableOpacity
-            onPress={
-              this.signInUser
-              // handleScheduleNotification()
-            }
-          >
-            <LinearGradient
-              colors={["#5f9ea0", "#5f9ea0"]}
-              style={styles.login}
+      <ImageBackground
+        source={require("../assets/images/berriesSmoll.jpg")}
+        style={styles.image}
+      >
+        <View style={styles.header}></View>
+        <Animatable.View style={styles.footer} animation="fadeInUpBig">
+          <Text style={styles.textfooter}>Email</Text>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="user-o" color="black" size={20} />
+            <TextInput
+              placeholder="Your Email"
+              style={styles.textInput}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={(email) => textInputchange(email)}
+            />
+            {checkTextInputChange ? (
+              <Feather name="check-circle" color="blue" size={20} />
+            ) : null}
+          </View>
+          <Text style={[styles.textfooter, { marginTop: 35 }]}> Password</Text>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="lock" color="black" size={20} />
+            <TextInput
+              placeholder="Your Password"
+              secureTextEntry={secureTextEntry ? true : false}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(password) => handllePasswordChange(password)}
+            />
+            <TouchableOpacity onPress={UpdateSecureTextEntry}>
+              {secureTextEntry ? (
+                <Feather name="eye-off" color="blue" size={20} />
+              ) : (
+                <Feather name="eye" color="blue" size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <TouchableOpacity
+              onPress={
+                this.signInUser
+                // handleScheduleNotification()
+              }
             >
-              <Text style={[styles.textSign, { color: "black" }]}> LOGIN </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          {/* <GoogleSigninButton
-            style={{ width: 192, height: 48, marginLeft: 70, marginTop: 20 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={this._signIn}
-          /> */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignUp")}
-            style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}
-          >
-            <LinearGradient colors={["white", "white"]} style={styles.login}>
-              <Text style={[styles.textSign, { color: "#5f9ea0" }]}>
-                {" "}
-                Not a registered User?SIGN UP
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("HomePage")}
-            style={[
-              styles.signUp,
-              { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
-            ]}
-          >
-            <LinearGradient
-              colors={["#5f9ea0", "#5f9ea0"]}
-              style={styles.login}
+              <LinearGradient
+                colors={["#484C7F", "#484C7F"]}
+                style={styles.login}
+              >
+                <Text style={[styles.textSign, { color: "white" }]}>
+                  {" "}
+                  LOGIN{" "}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignUp")}
+              style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}
             >
-              <Text style={[styles.textSign, { color: "black" }]}>
-                {" "}
-                Continue without LOGIN{" "}
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
+              <LinearGradient colors={["white", "white"]} style={styles.login}>
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
+                  {" "}
+                  Not a registered User?SIGN UP
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("HomePage")}
+              style={[{ borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 }]}
+            >
+              <LinearGradient
+                colors={["#484C7F", "#484C7F"]}
+                style={styles.login}
+              >
+                <Text style={[styles.textSign, { color: "white" }]}>
+                  {" "}
+                  Continue without LOGIN{" "}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
+      </ImageBackground>
     </View>
   );
 }
@@ -285,14 +283,17 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
+    // opacity: 1,
   },
   header: {
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
+    // opacity: 0.6,
   },
+
   footer: {
     flex: 3,
     backgroundColor: "white",
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 30,
     fontFamily: "times new Roman",
@@ -310,20 +311,23 @@ const styles = StyleSheet.create({
   textfooter: {
     color: "black",
     fontSize: 18,
+    fontFamily: "IowanOldStyle-Roman",
   },
   action: {
     flexDirection: "row",
     marginTop: 2,
     borderBottomWidth: 1,
-    borderBottomColor: "#01ab9d",
-    paddingBottom: 5,
+    borderBottomColor: "#484C7F",
+    paddingBottom: 10,
     justifyContent: "center",
   },
   textInput: {
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
+    paddingBottom: 10,
     color: "black",
+    fontFamily: "IowanOldStyle-Roman",
   },
   button: {
     alignItems: "center",
@@ -337,6 +341,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
+    marginBottom: 5,
   },
   errorMsg: {
     color: "#FF0000",
@@ -345,5 +350,11 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });

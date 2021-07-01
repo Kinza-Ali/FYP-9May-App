@@ -10,6 +10,7 @@ import Start from "./app/screens/Start";
 import MainTabScreen from "./app/screens/MainTabScreen";
 import asyncStorage from "@react-native-community/async-storage";
 import {
+  Login,
   DietPlan,
   HomeScreen,
   ChatbotScreen,
@@ -57,6 +58,7 @@ export default function App() {
           drawerContent={(props) => <DrawerContent {...props} />}
         >
           <Drawer.Screen name="MainTabScreen" component={MainTabScreen} />
+          <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="AboutUs" component={AboutUs} />
           <Drawer.Screen name="Start" component={Start} />
 

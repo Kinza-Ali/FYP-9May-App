@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  ImageBackground,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import LinearGradient from "react-native-linear-gradient";
@@ -20,48 +21,56 @@ const Start = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor='#009387' barStyle="light-content"/> */}
-      <View style={styles.header}>
-        <Animatable.Image
-          animation="bounceIn"
-          duraton="1500"
-          source={require("../assets/images/logo.jpg")}
-          style={styles.logo}
-          resizeMode="stretch"
-        />
-      </View>
-      <Animatable.View
-        style={[
-          styles.footer,
-          {
-            backgroundColor: "white",
-          },
-        ]}
-        animation="fadeInUpBig"
+      <ImageBackground
+        source={require("../assets/images/berries.jpg")}
+        style={styles.image}
       >
-        <Text
-          style={[
-            styles.title,
-            {
-              color: "black",
-            },
-          ]}
+        <Animatable.View style={styles.header}>
+          {/* <Animatable.Image
+            animation="bounceIn"
+            duraton="1500"
+            source={require("../assets/images/orange.jpg")}
+            style={styles.logo}
+            resizeMode="stretch"
+            animation="fadeInUpBig"
+          /> */}
+        </Animatable.View>
+        <Animatable.View
+          // style={[
+          //   styles.footer,
+          //   {
+          //     backgroundColor: "F6E5E5",
+          //   },
+          // ]}
+          animation="fadeInUpBig"
         >
-          Welcome to Health and Nutrition!
-        </Text>
-        {/* <Text style={styles.text}>Sign in with account</Text> */}
-        <View style={styles.button}>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <LinearGradient
-              colors={["#5f9ea0", "#5f9ea0"]}
-              style={styles.signIn}
-            >
-              <Text style={styles.textSign}>Get Started</Text>
-              <MaterialIcons name="navigate-next" color="#fff" size={20} />
-              {/* <FontAwesomeIcons name="chevrons-right" color="black" size={25} /> */}
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </Animatable.View>
+          <Text
+            style={[
+              styles.title,
+              {
+                color: "black",
+                marginLeft: 20,
+                marginTop: 60,
+              },
+            ]}
+          >
+            Welcome to Health & Nutrition!
+          </Text>
+          {/* <Text style={styles.text}>Sign in with account</Text> */}
+          <View style={styles.button}>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <LinearGradient
+                colors={["#B9BBDF", "#B9BBDF"]}
+                style={styles.signIn}
+              >
+                <Text style={styles.textSign}>Get Started</Text>
+                <MaterialIcons name="navigate-next" color="black" size={20} />
+                {/* <FontAwesomeIcons name="chevrons-right" color="black" size={25} /> */}
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
+      </ImageBackground>
     </View>
   );
 };
@@ -74,7 +83,8 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#F2F4F6",
+    opacity: 0.9,
   },
   header: {
     flex: 2,
@@ -83,13 +93,15 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F6E5E5",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
     paddingHorizontal: 30,
   },
   logo: {
+    marginTop: 2,
+    marginLeft: 5,
     width: height_logo,
     height: height_logo,
   },
@@ -97,6 +109,14 @@ const styles = StyleSheet.create({
     color: "#05375a",
     fontSize: 30,
     fontWeight: "bold",
+    // marginTop: 10,
+    paddingBottom: 260,
+    // padding: 20,
+
+    paddingLeft: 30,
+    paddingRight: 40,
+    justifyContent: "center",
+    fontFamily: "IowanOldStyle-Roman",
   },
   text: {
     color: "grey",
@@ -104,18 +124,28 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "flex-end",
-    marginTop: 30,
+    // marginTop: 280,
+    paddingTop: 15,
+    marginBottom: 120,
+    paddingRight: 20,
+    opacity: 0.9,
   },
   signIn: {
     width: 150,
-    height: 40,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
     flexDirection: "row",
   },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   textSign: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
 });

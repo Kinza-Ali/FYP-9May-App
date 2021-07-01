@@ -16,6 +16,7 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import asyncStorage from "@react-native-community/async-storage";
 import { readData } from "../../Setup";
+import { color } from "react-native-reanimated";
 // import Feather from 'react-native-vector-icons/Feather'
 // import{ AuthContext } from '../components/context';
 export function DrawerContent(props) {
@@ -65,9 +66,11 @@ export function DrawerContent(props) {
             <View>
               <Avatar.Image
                 source={{
-                  uri: "https://api.adorable.io/avatars/50/abott@adorable.png",
+                  uri:
+                    "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
                 }}
                 size={50}
+                backgroundColor="#B9BBDF"
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 {/* <Title style={styles.title}>
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
+    // fontFamily: "IowanOldStyle-Roman",
   },
   caption: {
     fontSize: 14,

@@ -24,7 +24,7 @@ const HomePage = ({ navigation }) => {
       <View
         style={{
           marginTop: 20,
-          backgroundColor: "#5f9ea0",
+          backgroundColor: "#B9BBDF",
           height: 33,
           borderTopLeftRadius: 5,
           borderBottomRightRadius: 7,
@@ -44,9 +44,7 @@ const HomePage = ({ navigation }) => {
         <View style={styles.container}>
           {/* <StatusBar backgroundColor ='#5f9ea0' barStyle="Light-content"/> */}
           <View style={styles.header}>
-            <Text style={styles.textheader}>
-              Welcome to Health & Nutrition!
-            </Text>
+            <Text style={styles.textheader}>Home</Text>
           </View>
           <View style={styles.footer}>
             <ScrollView contentContainerStyle={{ alignSelf: "center" }}>
@@ -55,7 +53,7 @@ const HomePage = ({ navigation }) => {
                   onPress={() => navigation.navigate("Nutritionists")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -74,7 +72,7 @@ const HomePage = ({ navigation }) => {
                   onPress={() => navigation.navigate("Workouts")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -91,7 +89,7 @@ const HomePage = ({ navigation }) => {
               <View style={styles.Button}>
                 <TouchableOpacity onPress={() => navigation.navigate("Blogs")}>
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image source={require("../assets/images/blogs.png")} />
@@ -107,7 +105,7 @@ const HomePage = ({ navigation }) => {
                   onPress={() => navigation.navigate("Recipes")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image source={require("../assets/images/recepie.png")} />
@@ -123,7 +121,7 @@ const HomePage = ({ navigation }) => {
                   onPress={() => navigation.navigate("SuccessStories")}
                 >
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
                     <Image
@@ -148,7 +146,7 @@ export default HomePage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 2,
@@ -165,9 +163,12 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "white",
-    fontWeight: "bold",
+    color: "black",
+    // fontWeight: "bold",
     fontSize: 30,
+    justifyContent: "center",
+    alignSelf: "center",
+    fontFamily: "IowanOldStyle-Roman",
   },
   textfooter: {
     color: "black",
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",

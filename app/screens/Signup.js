@@ -314,9 +314,16 @@ export default function SignUp({ navigation }) {
                 navigation.goBack();
               }}
             >
-              <FontAwesome name="chevron-left" size={20} color="#fff" />
+              <FontAwesome name="chevron-left" size={20} color="black" />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontSize: 20, paddingRight: 160 }}>
+            <Text
+              style={{
+                color: "black",
+                fontSize: 20,
+                paddingRight: 160,
+                fontFamily: "IowanOldStyle-Roman",
+              }}
+            >
               SignUp
             </Text>
           </View>
@@ -410,11 +417,21 @@ export default function SignUp({ navigation }) {
               <Text style={{ color: "red" }}> {heightValid} </Text>
               <Text style={styles.textfooter}> Gender </Text>
               <Text style={styles.textfooter}> {gender} </Text>
-              <Pressable onPress={() => setShowModal(true)}>
-                <Text>Select</Text>
-              </Pressable>
+              <View style={styles.button}>
+                <TouchableOpacity onPress={() => setShowModal(true)}>
+                  <LinearGradient
+                    colors={["#B9BBDF", "#B9BBDF"]}
+                    style={styles.selectButton}
+                  >
+                    <Text style={[styles.textSign, { color: "black" }]}>
+                      {" "}
+                      Select{" "}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
               <Modal visible={showModal} transparent={false}>
-                <View style={[styles.action, { width: "80%", height: "30%" }]}>
+                <View style={{ width: "80%", height: "30%", paddingLeft: 40 }}>
                   <Picker
                     style={styles.picker}
                     // style={{ height: 10, width: 300 }}
@@ -425,9 +442,22 @@ export default function SignUp({ navigation }) {
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
                 </View>
-                <Pressable onPress={() => setShowModal(false)}>
-                  <Text>Submit</Text>
-                </Pressable>
+                {/* <Pressable onPress={() => setShowModal(false)}>
+                  <Text style>Submit</Text>
+                </Pressable> */}
+                <View style={styles.button}>
+                  <TouchableOpacity onPress={() => setShowModal(false)}>
+                    <LinearGradient
+                      colors={["#484C7F", "#484C7F"]}
+                      style={styles.modalButton}
+                    >
+                      <Text style={[styles.textSign, { color: "white" }]}>
+                        {" "}
+                        Submit{" "}
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
               </Modal>
               <Text style={[styles.textfooter, { marginTop: 20 }]}>
                 {" "}
@@ -458,10 +488,10 @@ export default function SignUp({ navigation }) {
               <View style={styles.Button}>
                 <TouchableOpacity onPress={onRegister}>
                   <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
+                    colors={["#484C7F", "#484C7F"]}
                     style={styles.login}
                   >
-                    <Text style={[styles.textSign, { color: "black" }]}>
+                    <Text style={[styles.textSign, { color: "white" }]}>
                       {" "}
                       REGISTER{" "}
                     </Text>
@@ -474,7 +504,9 @@ export default function SignUp({ navigation }) {
                     { borderColor: "#5f9ea0", marginTop: 2 },
                   ]}
                 >
-                  <Text style={[styles.textSign, { color: "grey" }]}>
+                  <Text
+                    style={[styles.textSign, { color: "black", marginTop: 10 }]}
+                  >
                     {" "}
                     Already a Registered User?LOGIN
                   </Text>
@@ -493,7 +525,7 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 5,
@@ -513,31 +545,36 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 30,
+    fontFamily: "IowanOldStyle-Roman",
   },
   textfooter: {
     color: "black",
     fontSize: 18,
     marginTop: 5,
+    fontFamily: "IowanOldStyle-Roman",
   },
   action: {
     flexDirection: "row",
     marginTop: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#484C7F",
     paddingBottom: 2,
     // paddingTop:40,
     alignSelf: "center",
   },
   textInput: {
     flex: 1,
+    fontFamily: "IowanOldStyle-Roman",
+
     //height: Platform.OS === 'android' ? 76 : 50,
+
     paddingLeft: 10,
     color: "black",
     marginTop: 20,
   },
   button: {
     alignItems: "center",
-    marginTop: 50,
+    // marginTop: 30,
   },
   login: {
     width: "100%",
@@ -547,9 +584,28 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
   },
+  modalButton: {
+    width: "100%",
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  selectButton: {
+    width: "100%",
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
     marginTop: 0,
   },
   picker: {

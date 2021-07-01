@@ -15,7 +15,8 @@ import asyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import Breakfast from "./Breakfast";
 import { LinearGradient } from "../../Setup";
-import Card from "../assets/Card";
+import Cards from "../assets/Card";
+import { Avatar, Card, Title, Paragraph } from "react-native-paper";
 
 class Profile extends Component {
   state = {
@@ -160,91 +161,12 @@ class Profile extends Component {
     // this.formula(this.state.user.gender);
   };
 
-  // Formula
-  formula = (gender) => {
-    // console.log(this.state.prediction.diabetesType);
-    // var heightFeet = this.state.user.height.split(".");
-    // var heightInch = this.state.user.height.split(".")[1];
-    // var heightInCm = Math.round(this.state.user.height * 30.48);
-    // var heightInM = heightInCm / 100;
-    // //............... BMI.......
-    // var BMI = Math.round(this.state.user.weight / (heightInM * heightInM), 2);
-    // // ........Water Intake.......
-    // let i = this.state.user.weight - 25;
-    // let j = i * 25;
-    // let k = j + 1500;
-    // var WaterIntake = Math.floor(k / 250);
-    // if (gender == "Female") {
-    //   //IBF for Females (fat percentage).....
-    //   var IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 5.4, 2);
-    //   // for IBW
-    //   if (heightFeet == 4) {
-    //     var IBW = 45.5 - 2.3 * heightInch;
-    //   } else if (heightFeet == 5) {
-    //     IBW = 45.5 + 2.3 * heightInch;
-    //   } else {
-    //     IBW = 45.5 + 25.3 + 2.3 * heightInch;
-    //   }
-    //   // ......for BMR.......
-    //   var BMR = Math.round(
-    //     655.1 + 9.6 * IBW + 1.85 * heightInCm - 4.67 * this.state.user.age,
-    //     2
-    //   );
-    // }
-    // if (gender == "Male") {
-    //   //IBF for Males (fat percentage):
-    //   IBF = Math.round(1.2 * BMI + 0.23 * this.state.user.age - 16.2, 2);
-    //   // .....for IBW....
-    //   if (heightFeet == 4) IBW = 50 - 2.3 * heightInch;
-    //   else if (heightFeet == 5) IBW = 50 + 2.3 * heightInch;
-    //   else {
-    //     IBW = 50 + 25.3 + 2.3 * heightInch;
-    //   }
-    //   // .....for BMR...
-    //   BMR = Math.round(
-    //     66.5 + 13.75 * IBW + 5.003 * heightInCm - 6.755 * this.state.user.age,
-    //     2
-    //   );
-    // }
-    // console.log(this.state.prediction.lifestyle);
-    // Sedentary Lifestyle:
-    // if (this.state.prediction.lifestyle == 1)
-    //   var calorieCount = Math.round(BMR * 1.2, 2);
-    // // Light Exercise:
-    // else if (this.state.prediction.lifestyle == 2)
-    //   calorieCount = Math.round(BMR * 1.375, 2);
-    // //Moderate Exercise (3-5 days):
-    // else if (this.state.prediction.lifestyle == 3)
-    //   calorieCount = Math.round(BMR * 1.55, 2);
-    // // Very Active:
-    // else calorieCount = Math.round(BMR * 1.725, 2);
-    // if (BMI < 18.5) {
-    //   this.setState({ userStatus: "Under Weight" });
-    // } else if ((BMI = 18.5 || BMI <= 24.5)) {
-    //   this.setState({ userStatus: "Normal Weight" });
-    // } else if ((BMI = 25 || BMI <= 29.5)) {
-    //   this.setState({ userStatus: "Over Weight" });
-    // } else if (BMI >= 30) {
-    //   this.setState({ userStatus: "Obese" });
-    // }
-    // IBW = Math.round(IBW, 2);
-    // this.setState({
-    //   BMR: BMR,
-    //   IBW: IBW,
-    //   IBF,
-    //   WaterIntake,
-    //   BMI,
-    //   calorieCount,
-    // });
-    // this.saveData();
-    // console.log(this.state.user.BMR);
-  };
   //....
 
   //-------
   render() {
     return (
-      <View style={{ backgroundColor: "#5f9ea0" }}>
+      <View style={{ backgroundColor: "#B9BBDF" }}>
         <ScrollView
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -260,7 +182,7 @@ class Profile extends Component {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: "#5f9ea0",
+                backgroundColor: "#B9BBDF",
               }}
             >
               <TouchableOpacity
@@ -268,42 +190,66 @@ class Profile extends Component {
                   this.props.navigation.goBack();
                 }}
               >
-                <FontAwesome name="chevron-left" size={20} color="#fff" />
+                <FontAwesome name="chevron-left" size={20} color="black" />
               </TouchableOpacity>
-              <Text style={{ color: "#fff", fontSize: 20 }}>Profile</Text>
+              <Text
+                style={{
+                  fontFamily: "IowanOldStyle-Roman",
+                  color: "black",
+                  fontSize: 20,
+                }}
+              >
+                Profile
+              </Text>
               <View />
             </View>
             <ScrollView>
               <View style={styles.container}>
-                {/* <Card leftText = "Name: " rightText = {this.state.user.name} style={styles.InputFields}/> 
+                {/* <Cards leftText = "Name: " rightText = {this.state.user.name} style={styles.InputFields}/> 
         <Text> {this.state.user.name}</Text> */}
+                <Text style={{ marginLeft: 60, marginBottom: 20 }}>
+                  <Avatar.Image
+                    source={{
+                      uri:
+                        "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+                    }}
+                    size={40}
+                    backgroundColor="#B9BBDF"
+                    containerStyle={{
+                      // marginLeft: 20,
+                      // paddingLeft: 20,
+                      marginBottom: 200,
+                    }}
+                  />{" "}
+                  <Text style={styles.avatar}>
+                    {"  "}
+                    Hey, {this.state.user.name}
+                  </Text>
+                </Text>
 
-                <Card leftText="Name: " rightText={this.state.user.name} />
-                <Card leftText="Age: " rightText={this.state.user.age} />
-                <Card leftText="Weight: " rightText={this.state.user.weight} />
-
-                <Card leftText="Height: " rightText={this.state.user.height} />
-                <Card leftText="Gender: " rightText={this.state.user.gender} />
-                <Card leftText="Email: " rightText={this.state.user.email} />
-                <Card leftText="IBF: " rightText={this.state.user.IBF} />
-                <Card leftText="BMI: " rightText={this.state.user.BMI} />
-                <Card leftText="Status" rightText={this.state.userStatus} />
-                <Card
+                <Cards leftText="Age:" rightText={this.state.user.age} />
+                <Cards leftText="Weight: " rightText={this.state.user.weight} />
+                <Cards leftText="Height: " rightText={this.state.user.height} />
+                <Cards leftText="Gender: " rightText={this.state.user.gender} />
+                <Cards leftText="Email: " rightText={this.state.user.email} />
+                <Cards leftText="IBF: " rightText={this.state.user.IBF} />
+                <Cards leftText="BMI: " rightText={this.state.user.BMI} />
+                <Cards leftText="Status" rightText={this.state.userStatus} />
+                <Cards
                   leftText="Water Intake (In glass):"
                   rightText={this.state.user.WaterIntake}
                 />
-                <Card leftText="IBW: " rightText={this.state.user.IBW} />
-                <Card
+                <Cards leftText="IBW: " rightText={this.state.user.IBW} />
+                <Cards
                   leftText="calorieCount: "
                   rightText={this.state.calorieCount}
                 />
-
                 <View style={styles.button}>
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("DietPlan")}
                   >
                     <LinearGradient
-                      colors={["#5f9ea0", "#5f9ea0"]}
+                      colors={["#484C7F", "#484C7F"]}
                       style={styles.login}
                     >
                       <Text style={[styles.textSign, { color: "white" }]}>
@@ -355,7 +301,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#B9BBDF",
     paddingBottom: 5,
   },
   textInput: {
@@ -398,12 +344,25 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#5f9ea0",
+    color: "#B9BBDF",
+  },
+  texts: {
+    fontSize: 20,
+    // fontWeight: "bold",
+    color: "#484C7F",
+    fontFamily: "IowanOldStyle-Roman",
+    paddingLeft: 43,
+    marginBottom: -10,
   },
   InputFields: {
     fontSize: 15,
     fontWeight: "bold",
     marginTop: 5,
     marginLeft: 30,
+  },
+  avatar: {
+    fontFamily: "IowanOldStyle-Roman",
+    fontWeight: "bold",
+    fontSize: 26,
   },
 });

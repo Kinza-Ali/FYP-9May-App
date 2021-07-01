@@ -16,7 +16,7 @@ const Legs = ({ navigation }) => {
     <View>
       <ScrollView>
         <View style={styles.container}>
-          <View
+          {/* <View
             style={{
               marginHorizontal: 10,
               marginTop: 40,
@@ -35,7 +35,7 @@ const Legs = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={{ color: "#fff", fontSize: 20 }}>Legs</Text>
             <View />
-          </View>
+          </View> */}
           <View style={styles.header}>
             <Text style={styles.textheader}> Tone your calves!</Text>
           </View>
@@ -62,7 +62,7 @@ export default Legs;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   text: {
     fontSize: 18,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   footer: {
-    flex: 8,
+    flex: 5,
     backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
@@ -83,11 +83,13 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "times new Roman",
     marginTop: 10,
+    fontFamily: "IowanOldStyle-Roman",
+    alignSelf: "center",
   },
   textfooter: {
     color: "black",

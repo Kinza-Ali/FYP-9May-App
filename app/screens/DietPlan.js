@@ -6,17 +6,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  ImageBackground,
 } from "react-native";
 import Breakfast from "./Breakfast";
 import axios from "axios";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import asyncStorage from "@react-native-community/async-storage";
-import Card from "../assets/Card";
+// import Card from "../assets/Card";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "../../Setup";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 export default class DietPlan extends Component {
   state = {
     // Breakfast: {},
@@ -53,167 +54,245 @@ export default class DietPlan extends Component {
         });
       });
   }
-  //....
-  // readData = async () => {
-  //   try {
-  //     // const Break = await asyncStorage.getItem('Breakfast');
-  //     // const Dinner = await asyncStorage.getItem('Dinner');
-  //     // const Lunch = await asyncStorage.getItem('Lunch');
-  //     // const Snacks = await asyncStorage.getItem('Snacks');
-  //     const dietPlan = await asyncStorage.getItem('dietPlan');
-
-  //     this.setState({
-  //       // Breakfast: JSON.parse(Break),
-  //       // Lunch: JSON.parse(Lunch),
-  //       // Dinner: JSON.parse(Dinner),
-  //       // Snacks: JSON.parse(Snacks),
-  //       dietPlan: JSON.parse(dietPlan),
-  //     });
-  //     // console.log(this.state.Breakfast);
-  //   } catch (e) {
-  //     alert('Failed to fetch the data from storage');
-  //   }
-  // };
 
   render() {
     return (
-      <View style={{ backgroundColor: "#5f9ea0" }}>
-        <ScrollView
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
+      <View style={styles.container}>
+        <View style={styles.header}></View>
+        <View
+          style={{
+            marginHorizontal: 0,
+            height: 40,
+            marginTop: 20,
+            marginBottom: 20,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          <View style={styles.container}>
-            <View
-              style={{
-                marginHorizontal: 0,
-                height: 40,
-                marginTop: 40,
-                marginBottom: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "#5f9ea0",
-              }}
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.goBack();
+            }}
+          >
+            <FontAwesome name="chevron-left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: "IowanOldStyle-Roman",
+              color: "black",
+              fontWeight: "bold",
+              fontSize: 22,
+              marginRight: 150,
+              // alignSelf: "center",
+              marginBottom: -20,
+            }}
+          >
+            Diet Plan
+          </Text>
+          {/* </ImageBackground> */}
             >
-              <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.goBack();
+                style={{
+                  borderRadius: 10,
+                  paddingTop: 10,
+                  paddingLeft: 5,
+                  backgroundColor: "#B9BBDF",
+                  marginTop: 30,
+                  marginLeft: 20,
+                  marginRight: 20,
                 }}
               >
-                <FontAwesome name="chevron-left" size={20} color="#fff" />
-              </TouchableOpacity>
-              <Text style={{ color: "#fff", fontSize: 20, marginRight: 160 }}>
-                Diet Plan
-              </Text>
-            </View>
-            <ScrollView>
-              <View style={styles.container}>
-                <View style={styles.header}></View>
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      fontFamily: "IowanOldStyle-Roman",
+                      color: "#484C7F",
+                      paddingLeft: 10,
+                      fontWeight: "bold",
+                    },
+                  ]}
+                >
+                  {" "}
+                  Breakfast{" "}
+                </Text>
 
-                <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-                  <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
-                    style={styles.login}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Breakfast{" "}
-                    </Text>
-                  </LinearGradient>
-
-                  {Object.keys(this.state.dietPlan).length > 0
-                    ? Object.keys(this.state.dietPlan.Breakfast).map((item) => {
-                        if (this.state.dietPlan.Breakfast[item])
-                          return (
-                            <Text style={{ margin: 10 }}>
-                              {"-> " +
+                {Object.keys(this.state.dietPlan).length > 0
+                  ? Object.keys(this.state.dietPlan.Breakfast).map((item) => {
+                      if (this.state.dietPlan.Breakfast[item])
+                        return (
+                          <View>
+                            <Text
+                              style={{
+                                margin: 10,
+                                fontFamily: "IowanOldStyle-Roman",
+                              }}
+                            >
+                              {"• " +
                                 item +
-                                " " +
+                                "    " +
                                 this.state.dietPlan.Breakfast[item] +
-                                " " +
+                                "     " +
                                 "grams"}
                             </Text>
-                          );
-                      })
-                    : undefined}
-                  <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
-                    style={styles.login}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Snacks{" "}
-                    </Text>
-                  </LinearGradient>
-                  {Object.keys(this.state.dietPlan).length > 0
-                    ? Object.keys(this.state.dietPlan.Snacks).map((item) => {
-                        if (this.state.dietPlan.Snacks[item])
-                          return (
-                            <Text style={{ margin: 10 }}>
-                              {"-> " +
-                                item +
-                                " " +
-                                this.state.dietPlan.Snacks[item] +
-                                " " +
-                                "grams"}
-                            </Text>
-                          );
-                      })
-                    : undefined}
-                  <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
-                    style={styles.login}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Lunch{" "}
-                    </Text>
-                  </LinearGradient>
-                  {Object.keys(this.state.dietPlan).length > 0
-                    ? Object.keys(this.state.dietPlan.Lunch).map((item) => {
-                        if (this.state.dietPlan.Lunch[item])
-                          return (
-                            <Text style={{ margin: 10 }}>
-                              {"-> " +
-                                item +
-                                " " +
-                                this.state.dietPlan.Lunch[item] +
-                                " " +
-                                "grams"}
-                            </Text>
-                          );
-                      })
-                    : undefined}
-                  <LinearGradient
-                    colors={["#5f9ea0", "#5f9ea0"]}
-                    style={styles.login}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Dinner{" "}
-                    </Text>
-                  </LinearGradient>
-                  {Object.keys(this.state.dietPlan).length > 0
-                    ? Object.keys(this.state.dietPlan.Dinner).map((item) => {
-                        if (this.state.dietPlan.Dinner[item])
-                          return (
-                            <Text style={{ margin: 10 }}>
-                              {"-> " +
-                                item +
-                                " " +
-                                this.state.dietPlan.Dinner[item] +
-                                " " +
-                                "grams"}
-                            </Text>
-                          );
-                      })
-                    : undefined}
-                  {/* <Breakfast BreakfastVals={this.state.firestoreDietPlan} /> */}
-                </Animatable.View>
-              </View>
-            </ScrollView>
-          </View>
+                          </View>
+                        );
+                    })
+                  : undefined}
+              </Card>
+              <Card
+                style={{
+                  borderRadius: 10,
+                  paddingTop: 10,
+                  paddingLeft: 5,
+                  backgroundColor: "#B9BBDF",
+                  marginBottom: 15,
+                  marginTop: 10,
+                  marginRight: 20,
+                  marginLeft: 20,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      fontFamily: "IowanOldStyle-Roman",
+                      color: "#484C7F",
+                      fontWeight: "bold",
+                      paddingLeft: 10,
+                    },
+                  ]}
+                >
+                  {" "}
+                  Snacks{" "}
+                </Text>
+
+                {Object.keys(this.state.dietPlan).length > 0
+                  ? Object.keys(this.state.dietPlan.Snacks).map((item) => {
+                      if (this.state.dietPlan.Snacks[item])
+                        return (
+                          <Text
+                            style={{
+                              margin: 10,
+                              fontFamily: "IowanOldStyle-Roman",
+                            }}
+                          >
+                            {"•	 " +
+                              item +
+                              "   " +
+                              this.state.dietPlan.Snacks[item] +
+                              " " +
+                              "grams"}
+                          </Text>
+                        );
+                    })
+                  : undefined}
+              </Card>
+              <Card
+                style={{
+                  borderRadius: 10,
+                  paddingTop: 10,
+                  paddingLeft: 5,
+                  backgroundColor: "#B9BBDF",
+                  marginBottom: 15,
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginRight: 20,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      fontFamily: "IowanOldStyle-Roman",
+                      color: "#484C7F",
+                      fontWeight: "bold",
+                      paddingLeft: 10,
+                    },
+                  ]}
+                >
+                  {" "}
+                  Lunch{" "}
+                </Text>
+
+                {Object.keys(this.state.dietPlan).length > 0
+                  ? Object.keys(this.state.dietPlan.Lunch).map((item) => {
+                      if (this.state.dietPlan.Lunch[item])
+                        return (
+                          <Text
+                            style={{
+                              margin: 10,
+                              fontFamily: "IowanOldStyle-Roman",
+                            }}
+                          >
+                            {"•	 " +
+                              item +
+                              "   " +
+                              this.state.dietPlan.Lunch[item] +
+                              " " +
+                              "grams"}
+                          </Text>
+                        );
+                    })
+                  : undefined}
+              </Card>
+
+              <Card
+                style={{
+                  borderRadius: 10,
+                  paddingTop: 10,
+                  paddingLeft: 5,
+                  backgroundColor: "#B9BBDF",
+                  marginBottom: 15,
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginRight: 20,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      fontSize: 20,
+                      fontFamily: "IowanOldStyle-Roman",
+                      color: "#484C7F",
+                      // color: "white",
+                      fontWeight: "bold",
+                      paddingLeft: 10,
+                    },
+                  ]}
+                >
+                  {" "}
+                  Dinner{" "}
+                </Text>
+                {/* </Card> */}
+
+                {Object.keys(this.state.dietPlan).length > 0
+                  ? Object.keys(this.state.dietPlan.Dinner).map((item) => {
+                      if (this.state.dietPlan.Dinner[item])
+                        return (
+                          <Text
+                            style={{
+                              margin: 10,
+                              fontFamily: "IowanOldStyle-Roman",
+                            }}
+                          >
+                            {"•	 " +
+                              item +
+                              "  " +
+                              this.state.dietPlan.Dinner[item] +
+                              " " +
+                              "grams"}
+                          </Text>
+                        );
+                    })
+                  : undefined}
+              </Card>
+            </ImageBackground>
+          </Animatable.View>
+          {/* </View> */}
         </ScrollView>
       </View>
     );
@@ -222,13 +301,14 @@ export default class DietPlan extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingBottom: 10,
+    borderRadius: 20,
     // backgroundColor:'#5f9ea0',
   },
   footer: {
@@ -236,8 +316,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 45,
     borderTopRightRadius: 45,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    // paddingHorizontal: 10,
+    // paddingVertical: 10,
   },
   textheader: {
     color: "black",
@@ -301,5 +381,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 5,
     marginLeft: 30,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderTopLeftRadius: 45,
+    borderTopRightRadius: 45,
+    // borderRadius: 40,
   },
 });
