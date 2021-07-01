@@ -91,14 +91,23 @@ export default class DietPlan extends Component {
             Diet Plan
           </Text>
           {/* </ImageBackground> */}
+        </View>
+
+        <ScrollView>
+          {/* <View style={styles.container}> */}
+
+          <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+            <ImageBackground
+              source={require("../assets/images/berries.jpg")}
+              style={styles.image}
             >
-                onPress={() => {
-                  this.props.navigation.goBack();
+              <Card
                 style={{
                   borderRadius: 10,
                   paddingTop: 10,
                   paddingLeft: 5,
                   backgroundColor: "#B9BBDF",
+                  marginBottom: 15,
                   marginTop: 30,
                   marginLeft: 20,
                   marginRight: 20,
