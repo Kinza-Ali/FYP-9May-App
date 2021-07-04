@@ -172,7 +172,7 @@ class Chatbot extends Component {
     // Push Notifications
     handleScheduleNotification();
     // post request....
-    await this.post("http://6609679828f1.ngrok.io/dietplan", {
+    await this.post("http://3b199b91829f.ngrok.io/dietplan", {
       gender: genderVal,
       age: this.state.user.age,
       height: this.state.user.height,
