@@ -14,7 +14,7 @@ import firestore from "@react-native-firebase/firestore";
 import asyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import Breakfast from "./Breakfast";
-import { LinearGradient } from "../../Setup";
+import LinearGradient from 'react-native-linear-gradient';
 import Cards from "../assets/Card";
 import { Avatar, Card, Title, Paragraph } from "react-native-paper";
 

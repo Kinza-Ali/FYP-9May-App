@@ -16,11 +16,10 @@ import {
   Image,
   Modal,
 } from "react-native";
-import { LinearGradient } from "../../Setup";
+import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Picker } from "@react-native-picker/picker";
 import * as Animatable from "react-native-animatable";
-// import {LinearGradient} from '../../Setup';
 import asyncStorage from "@react-native-community/async-storage";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';

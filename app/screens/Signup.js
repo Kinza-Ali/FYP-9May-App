@@ -1,16 +1,10 @@
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from "react";
-import {
-  MaterialCommunityIcon,
-  FontAwesomeIcons,
-  Feather,
-  LinearGradient,
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-  auth,
-  firestore,
-} from "../../Setup";
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import asyncStorage from "@react-native-community/async-storage";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";

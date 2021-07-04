@@ -15,7 +15,6 @@ import auth from "@react-native-firebase/auth";
 import asyncStorage from "@react-native-community/async-storage";
 // import Card from "../assets/Card";
 import * as Animatable from "react-native-animatable";
-import { LinearGradient } from "../../Setup";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 export default class DietPlan extends Component {
@@ -33,6 +32,7 @@ export default class DietPlan extends Component {
     // prediction: {},
     // completeDietPlan: [],
     // firestoreDietPlan: {},
+
     dietPlan: {},
     refreshing: false,
   };
@@ -50,6 +50,7 @@ export default class DietPlan extends Component {
         snapshot.forEach((docSnap) => {
           this.setState({
             dietPlan: docSnap.data().DietPlan,
+            // email:docSnap.data().email
           });
         });
       });
@@ -100,7 +101,8 @@ export default class DietPlan extends Component {
             <ImageBackground
               source={require("../assets/images/berries.jpg")}
               style={styles.image}
-            >
+            > 
+            {/* <Text>{this.state.email}</Text> */}
               <Card
                 style={{
                   borderRadius: 10,

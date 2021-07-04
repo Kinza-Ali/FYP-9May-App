@@ -15,7 +15,6 @@ import auth from "@react-native-firebase/auth";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import asyncStorage from "@react-native-community/async-storage";
-import { readData } from "../../Setup";
 import { color } from "react-native-reanimated";
 // import Feather from 'react-native-vector-icons/Feather'
 // import{ AuthContext } from '../components/context';

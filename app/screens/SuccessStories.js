@@ -14,7 +14,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { Avatar } from "react-native-paper";
-import { LinearGradient } from "../../Setup";
 import * as Animatable from "react-native-animatable";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";

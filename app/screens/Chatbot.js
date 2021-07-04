@@ -30,24 +30,11 @@ class Chatbot extends Component {
     id: 1,
     name: "",
     answers: [],
-    // Breakfast: {},
-    // Dinner: {},
-    // Lunch: {},
-    // Snacks: {},
-    // completeDietPlan: [],
-    // BMI: 0,
-    // IBF: 0,
+    oldEmail:"",
     calorieCount: 0,
-    // IBW: 0,
-    // WaterIntake: 0,
     prediction: {},
     Breakfastupd: {},
     dietPlan: {},
-    // age: "",
-    // weight: "",
-    // height: "",
-    // gender: "",
-    //new addition
     user: {
       name: "",
       age: "",
@@ -74,6 +61,7 @@ class Chatbot extends Component {
       dialogflowConfig.project_id
     );
     const { name, id } = this.props.route.params;
+
     firestore()
       .collection("CHATBOT_HISTORY")
       .doc(id)
@@ -127,12 +115,34 @@ class Chatbot extends Component {
       });
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.calorieCount !== this.state.calorieCount) {
-      console.log("New cal " + this.state.calorieCount);
+    if (prevState.oldEmail !== this.state.oldEmail) {
+      console.log("New cal " + this.state.oldEmail);
     }
   }
+
   constructor(props) {
+    
     super(props);
+      // var oldEmail="";
+    firestore()
+      .collection("DietPlan")
+      .doc(auth().currentUser.uid)
+      .collection("userDietPlan")
+      .where("email", "==", auth().currentUser.email)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((docSnap) => {
+          this.setState({
+            // dietPlan: docSnap.data().DietPlan,
+            // console.log("%%%%%%%%%%%");
+            // console.log(docSnap.data().email);
+            oldEmail:docSnap.data().email
+          });
+          console.log(this.state.oldEmail);
+        });
+      });
+      console.log("--------------");
+      // console.log(this.state.oldEmail);
     this.getUser();
   }
   //-------- Get user Info
@@ -196,23 +206,36 @@ class Chatbot extends Component {
         .post(url, data)
         .then((res) => {
           resolve(res.data);
-          // var arrayPlan = [];
-          // arrayPlan.push(res.data.Breakfast);
-          // arrayPlan.push(res.data.Lunch);
-          // arrayPlan.push(res.data.Dinner);
-          // arrayPlan.push(res.data.Snacks);
-          // var joined = this.state.completeDietPlan.concat(arrayPlan);
-          // JSON.stringify(
-          //   this.state.completeDietPlan.forEach(function (itm) {})
-          // );
           this.setState({
-            // Breakfast: res.data.Breakfast,
-            // Lunch: res.data.Lunch,
-            // Snacks: res.data.Snacks,
-            // Dinner: res.data.Dinner,
-            // completeDietPlan: joined,
             dietPlan: res.data,
           });
+      
+      console.log("+++++++++++++++++++++++");
+
+      // if(auth().currentUser.email == oldEmail) {
+        // firestore()
+        //     .collection("DietPlan")
+        //     .doc(auth().currentUser.uid)
+        //     .collection("userDietPlan")
+        //     .where("email", "==", auth().currentUser.email)
+        //     .delete()
+
+        //     .then(() => {
+        //       firestore()
+        //       .collection("DietPlan")
+        //       .doc(auth().currentUser.uid)
+        //       .collection("userDietPlan")
+        //       .add({
+        //         // token: auth().currentUser.accessToken,
+        //         email: auth().currentUser.email,
+        //         DietPlan: this.state.dietPlan,
+        //         createdAt: new Date().getTime(),
+        //         calorieCount: this.state.calorieCount,
+        //       })
+        //       this.sendBotResponse(JSON.stringify(res.data));
+        //     });
+      // }
+      // else {
           firestore()
             .collection("DietPlan")
             .doc(auth().currentUser.uid)
@@ -223,59 +246,20 @@ class Chatbot extends Component {
               DietPlan: this.state.dietPlan,
               createdAt: new Date().getTime(),
               calorieCount: this.state.calorieCount,
+            })
+            .then(() => {
+              console.log('User added!');
             });
           console.log(res.data);
           this.sendBotResponse(JSON.stringify(res.data));
-          // this.setState({ Breakfastupd: this.state.Breakfast });
+      // }
+          this.setState({ Breakfastupd: this.state.Breakfast });
         })
         .catch((err) => {
           reject(err);
         });
     });
-  //...........................
-  // saveData = async () => {
-  //   try {
-  //     await asyncStorage.setItem(
-  //       "calorieCount",
-  //       JSON.stringify(this.state.calorieCount)
-  //     );
-  //     console.log("#######");
-  //     console.log(calorieCount);
-  //   } catch (e) {
-  //     alert("Failed to save the data to the storage");
-  //   }
-  // };
-  // //..........................
-  // readData = async () => {
-  //   try {
-  //     const age = await asyncStorage.getItem("age");
-  //     const gender = await asyncStorage.getItem("gender");
-  //     const height = await asyncStorage.getItem("height");
-  //     const weight = await asyncStorage.getItem("weight");
-  //     const BMI = await asyncStorage.getItem("BMI");
-  //     const IBW = await asyncStorage.getItem("IBW");
-  //     const IBF = await asyncStorage.getItem("IBF");
-  //     const WaterIntake = await asyncStorage.getItem("Waterintake");
-  //     const calorieCount = await asyncStorage.getItem("calorieCount");
-  //     // console.log("==========");
-  //     // console.log(calorieCount);
-  //     this.setState({
-  //       age: age,
-  //       weight: weight,
-  //       height: height,
-  //       gender: gender,
-  //       BMI: BMI,
-  //       IBW: IBW,
-  //       IBF: IBF,
-  //       WaterIntake: WaterIntake,
-  //       calorieCount: calorieCount,
-  //     });
-  //     // console.log("_+++++++++++++");
-  //     // console.log(this.state.age);
-  //   } catch (e) {
-  //     alert("Failed to fetch the data from storage");
-  //   }
-  // };
+
   //...........................
 
   //handleGoogleResponse to show the response from the bot to the user

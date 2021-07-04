@@ -12,7 +12,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import { LinearGradient } from "../../Setup";
+import LinearGradient from 'react-native-linear-gradient';
 import { get } from "react-native/Libraries/Utilities/PixelRatio";
 // import AsyncStorage from '@react-native-community/async-storage';
 // const blogUrl = 'http://192.168.18.3:3001/api/blogs';

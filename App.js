@@ -9,25 +9,15 @@ import RootStackScreen from "./app/screens/RootStackScreen";
 import Start from "./app/screens/Start";
 import MainTabScreen from "./app/screens/MainTabScreen";
 import asyncStorage from "@react-native-community/async-storage";
-import {
-  Login,
-  DietPlan,
-  HomeScreen,
-  ChatbotScreen,
-  Workouts,
-  LoginScreen,
-  Icon,
-  Recipes,
-  Nutritionists,
-  AboutUs,
-  SuccessStories,
-  SignUpScreen,
-  Home,
-  AdminBlog,
-  AdminRecipe,
-  AdminScreen,
-  AdminSuccessStories,
-} from "./Setup";
+import DietPlan from './app/screens/DietPlan';
+import HomeScreen from './app/screens/HomeScreen';
+import LoginScreen from './app/screens/Login';
+import AboutUs from './app/screens/AboutUs';
+import AdminBlog from './app/screens/AdminBlog';
+import AdminRecipe from './app/screens/AdminRecipe';
+import AdminScreen from './app/screens/AdminScreen';
+import AdminSuccessStories from './app/screens/AdminSuccessStories';
+
 // Icon.loadFont();
 // const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();

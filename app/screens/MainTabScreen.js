@@ -4,23 +4,21 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
-import {
-  Profile,
-  HomeScreen,
-  Recipes,
-  Blogs,
-  ChatbotScreen,
-  Workouts,
-  Nutritionists,
-  SuccessStories,
-  Shoulders,
-  WarmUp,
-  Facial,
-  Arms,
-  Abs,
-  FullBody,
-  Legs,
-} from "../../Setup";
+import HomeScreen from './HomeScreen';
+import Recipes from './Recipes';
+import Workouts from './Workouts';
+import Profile from './Profile';
+import Nutritionists from './Nutritionists';
+import Blogs from './Blogs';
+import ChatbotScreen from './Chatbot';
+import FullBody from './FullBody';
+import Arms from './Arms';
+import Abs from './Abs';
+import Facial from './Facial';
+import Legs from './Legs';
+import WarmUp from './WarmUp';
+import Shoulders from './Shoulders';
+import SuccessStories from './SuccessStories';
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const WorkoutStack = createStackNavigator();

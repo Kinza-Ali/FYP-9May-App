@@ -3,16 +3,15 @@ import notification, {
   handleScheduleNotification,
 } from "../../src/notification.ios";
 import * as Animatable from "react-native-animatable";
+import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import {
-  Feather,
-  LinearGradient,
-  FontAwesomeIcons,
   GoogleSignin,
-  GoogleSigninButton,
   statusCodes,
-  auth,
-  firestore,
-} from "../../Setup";
+} from '@react-native-community/google-signin';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import asyncStorage from "@react-native-community/async-storage";
 import {
   Text,

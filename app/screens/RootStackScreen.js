@@ -1,33 +1,22 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  AboutUs,
-  AdminBlog,
-  AdminRecipe,
-  AdminSuccessStories,
-  DietPlan,
-  Icon,
-  Start,
-  SuccessStories,
-  HomeScreen,
-  LoginScreen,
-  SignUpScreen,
-  Recipes,
-  Workouts,
-  Profile,
-  Nutritionists,
-  Blogs,
-  ChatbotScreen,
-  Home,
-  FullBody,
-  Abs,
-  Arms,
-  Facial,
-  Legs,
-  WarmUp,
-  Shoulders,
-  AdminScreen,
-} from "../../Setup";
+
+import LoginScreen from './Login';
+import SignUpScreen from './Signup';
+import Recipes from './Recipes';
+import Nutritionists from './Nutritionists';
+import Blogs from './Blogs';
+import Home from './HomePage';
+import FullBody from './FullBody';
+import Arms from './Arms';
+import Abs from './Abs';
+import Facial from './Facial';
+import Legs from './Legs';
+import WarmUp from './WarmUp';
+import Shoulders from './Shoulders';
+import SuccessStories from './SuccessStories';
+import Start from './Start';
+import AboutUs from './AboutUs';
 const RootStack = createStackNavigator();
 const RootStackScreen = ({ navigation }) => (
   <RootStack.Navigator

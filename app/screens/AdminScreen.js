@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  // FontAwesomeIcons,
-  // Feather,
-  LinearGradient,
-  auth,
-  asyncStorage,
-} from "../../Setup";
+import LinearGradient from 'react-native-linear-gradient';
+import auth from '@react-native-firebase/auth';
+import asyncStorage from '@react-native-community/async-storage';
+
 // import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Feather from "react-native-vector-icons/Feather";
 // import LinearGradient from 'react-native-linear-gradient';
