@@ -21,10 +21,10 @@ import LinearGradient from "react-native-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
-import { handleScheduleNotification } from "../../src/notification.ios";
-// import { deleteStory } from "./CrudApi";
-// import AsyncStorage from '@react-native-community/async-storage';
-const blogUrl = "http://192.168.18.3:3001/api/blogs";
+// import { handleScheduleNotification } from "../../src/notification.ios";
+// // import { deleteStory } from "./CrudApi";
+// // import AsyncStorage from '@react-native-community/async-storage';
+const baseUrl = "http://192.168.18.3:3001/api/blogs";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
@@ -51,16 +51,17 @@ export default function Blogs({ navigation }) {
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
-  // const [blogUrl, seblogUrl] = useState("");
+  const [url, setUrl] = useState("");
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
 
   // Pull to refresh method
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetch(blogUrl)
+    fetch(baseUrl)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => alert(error))
@@ -86,7 +87,7 @@ export default function Blogs({ navigation }) {
   // console.log(isAdmin);
 
   useEffect(() => {
-    fetch(blogUrl)
+    fetch(baseUrl)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => alert(error))
@@ -95,6 +96,7 @@ export default function Blogs({ navigation }) {
 
   //---------
   updateStory = async (id) => {
+    blogUrl = url;
     var response = await methods.put("blogs/" + id, {
       title,
       paragraph,
@@ -106,7 +108,8 @@ export default function Blogs({ navigation }) {
   };
   // //-------------- Add Story Method
   addStory = async () => {
-    var response = await methods.post("blogs", { title, paragraph });
+    blogUrl = url;
+    await methods.post("blogs", { title, paragraph, blogUrl });
 
     console.log("============" + title + "==========" + paragraph);
   };
@@ -158,6 +161,157 @@ export default function Blogs({ navigation }) {
               <View style={styles.header}></View>
 
               <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+                {isAdmin ? (
+                  <View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                        paddingRight: 20,
+                        marginBottom: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => setShowModal(true)}
+                        style={{
+                          backgroundColor: "#B9BBDF",
+                          width: 60,
+                          height: 60,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 10,
+                          borderRadius: 100,
+                        }}
+                      >
+                        <FontAwesome name="plus" size={30} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                    <Modal visible={showModal} transparent={false}>
+                      <ScrollView
+                        style={{
+                          width: "100%",
+                          height: "30%",
+
+                          alignSelf: "center",
+                        }}
+                      >
+                        <Text style={styles.textSignModal}>Add Story</Text>
+                        <View style={styles.action}>
+                          <TextInput
+                            placeholder="Add title"
+                            style={{
+                              fontFamily: "IowanOldStyle-Roman",
+                              fontSize: 20,
+                              paddingBottom: 20,
+                              paddingTop: 20,
+                            }}
+                            autoCapitalize="none"
+                            onChangeText={(text) => {
+                              setTitle(text);
+                            }}
+                          />
+                        </View>
+                        <View style={styles.action}>
+                          <TextInput
+                            placeholder="Add paragraph"
+                            style={{
+                              fontFamily: "IowanOldStyle-Roman",
+                              fontSize: 20,
+                              paddingBottom: 20,
+                              paddingTop: 20,
+                            }}
+                            autoCapitalize="none"
+                            onChangeText={(text) => {
+                              setParagraph(text);
+                            }}
+                          />
+                        </View>
+                        <View style={styles.action}>
+                          <TextInput
+                            style={{
+                              fontFamily: "IowanOldStyle-Roman",
+                              fontSize: 20,
+                              paddingBottom: 20,
+                              paddingTop: 20,
+                            }}
+                            placeholder="Add Blog Url"
+                            autoCapitalize="none"
+                            onChangeText={(text) => {
+                              setUrl(text);
+                            }}
+                          />
+                        </View>
+                        <TouchableOpacity
+                          onPress={this.addStory}
+                          style={[
+                            styles.signUp,
+                            {
+                              borderColor: "#484C7F",
+                              borderWidth: 0,
+                              marginTop: 0,
+                              paddingRight: 100,
+                              margin: 20,
+                              width: "170%",
+                              paddingLeft: 100,
+                              marginTop: 20,
+                            },
+                          ]}
+                        >
+                          <LinearGradient
+                            colors={["#484C7F", "#484C7F"]}
+                            style={styles.login}
+                          >
+                            <Text
+                              style={[
+                                styles.textSign,
+                                {
+                                  color: "white",
+                                  fontFamily: "IowanOldStyle-Roman",
+                                  // padding: 20,
+                                },
+                              ]}
+                            >
+                              {" "}
+                              Add Story{" "}
+                            </Text>
+                          </LinearGradient>
+                        </TouchableOpacity>
+                        <View style={styles.button}>
+                          <TouchableOpacity
+                            onPress={() => setShowModal(false)}
+                            style={[
+                              styles.signUp,
+                              {
+                                borderColor: "#484C7F",
+                                alignSelf: "center",
+                                borderWidth: 0,
+                                marginTop: 20,
+                                paddingRight: 100,
+                                // margin: 20,
+                                width: "170%",
+                                paddingLeft: 100,
+                              },
+                            ]}
+                          >
+                            <LinearGradient
+                              colors={["#484C7F", "#484C7F"]}
+                              style={styles.modalButton}
+                            >
+                              <Text
+                                style={[styles.textSigns, { color: "white" }]}
+                              >
+                                {" "}
+                                Return{" "}
+                              </Text>
+                            </LinearGradient>
+                          </TouchableOpacity>
+                        </View>
+                      </ScrollView>
+                    </Modal>
+                  </View>
+                ) : (
+                  <Text> </Text>
+                )}
                 {loading ? (
                   <ActivityIndicator />
                 ) : (
@@ -191,21 +345,28 @@ export default function Blogs({ navigation }) {
                           //   title="edit"
                           // />
                           <View
-                            style={{
-                              flexDirection: "row",
-                            }}
+                            style={[
+                              {
+                                // flexDirection: "row",
+                                marginTop: 10,
+                                // padding: 20,
+                              },
+                            ]}
                           >
                             <View
-                              style={{
-                                flex: 3,
-                              }}
+                              style={
+                                {
+                                  // flex: 2,
+                                }
+                              }
                             >
                               <TouchableOpacity
-                                onPress={() => setShowModal(false)}
+                                onPress={() => setShowModalUpdate(true)}
                                 style={[
                                   styles.signUp,
                                   {
                                     borderColor: "#484C7F",
+                                    alignItems: "flex-end",
                                   },
                                 ]}
                               >
@@ -215,7 +376,7 @@ export default function Blogs({ navigation }) {
                                 >
                                   <Text
                                     style={[
-                                      styles.textSign,
+                                      styles.textSigns,
                                       { color: "white" },
                                     ]}
                                   >
@@ -224,32 +385,45 @@ export default function Blogs({ navigation }) {
                                   </Text>
                                 </LinearGradient>
                               </TouchableOpacity>
-                              <Modal visible={showModal} transparent={false}>
-                                <ScrollView
-                                  style={{
-                                    width: "100%",
-                                    height: "30%",
-                                    paddingLeft: 40,
-                                  }}
-                                >
-                                  <Text style={styles.textSignModal}>
-                                    Edit Story
-                                  </Text>
+                            </View>
+                            <Modal
+                              visible={showModalUpdate}
+                              transparent={false}
+                            >
+                              <ScrollView
+                                style={{
+                                  width: "100%",
+                                  height: "30%",
+                                  paddingLeft: 40,
+                                }}
+                              >
+                                <Text style={styles.textSignModal}>
+                                  Edit Story
+                                </Text>
+                                <View style={styles.action}>
                                   <TextInput
                                     placeholder={item.title}
                                     defaultValue={item.title}
                                     style={{
                                       fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
                                     }}
                                     autoCapitalize="none"
                                     onChangeText={(text) => {
                                       setTitle(text);
                                     }}
                                   />
+                                </View>
+                                <View style={styles.action}>
                                   <TextInput
                                     placeholder="Add paragraph"
                                     style={{
                                       fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
                                     }}
                                     defaultValue={item.paragraph}
                                     autoCapitalize="none"
@@ -257,71 +431,85 @@ export default function Blogs({ navigation }) {
                                       setParagraph(text);
                                     }}
                                   />
+                                </View>
+                                <View style={styles.action}>
                                   <TextInput
                                     style={{
                                       fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
                                     }}
                                     defaultValue={item.blogUrl}
                                     autoCapitalize="none"
                                     onChangeText={(text) => {
-                                      setblogUrl(text);
+                                      setUrl(text);
                                     }}
                                   />
+                                </View>
+                                <TouchableOpacity
+                                  onPress={this.updateStory(item.id)}
+                                  style={[
+                                    styles.signUp,
+                                    {
+                                      borderColor: "#484C7F",
+                                      marginTop: 20,
+                                      borderColor: "#484C7F",
+                                      borderWidth: 0,
+
+                                      paddingRight: 100,
+                                      margin: 20,
+                                      width: "170%",
+                                      paddingLeft: 100,
+                                      marginTop: 20,
+                                    },
+                                  ]}
+                                >
+                                  <LinearGradient
+                                    colors={["#484C7F", "#484C7F"]}
+                                    style={styles.login}
+                                  >
+                                    <Text
+                                      style={[
+                                        styles.textSign,
+                                        {
+                                          color: "white",
+                                          fontFamily: "IowanOldStyle-Roman",
+                                        },
+                                      ]}
+                                    >
+                                      {" "}
+                                      Update Story{" "}
+                                    </Text>
+                                  </LinearGradient>
+                                </TouchableOpacity>
+                                <View style={styles.button}>
                                   <TouchableOpacity
-                                    onPress={this.updateStory(id)}
-                                    style={[
-                                      styles.signUp,
-                                      {
-                                        borderColor: "#484C7F",
-                                        borderWidth: 0,
-                                        marginTop: 0,
-                                      },
-                                    ]}
+                                    style={{ marginTop: 20 }}
+                                    onPress={() => setShowModalUpdate(false)}
                                   >
                                     <LinearGradient
                                       colors={["#484C7F", "#484C7F"]}
-                                      style={styles.login}
+                                      style={styles.modalButton}
                                     >
                                       <Text
                                         style={[
-                                          styles.textSign,
-                                          {
-                                            color: "white",
-                                            fontFamily: "IowanOldStyle-Roman",
-                                          },
+                                          styles.textSigns,
+                                          { color: "white" },
                                         ]}
                                       >
                                         {" "}
-                                        Update Story{" "}
+                                        Return{" "}
                                       </Text>
                                     </LinearGradient>
                                   </TouchableOpacity>
-                                  <View style={styles.button}>
-                                    <TouchableOpacity
-                                      onPress={() => setShowModal(false)}
-                                    >
-                                      <LinearGradient
-                                        colors={["#484C7F", "#484C7F"]}
-                                        style={styles.modalButton}
-                                      >
-                                        <Text
-                                          style={[
-                                            styles.textSign,
-                                            { color: "white" },
-                                          ]}
-                                        >
-                                          {" "}
-                                          Return{" "}
-                                        </Text>
-                                      </LinearGradient>
-                                    </TouchableOpacity>
-                                  </View>
-                                </ScrollView>
-                              </Modal>
-                            </View>
+                                </View>
+                              </ScrollView>
+                            </Modal>
+
                             <View
                               style={{
-                                flex: 3,
+                                // flex: 1,
 
                                 paddingLeft: 20,
                               }}
@@ -332,9 +520,8 @@ export default function Blogs({ navigation }) {
                                   styles.signUp,
                                   {
                                     borderColor: "#484C7F",
-                                    borderWidth: 0,
-
-                                    // marginTop: 20,
+                                    alignItems: "flex-end",
+                                    marginTop: 20,
                                   },
                                 ]}
                               >
@@ -361,16 +548,6 @@ export default function Blogs({ navigation }) {
                       </Text>
                     )}
                   />
-                )}
-                {isAdmin ? (
-                  <View>
-                    <Button
-                      title="Edit Blogs"
-                      onPress={() => navigation.navigate("AdminBlog")}
-                    />
-                  </View>
-                ) : (
-                  <Text> </Text>
                 )}
               </Animatable.View>
             </View>
@@ -412,6 +589,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
+    alignSelf: "center",
     borderBottomColor: "#5f9ea0",
     paddingBottom: 5,
   },
@@ -447,8 +625,16 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontFamily: "IowanOldStyle-Roman",
   },
+  textSigns: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    fontFamily: "IowanOldStyle-Roman",
+  },
   signUp: {
-    width: "200%",
+    width: "150%",
     height: 40,
     justifyContent: "center",
     alignItems: "center",
@@ -467,5 +653,49 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     lineHeight: 25,
     fontFamily: "IowanOldStyle-Roman",
+  },
+  button: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  modalButton: {
+    width: 120,
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  selectButton: {
+    width: 160,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 10,
+    alignSelf: "center",
+    paddingBottom: -80,
+  },
+  textSignModal: {
+    fontSize: 30,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 20,
+    marginBottom: 10,
+    marginTop: 35,
+    fontFamily: "IowanOldStyle-Roman",
+    alignSelf: "center",
+  },
+  action: {
+    flexDirection: "row",
+    marginTop: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: "#484C7F",
+    paddingBottom: 2,
+    // paddingTop:40,
+    alignSelf: "center",
   },
 });
