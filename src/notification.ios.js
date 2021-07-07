@@ -1,6 +1,6 @@
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import methods from "../app/connect/index";
-import { auth } from "../Setup";
+import auth from "@react-native-firebase/auth";
 import asyncStorage from "@react-native-community/async-storage";
 import { useState } from "react";
 // //------------- Show Notifications --------

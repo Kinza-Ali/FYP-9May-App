@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import LinearGradient from 'react-native-linear-gradient';
-import auth from '@react-native-firebase/auth';
-import asyncStorage from '@react-native-community/async-storage';
 
+import LinearGradient from "react-native-linear-gradient";
+import auth from "@react-native-firebase/auth";
+import asyncStorage from "@react-native-community/async-storage";
 // import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import Feather from "react-native-vector-icons/Feather";
 // import LinearGradient from 'react-native-linear-gradient';
@@ -57,16 +57,16 @@ const AdminScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* <StatusBar backgroundColor="#5f9ea0" barStyle="Light-content" /> */}
+        {/* <StatusBar backgroundColor="#484C7F" barStyle="Light-content" /> */}
         <View style={styles.header}>
-          <Text style={styles.textheader}>Welcome to Health & Nutrition!</Text>
+          <Text style={styles.textheader}>Admin Pannel</Text>
         </View>
         <View style={styles.footer}>
           <ScrollView contentContainerStyle={{ alignSelf: "center" }}>
             <View style={styles.Button}>
               <TouchableOpacity onPress={() => navigation.navigate("Blogs")}>
                 <LinearGradient
-                  colors={["#5f9ea0", "#5f9ea0"]}
+                  colors={["#484C7F", "#484C7F"]}
                   style={styles.login}
                 >
                   <Image source={require("../assets/images/blogs.png")} />
@@ -80,7 +80,7 @@ const AdminScreen = ({ navigation }) => {
             <View style={styles.Button}>
               <TouchableOpacity onPress={() => navigation.navigate("Recipes")}>
                 <LinearGradient
-                  colors={["#5f9ea0", "#5f9ea0"]}
+                  colors={["#484C7F", "#484C7F"]}
                   style={styles.login}
                 >
                   <Image source={require("../assets/images/recepie.png")} />
@@ -96,7 +96,7 @@ const AdminScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate("SuccessStories")}
               >
                 <LinearGradient
-                  colors={["#5f9ea0", "#5f9ea0"]}
+                  colors={["#484C7F", "#484C7F"]}
                   style={styles.login}
                 >
                   <Image
@@ -113,7 +113,7 @@ const AdminScreen = ({ navigation }) => {
             <View style={styles.Button}>
               <TouchableOpacity onPress={this.signOut}>
                 <LinearGradient
-                  colors={["#5f9ea0", "#5f9ea0"]}
+                  colors={["#484C7F", "#484C7F"]}
                   style={styles.login}
                 >
                   {/* <Image
@@ -136,7 +136,7 @@ export default AdminScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#B9BBDF",
   },
   header: {
     flex: 1,
@@ -157,6 +157,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     marginTop: 30,
+    fontFamily: "IowanOldStyle-Roman",
+    alignSelf: "center",
   },
   textfooter: {
     color: "black",
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#484C7F",
     paddingBottom: 5,
   },
   textInput: {
@@ -191,6 +193,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
     width: "100%",
@@ -202,7 +205,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#5f9ea0",
+    color: "#484C7F",
   },
   image: {
     height: 35,

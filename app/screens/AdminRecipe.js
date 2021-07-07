@@ -12,7 +12,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from "react-native-linear-gradient";
 import { get } from "react-native/Libraries/Utilities/PixelRatio";
 // import AsyncStorage from '@react-native-community/async-storage';
 // const blogUrl = 'http://192.168.18.3:3001/api/blogs';
@@ -96,8 +96,9 @@ export default function AdminRecipe({ navigation, props }) {
       }}
     >
       <ScrollView>
-        <Text> Add Recipe</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman" }}> Add Recipe</Text>
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add DishName"
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -105,21 +106,25 @@ export default function AdminRecipe({ navigation, props }) {
           }}
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add Ingredients"
           onChangeText={setIngredients}
           autoCapitalize="none"
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add Method"
           onChangeText={setMethod}
           autoCapitalize="none"
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add DishUrl"
           onChangeText={setDishUrl}
           autoCapitalize="none"
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add Image Url"
           onChangeText={setImgUrl}
           autoCapitalize="none"
@@ -128,11 +133,21 @@ export default function AdminRecipe({ navigation, props }) {
           onPress={this.addRecipe}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            {
+              borderColor: "#484C7F",
+              borderWidth: 0,
+              marginTop: 0,
+              fontFamily: "IowanOldStyle-Roman",
+            },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text
+              style={[
+                styles.textSign,
+                { color: "white", fontFamily: "IowanOldStyle-Roman" },
+              ]}
+            >
               {" "}
               Add Recipe{" "}
             </Text>
@@ -141,17 +156,21 @@ export default function AdminRecipe({ navigation, props }) {
       </ScrollView>
       {/* try to fetch data and only update few of it */}
       <ScrollView>
-        <Text> Update Recipe</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman" }}>
+          {" "}
+          Update Recipe
+        </Text>
         <TextInput
           placeholder="Enter Id"
           defaultValue={id}
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           autoCapitalize="none"
           onChangeText={(text) => {
             setId(text);
           }}
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add Recipe"
           onChangeText={setDishName}
           defaultValue={newDishName}
@@ -159,28 +178,28 @@ export default function AdminRecipe({ navigation, props }) {
         />
         <TextInput
           placeholder="Add Ingredients"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newIngredients}
           autoCapitalize="none"
           onChangeText={setIngredients}
         />
         <TextInput
           placeholder="Add Method"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newMethod}
           autoCapitalize="none"
           onChangeText={setMethod}
         />
         <TextInput
           placeholder="Add DishUrl"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newDishUrl}
           autoCapitalize="none"
           onChangeText={setDishUrl}
         />
         <TextInput
           placeholder="Add Image"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newImgUrl}
           autoCapitalize="none"
           onChangeText={setImgUrl}
@@ -189,11 +208,16 @@ export default function AdminRecipe({ navigation, props }) {
           onPress={this.updateRecipe}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            { borderColor: "#484C7F", borderWidth: 0, marginTop: 0 },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text
+              style={[
+                styles.textSign,
+                { color: "white", fontFamily: "IowanOldStyle-Roman" },
+              ]}
+            >
               {" "}
               Update Recipe{" "}
             </Text>
@@ -201,10 +225,13 @@ export default function AdminRecipe({ navigation, props }) {
         </TouchableOpacity>
       </ScrollView>
       <ScrollView>
-        <Text> Delete Recipe</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman" }}>
+          {" "}
+          Delete Recipe
+        </Text>
         <TextInput
           placeholder="Enter Id"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           value={id}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -215,11 +242,21 @@ export default function AdminRecipe({ navigation, props }) {
           onPress={this.deletRecipe}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            {
+              borderColor: "#484C7F",
+              borderWidth: 0,
+              marginTop: 0,
+              fontFamily: "IowanOldStyle-Roman",
+            },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text
+              style={[
+                styles.textSign,
+                { color: "white", fontFamily: "IowanOldStyle-Roman" },
+              ]}
+            >
               {" "}
               Delete Recipe{" "}
             </Text>
@@ -233,13 +270,18 @@ export default function AdminRecipe({ navigation, props }) {
           }
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            { borderColor: "#484C7F", borderWidth: 0, marginTop: 0 },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text
+              style={[
+                styles.textSign,
+                { color: "white", fontFamily: "IowanOldStyle-Roman" },
+              ]}
+            >
               {" "}
-              Go to HomeScreen{" "}
+              Go to Home{" "}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -250,7 +292,7 @@ export default function AdminRecipe({ navigation, props }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#484C7F",
   },
   header: {
     flex: 1,
@@ -267,20 +309,20 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     fontSize: 30,
     fontFamily: "times new Roman",
   },
   textfooter: {
-    color: "black",
+    color: "white",
     fontSize: 18,
   },
   action: {
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#484C7F",
     paddingBottom: 5,
     justifyContent: "center",
   },
@@ -288,7 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
-    color: "black",
+    color: "white",
   },
   button: {
     alignItems: "center",
@@ -302,9 +344,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
+    fontFamily: "IowanOldStyle-Roman",
   },
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
 });

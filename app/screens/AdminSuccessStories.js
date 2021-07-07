@@ -12,9 +12,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
-
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
+import LinearGradient from "react-native-linear-gradient";
 // import AsyncStorage from '@react-native-community/async-storage';
 const blogUrl = "http://192.168.18.3:3001/api/successStories";
 
@@ -86,16 +84,20 @@ export default function AdminBlog({ navigation, props }) {
       }}
     >
       <ScrollView>
-        <Text> Add Story</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman", marginTop: 20 }}>
+          {" "}
+          Add Story
+        </Text>
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add Title"
-          //   style={styles.textInput}
           autoCapitalize="none"
           onChangeText={(text) => {
             setTitle(text);
           }}
         />
         <TextInput
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           placeholder="Add paragraph"
           onChangeText={setParagraph}
           autoCapitalize="none"
@@ -104,11 +106,16 @@ export default function AdminBlog({ navigation, props }) {
           onPress={this.addStory}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            {
+              borderColor: "#484C7F",
+              borderWidth: 0,
+              marginTop: 0,
+              fontFamily: "IowanOldStyle-Roman",
+            },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "white" }]}>
               {" "}
               Add Story{" "}
             </Text>
@@ -117,11 +124,13 @@ export default function AdminBlog({ navigation, props }) {
       </ScrollView>
       {/* try to fetch data and only update few of it */}
       <ScrollView>
-        <Text> Update Story</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman", marginTop: 20 }}>
+          {" "}
+          Update Story
+        </Text>
         <TextInput
           placeholder="Enter Id"
-          // value={id}
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={id}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -131,13 +140,13 @@ export default function AdminBlog({ navigation, props }) {
         <TextInput
           placeholder="Add Title"
           onChangeText={setTitle}
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newTitle}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Add paragraph"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           defaultValue={newParagraph}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -148,11 +157,11 @@ export default function AdminBlog({ navigation, props }) {
           onPress={this.updateStory}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            { borderColor: "#484C7F", borderWidth: 0, marginTop: 0 },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "white" }]}>
               {" "}
               Update Story{" "}
             </Text>
@@ -160,10 +169,13 @@ export default function AdminBlog({ navigation, props }) {
         </TouchableOpacity>
       </ScrollView>
       <ScrollView>
-        <Text> Delete Story</Text>
+        <Text style={{ fontFamily: "IowanOldStyle-Roman", marginTop: 20 }}>
+          {" "}
+          Delete Story
+        </Text>
         <TextInput
           placeholder="Enter Id"
-          //   style={styles.textInput}
+          style={{ fontFamily: "IowanOldStyle-Roman" }}
           value={id}
           autoCapitalize="none"
           onChangeText={(text) => {
@@ -174,11 +186,21 @@ export default function AdminBlog({ navigation, props }) {
           onPress={this.deleteStory}
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            {
+              borderColor: "#484C7F",
+              borderWidth: 0,
+              marginTop: 0,
+              fontFamily: "IowanOldStyle-Roman",
+            },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text
+              style={[
+                styles.textSign,
+                { color: "white", fontFamily: "IowanOldStyle-Roman" },
+              ]}
+            >
               {" "}
               Delete Story{" "}
             </Text>
@@ -192,11 +214,11 @@ export default function AdminBlog({ navigation, props }) {
           }
           style={[
             styles.signUp,
-            { borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 },
+            { borderColor: "#484C7F", borderWidth: 0, marginTop: 0 },
           ]}
         >
-          <LinearGradient colors={["#5f9ea0", "#5f9ea0"]} style={styles.login}>
-            <Text style={[styles.textSign, { color: "black" }]}>
+          <LinearGradient colors={["#484C7F", "#484C7F"]} style={styles.login}>
+            <Text style={[styles.textSign, { color: "white" }]}>
               {" "}
               Go to HomeScreen{" "}
             </Text>
@@ -209,7 +231,7 @@ export default function AdminBlog({ navigation, props }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5f9ea0",
+    backgroundColor: "#484C7F",
   },
   header: {
     flex: 1,
@@ -226,20 +248,20 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   textheader: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     fontSize: 30,
     fontFamily: "times new Roman",
   },
   textfooter: {
-    color: "black",
+    color: "white",
     fontSize: 18,
   },
   action: {
     flexDirection: "row",
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor: "#5f9ea0",
+    borderBottomColor: "#484C7F",
     paddingBottom: 5,
     justifyContent: "center",
   },
@@ -247,7 +269,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
-    color: "black",
+    color: "white",
   },
   button: {
     alignItems: "center",
@@ -261,9 +283,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
+    fontFamily: "IowanOldStyle-Roman",
   },
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "IowanOldStyle-Roman",
   },
 });

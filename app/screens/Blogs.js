@@ -1,5 +1,6 @@
 // import {json, response} from 'express';
 import React, { useState, useEffect, useCallback } from "react";
+import methods from "../connect/index";
 // import Clipboard from '@react-native-community/clipboard';
 import {
   Text,
@@ -13,11 +14,15 @@ import {
   ScrollView,
   StyleSheet,
   Linking,
+  Modal,
+  TextInput,
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
 import { handleScheduleNotification } from "../../src/notification.ios";
+// import { deleteStory } from "./CrudApi";
 // import AsyncStorage from '@react-native-community/async-storage';
 const blogUrl = "http://192.168.18.3:3001/api/blogs";
 const wait = (timeout) => {
@@ -46,6 +51,9 @@ export default function Blogs({ navigation }) {
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
+  // const [blogUrl, seblogUrl] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -84,6 +92,30 @@ export default function Blogs({ navigation }) {
       .catch((error) => alert(error))
       .finally(setLoading(false));
   }, []);
+
+  //---------
+  updateStory = async (id) => {
+    var response = await methods.put("blogs/" + id, {
+      title,
+      paragraph,
+      blogUrl,
+    });
+    console.log("==================");
+    console.log(response);
+    console.log("============" + title + "==========" + paragraph + id);
+  };
+  // //-------------- Add Story Method
+  addStory = async () => {
+    var response = await methods.post("blogs", { title, paragraph });
+
+    console.log("============" + title + "==========" + paragraph);
+  };
+  //------------
+  deleteStory = async (id) => {
+    var response = await methods.delete("blogs/" + id, {});
+    alert("Successfully deleted");
+  };
+  //-------------
   return (
     <View>
       <ScrollView
@@ -146,18 +178,183 @@ export default function Blogs({ navigation }) {
                         <OpenURLButton url={item.blogUrl}>
                           Read More...
                         </OpenURLButton>
-
+                        {"\n"}
                         {isAdmin ? (
-                          <Button
-                            onPress={() => {
-                              asyncStorage.setItem(
-                                "currentItem",
-                                JSON.stringify(item)
-                              );
-                              navigation.navigate("AdminBlog", item);
+                          // <Button
+                          //   onPress={() => {
+                          //     asyncStorage.setItem(
+                          //       "currentItem",
+                          //       JSON.stringify(item)
+                          //     );
+                          //     navigation.navigate("AdminBlog", item);
+                          //   }}
+                          //   title="edit"
+                          // />
+                          <View
+                            style={{
+                              flexDirection: "row",
                             }}
-                            title="edit"
-                          />
+                          >
+                            <View
+                              style={{
+                                flex: 3,
+                              }}
+                            >
+                              <TouchableOpacity
+                                onPress={() => setShowModal(false)}
+                                style={[
+                                  styles.signUp,
+                                  {
+                                    borderColor: "#484C7F",
+                                  },
+                                ]}
+                              >
+                                <LinearGradient
+                                  colors={["#484C7F", "#484C7F"]}
+                                  style={styles.login}
+                                >
+                                  <Text
+                                    style={[
+                                      styles.textSign,
+                                      { color: "white" },
+                                    ]}
+                                  >
+                                    {" "}
+                                    Edit{" "}
+                                  </Text>
+                                </LinearGradient>
+                              </TouchableOpacity>
+                              <Modal visible={showModal} transparent={false}>
+                                <ScrollView
+                                  style={{
+                                    width: "100%",
+                                    height: "30%",
+                                    paddingLeft: 40,
+                                  }}
+                                >
+                                  <Text style={styles.textSignModal}>
+                                    Edit Story
+                                  </Text>
+                                  <TextInput
+                                    placeholder={item.title}
+                                    defaultValue={item.title}
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                    }}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      setTitle(text);
+                                    }}
+                                  />
+                                  <TextInput
+                                    placeholder="Add paragraph"
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                    }}
+                                    defaultValue={item.paragraph}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      setParagraph(text);
+                                    }}
+                                  />
+                                  <TextInput
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                    }}
+                                    defaultValue={item.blogUrl}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      setblogUrl(text);
+                                    }}
+                                  />
+                                  <TouchableOpacity
+                                    onPress={this.updateStory(id)}
+                                    style={[
+                                      styles.signUp,
+                                      {
+                                        borderColor: "#484C7F",
+                                        borderWidth: 0,
+                                        marginTop: 0,
+                                      },
+                                    ]}
+                                  >
+                                    <LinearGradient
+                                      colors={["#484C7F", "#484C7F"]}
+                                      style={styles.login}
+                                    >
+                                      <Text
+                                        style={[
+                                          styles.textSign,
+                                          {
+                                            color: "white",
+                                            fontFamily: "IowanOldStyle-Roman",
+                                          },
+                                        ]}
+                                      >
+                                        {" "}
+                                        Update Story{" "}
+                                      </Text>
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                  <View style={styles.button}>
+                                    <TouchableOpacity
+                                      onPress={() => setShowModal(false)}
+                                    >
+                                      <LinearGradient
+                                        colors={["#484C7F", "#484C7F"]}
+                                        style={styles.modalButton}
+                                      >
+                                        <Text
+                                          style={[
+                                            styles.textSign,
+                                            { color: "white" },
+                                          ]}
+                                        >
+                                          {" "}
+                                          Return{" "}
+                                        </Text>
+                                      </LinearGradient>
+                                    </TouchableOpacity>
+                                  </View>
+                                </ScrollView>
+                              </Modal>
+                            </View>
+                            <View
+                              style={{
+                                flex: 3,
+
+                                paddingLeft: 20,
+                              }}
+                            >
+                              <TouchableOpacity
+                                // onPress={deleteStory(id)}
+                                style={[
+                                  styles.signUp,
+                                  {
+                                    borderColor: "#484C7F",
+                                    borderWidth: 0,
+
+                                    // marginTop: 20,
+                                  },
+                                ]}
+                              >
+                                <LinearGradient
+                                  colors={["#484C7F", "#484C7F"]}
+                                  style={styles.login}
+                                >
+                                  <Text
+                                    style={[
+                                      styles.textSign,
+                                      { color: "white" },
+                                    ]}
+                                  >
+                                    {" "}
+                                    Delete{" "}
+                                  </Text>
+                                </LinearGradient>
+                              </TouchableOpacity>
+                            </View>
+                          </View>
                         ) : (
                           <Text></Text>
                         )}
@@ -245,16 +442,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     justifyContent: "center",
-    paddingRight: 20,
-    marginBottom: 30,
+    alignSelf: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
     fontFamily: "IowanOldStyle-Roman",
   },
   signUp: {
-    width: "100%",
-    height: 30,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    width: "200%",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
+    alignSelf: "center",
   },
   text: {
     fontSize: 18,
