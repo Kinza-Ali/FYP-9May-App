@@ -30,7 +30,7 @@ class Chatbot extends Component {
     id: 1,
     name: "",
     answers: [],
-    oldEmail:"",
+    oldEmail: "",
     calorieCount: 0,
     prediction: {},
     Breakfastupd: {},
@@ -114,16 +114,15 @@ class Chatbot extends Component {
         console.log(err);
       });
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.oldEmail !== this.state.oldEmail) {
-      console.log("New cal " + this.state.oldEmail);
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.oldEmail !== this.state.oldEmail) {
+  //     console.log("New cal " + this.state.oldEmail);
+  //   }
+  // }
 
   constructor(props) {
-    
     super(props);
-      // var oldEmail="";
+    // var oldEmail="";
     firestore()
       .collection("DietPlan")
       .doc(auth().currentUser.uid)
@@ -136,13 +135,13 @@ class Chatbot extends Component {
             // dietPlan: docSnap.data().DietPlan,
             // console.log("%%%%%%%%%%%");
             // console.log(docSnap.data().email);
-            oldEmail:docSnap.data().email
+            oldEmail: docSnap.data().email,
           });
           console.log(this.state.oldEmail);
         });
       });
-      console.log("--------------");
-      // console.log(this.state.oldEmail);
+    console.log("--------------");
+    // console.log(this.state.oldEmail);
     this.getUser();
   }
   //-------- Get user Info
@@ -209,33 +208,33 @@ class Chatbot extends Component {
           this.setState({
             dietPlan: res.data,
           });
-      
-      console.log("+++++++++++++++++++++++");
 
-      // if(auth().currentUser.email == oldEmail) {
-        // firestore()
-        //     .collection("DietPlan")
-        //     .doc(auth().currentUser.uid)
-        //     .collection("userDietPlan")
-        //     .where("email", "==", auth().currentUser.email)
-        //     .delete()
+          console.log("+++++++++++++++++++++++");
 
-        //     .then(() => {
-        //       firestore()
-        //       .collection("DietPlan")
-        //       .doc(auth().currentUser.uid)
-        //       .collection("userDietPlan")
-        //       .add({
-        //         // token: auth().currentUser.accessToken,
-        //         email: auth().currentUser.email,
-        //         DietPlan: this.state.dietPlan,
-        //         createdAt: new Date().getTime(),
-        //         calorieCount: this.state.calorieCount,
-        //       })
-        //       this.sendBotResponse(JSON.stringify(res.data));
-        //     });
-      // }
-      // else {
+          // if(auth().currentUser.email == oldEmail) {
+          // firestore()
+          //     .collection("DietPlan")
+          //     .doc(auth().currentUser.uid)
+          //     .collection("userDietPlan")
+          //     .where("email", "==", auth().currentUser.email)
+          //     .delete()
+
+          //     .then(() => {
+          //       firestore()
+          //       .collection("DietPlan")
+          //       .doc(auth().currentUser.uid)
+          //       .collection("userDietPlan")
+          //       .add({
+          //         // token: auth().currentUser.accessToken,
+          //         email: auth().currentUser.email,
+          //         DietPlan: this.state.dietPlan,
+          //         createdAt: new Date().getTime(),
+          //         calorieCount: this.state.calorieCount,
+          //       })
+          //       this.sendBotResponse(JSON.stringify(res.data));
+          //     });
+          // }
+          // else {
           firestore()
             .collection("DietPlan")
             .doc(auth().currentUser.uid)
@@ -248,11 +247,11 @@ class Chatbot extends Component {
               calorieCount: this.state.calorieCount,
             })
             .then(() => {
-              console.log('User added!');
+              console.log("User added!");
             });
           console.log(res.data);
           this.sendBotResponse(JSON.stringify(res.data));
-      // }
+          // }
           this.setState({ Breakfastupd: this.state.Breakfast });
         })
         .catch((err) => {
@@ -594,7 +593,7 @@ class Chatbot extends Component {
         <View
           style={{
             marginTop: 20,
-            backgroundColor: "#5f9ea0",
+            backgroundColor: "#B9BBDF",
             height: 33,
             borderTopLeftRadius: 5,
             borderBottomRightRadius: 7,
