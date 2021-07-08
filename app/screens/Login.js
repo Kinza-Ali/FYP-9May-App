@@ -82,11 +82,11 @@ export default function Login({ navigation }) {
               //setAdmin(true);
               // console.log(docSnap.data().role);
               if (docSnap.data().role == "admin") {
-                navigation.navigate("AdminScreen");
+                navigation.replace("AdminScreen");
                 // setAdmin(true);
                 saveData();
               } else {
-                navigation.navigate("HomeScreen");
+                navigation.replace("UserScreens");
               }
             });
           });

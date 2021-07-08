@@ -24,7 +24,8 @@ import asyncStorage from "@react-native-community/async-storage";
 // import { handleScheduleNotification } from "../../src/notification.ios";
 // // import { deleteStory } from "./CrudApi";
 // // import AsyncStorage from '@react-native-community/async-storage';
-const baseUrl = "http://192.168.18.3:3001/api/blogs";
+const baseUrl ='http://213ee72b0857.ngrok.io/api/blogs';
+
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
@@ -57,6 +58,7 @@ export default function Blogs({ navigation }) {
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
+  const [activeBlog, setActiveBlog] = React.useState("");
 
   // Pull to refresh method
   const onRefresh = React.useCallback(() => {
@@ -82,11 +84,13 @@ export default function Blogs({ navigation }) {
       // alert("Failed to fetch the data from storage");
     }
   };
-  readData();
+
+
   //fetching data from blogs api
   // console.log(isAdmin);
 
   useEffect(() => {
+    readData()
     fetch(baseUrl)
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -95,16 +99,17 @@ export default function Blogs({ navigation }) {
   }, []);
 
   //---------
-  updateStory = async (id) => {
+  const updateStory = async (blog) => {
     blogUrl = url;
-    var response = await methods.put("blogs/" + id, {
-      title,
-      paragraph,
-      blogUrl,
+    var response = await methods.put("blogs/" + blog._id, {
+      title: blog.title,
+      paragraph: blog.paragraph,
+      blogUrl: blog.blogUrl
     });
     console.log("==================");
-    console.log(response);
-    console.log("============" + title + "==========" + paragraph + id);
+    
+    console.log(response.response);
+    console.log("============");
   };
   // //-------------- Add Story Method
   addStory = async () => {
@@ -114,9 +119,10 @@ export default function Blogs({ navigation }) {
     console.log("============" + title + "==========" + paragraph);
   };
   //------------
-  deleteStory = async (id) => {
+ const deleteStory = async (id) => {
     var response = await methods.delete("blogs/" + id, {});
     alert("Successfully deleted");
+    console.log(response)
   };
   //-------------
   return (
@@ -186,6 +192,136 @@ export default function Blogs({ navigation }) {
                         <FontAwesome name="plus" size={30} color="black" />
                       </TouchableOpacity>
                     </View>
+                    <Modal
+                              visible={showModalUpdate}
+                              transparent={false}
+                            >
+                              <ScrollView
+                                style={{
+                                  width: "100%",
+                                  height: "30%",
+                                  paddingLeft: 40,
+                                }}
+                              >
+                                <Text style={styles.textSignModal}>
+                                  Edit Story
+                                </Text>
+                                <View style={styles.action}>
+                                  <TextInput
+                                    placeholder={activeBlog.title}
+                                    defaultValue={activeBlog.title}
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
+                                    }}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      let objectLol = {...activeBlog}
+                                      objectLol.title = text
+                                      setActiveBlog(objectLol);
+                                    }}
+                                  />
+                                </View>
+                                <View style={styles.action}>
+                                  <TextInput
+                                    placeholder="Add paragraph"
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
+                                    }}
+                                    defaultValue={activeBlog.paragraph}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      let objectLol = {...activeBlog}
+                                      objectLol.paragraph = text
+                                      setActiveBlog(objectLol);
+                                    }}
+                                  />
+                                </View>
+                                <View style={styles.action}>
+                                  <TextInput
+                                    style={{
+                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontSize: 20,
+                                      paddingBottom: 20,
+                                      paddingTop: 20,
+                                    }}
+                                    defaultValue={activeBlog.blogUrl}
+                                    autoCapitalize="none"
+                                    onChangeText={(text) => {
+                                      let objectLol = {...activeBlog}
+                                      objectLol.blogUrl = text
+                                      console.log("TESTING ********")
+                                      console.log(objectLol)
+                                      console.log("TESTING ********")
+                                      setActiveBlog(objectLol);
+                                    }}
+                                  />
+                                </View>
+                                <TouchableOpacity
+                                  onPress={() => updateStory(activeBlog)}
+                                  style={[
+                                    styles.signUp,
+                                    {
+                                      borderColor: "#484C7F",
+                                      marginTop: 20,
+                                      borderColor: "#484C7F",
+                                      borderWidth: 0,
+
+                                      paddingRight: 100,
+                                      margin: 20,
+                                      width: "170%",
+                                      paddingLeft: 100,
+                                      marginTop: 20,
+                                    },
+                                  ]}
+                                >
+                                  <LinearGradient
+                                    colors={["#484C7F", "#484C7F"]}
+                                    style={styles.login}
+                                  >
+                                    <Text
+                                      style={[
+                                        styles.textSign,
+                                        {
+                                          color: "white",
+                                          fontFamily: "IowanOldStyle-Roman",
+                                        },
+                                      ]}
+                                    >
+                                      {" "}
+                                      Update Story{" "}
+                                    </Text>
+                                  </LinearGradient>
+                                </TouchableOpacity>
+                                <View style={styles.button}>
+                                  <TouchableOpacity
+                                    style={{ marginTop: 20 }}
+                                    onPress={() => setShowModalUpdate(false)}
+                                  >
+                                    <LinearGradient
+                                      colors={["#484C7F", "#484C7F"]}
+                                      style={styles.modalButton}
+                                    >
+                                      <Text
+                                        style={[
+                                          styles.textSigns,
+                                          { color: "white" },
+                                        ]}
+                                      >
+                                        {" "}
+                                        Return{" "}
+                                      </Text>
+                                    </LinearGradient>
+                                  </TouchableOpacity>
+                                </View>
+                              </ScrollView>
+                            </Modal>
+
                     <Modal visible={showModal} transparent={false}>
                       <ScrollView
                         style={{
@@ -207,6 +343,7 @@ export default function Blogs({ navigation }) {
                             }}
                             autoCapitalize="none"
                             onChangeText={(text) => {
+                        
                               setTitle(text);
                             }}
                           />
@@ -319,7 +456,7 @@ export default function Blogs({ navigation }) {
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
-                      <Text>
+                      <View>
                         <Text style={styles.textSign}>
                           {item.title}
                           {"\n"}
@@ -332,7 +469,7 @@ export default function Blogs({ navigation }) {
                         <OpenURLButton url={item.blogUrl}>
                           Read More...
                         </OpenURLButton>
-                        {"\n"}
+                        <Text>{"\n"}</Text>
                         {isAdmin ? (
                           // <Button
                           //   onPress={() => {
@@ -361,7 +498,10 @@ export default function Blogs({ navigation }) {
                               }
                             >
                               <TouchableOpacity
-                                onPress={() => setShowModalUpdate(true)}
+                                onPress={() => {
+                                  setActiveBlog(item)
+                                  setShowModalUpdate(true)
+                                }}
                                 style={[
                                   styles.signUp,
                                   {
@@ -386,126 +526,7 @@ export default function Blogs({ navigation }) {
                                 </LinearGradient>
                               </TouchableOpacity>
                             </View>
-                            <Modal
-                              visible={showModalUpdate}
-                              transparent={false}
-                            >
-                              <ScrollView
-                                style={{
-                                  width: "100%",
-                                  height: "30%",
-                                  paddingLeft: 40,
-                                }}
-                              >
-                                <Text style={styles.textSignModal}>
-                                  Edit Story
-                                </Text>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    placeholder={item.title}
-                                    defaultValue={item.title}
-                                    style={{
-                                      fontFamily: "IowanOldStyle-Roman",
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      setTitle(text);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    placeholder="Add paragraph"
-                                    style={{
-                                      fontFamily: "IowanOldStyle-Roman",
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={item.paragraph}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      setParagraph(text);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    style={{
-                                      fontFamily: "IowanOldStyle-Roman",
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={item.blogUrl}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      setUrl(text);
-                                    }}
-                                  />
-                                </View>
-                                <TouchableOpacity
-                                  onPress={this.updateStory(item.id)}
-                                  style={[
-                                    styles.signUp,
-                                    {
-                                      borderColor: "#484C7F",
-                                      marginTop: 20,
-                                      borderColor: "#484C7F",
-                                      borderWidth: 0,
-
-                                      paddingRight: 100,
-                                      margin: 20,
-                                      width: "170%",
-                                      paddingLeft: 100,
-                                      marginTop: 20,
-                                    },
-                                  ]}
-                                >
-                                  <LinearGradient
-                                    colors={["#484C7F", "#484C7F"]}
-                                    style={styles.login}
-                                  >
-                                    <Text
-                                      style={[
-                                        styles.textSign,
-                                        {
-                                          color: "white",
-                                          fontFamily: "IowanOldStyle-Roman",
-                                        },
-                                      ]}
-                                    >
-                                      {" "}
-                                      Update Story{" "}
-                                    </Text>
-                                  </LinearGradient>
-                                </TouchableOpacity>
-                                <View style={styles.button}>
-                                  <TouchableOpacity
-                                    style={{ marginTop: 20 }}
-                                    onPress={() => setShowModalUpdate(false)}
-                                  >
-                                    <LinearGradient
-                                      colors={["#484C7F", "#484C7F"]}
-                                      style={styles.modalButton}
-                                    >
-                                      <Text
-                                        style={[
-                                          styles.textSigns,
-                                          { color: "white" },
-                                        ]}
-                                      >
-                                        {" "}
-                                        Return{" "}
-                                      </Text>
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
-                              </ScrollView>
-                            </Modal>
+                            
 
                             <View
                               style={{
@@ -515,7 +536,7 @@ export default function Blogs({ navigation }) {
                               }}
                             >
                               <TouchableOpacity
-                                // onPress={deleteStory(id)}
+                                onPress={() => deleteStory(activeBlog._id)}
                                 style={[
                                   styles.signUp,
                                   {
@@ -545,7 +566,7 @@ export default function Blogs({ navigation }) {
                         ) : (
                           <Text></Text>
                         )}
-                      </Text>
+                      </View>
                     )}
                   />
                 )}

@@ -10,9 +10,17 @@ const Loader = (props) => {
     try {
       const loggedIn = await asyncStorage.getItem("loggedIn");
       const admin = await asyncStorage.getItem("isAdmin");
-      if (loggedIn) props.navigation.navigate("MainTabScreen");
+      if (loggedIn) {
+        if(admin){
+          props.navigation.replace("AdminScreen");
+
+        }else{
+
+          props.navigation.replace("UserScreens");
+        }
+      }
       else {
-        props.navigation.navigate("Start");
+        props.navigation.replace("Start");
       }
     } catch (e) {
       console.log("ERROR");

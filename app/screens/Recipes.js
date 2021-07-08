@@ -23,7 +23,7 @@ import * as Animatable from "react-native-animatable";
 import asyncStorage from "@react-native-community/async-storage";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://192.168.18.3:3001/api/recipes";
+const recipesUrl = "http://213ee72b0857.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {

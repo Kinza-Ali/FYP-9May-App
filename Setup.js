@@ -99,8 +99,4 @@ export {
   firestore,
   saveData,
   readData,
-};
-function Setup() {
-  return <App />;
 }
-export default Setup;

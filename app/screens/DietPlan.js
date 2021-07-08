@@ -19,7 +19,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 export default class DietPlan extends Component {
   state = {
-    // Breakfast: {},
+    Breakfast: [],
     // Dinner: {},
     // Lunch: {},
     // Snacks: {},
@@ -30,7 +30,7 @@ export default class DietPlan extends Component {
     // gender: '',
     // email: '',
     // prediction: {},
-    // completeDietPlan: [],
+    completeDietPlan: [],
     // firestoreDietPlan: {},
 
     dietPlan: {},
@@ -44,7 +44,7 @@ export default class DietPlan extends Component {
       .collection("DietPlan")
       .doc(auth().currentUser.uid)
       .collection("userDietPlan")
-      .where("email", "==", auth().currentUser.email)
+      .orderBy("createdAt", 'asc') //stores on the basis of previous date
       .get()
       .then((snapshot) => {
         snapshot.forEach((docSnap) => {
@@ -54,6 +54,54 @@ export default class DietPlan extends Component {
           });
         });
       });
+
+
+      // firestore()
+      // .collection("DietPlan")
+      // .doc(auth().currentUser.uid)
+      // .collection("userDietPlan")
+      // .orderBy("createdAt", "desc") //stores on the basis of previous date
+      // .limit(50) //limit for previous messages
+      // .get()
+      // .then((snapshot) => {
+      //   let completeDietPlan = snapshot.docs.map((doc) => {
+      //     const firebaseData = doc.data();
+      //     const data = {
+      //       plan: doc.DietPlan,
+      //       // Breakfast: doc.DietPlan.Breakfast,
+      //       ...firebaseData,
+      //     };
+      //     // if (!firebaseData.system) {
+      //     //   data.user = {
+      //     //     ...firebaseData.user,
+      //     //     name: firebaseData.user.name,
+      //     //   };
+      //     // }
+      //     return data;
+      //   });
+      //   if (completeDietPlan.length > 0) {
+      //     this.setState({completeDietPlan,Breakfast});
+      //   } 
+      //   console.log(Breakfast[0])
+      //   // else {
+      //   //   this.setState({
+      //   //     name,
+      //   //     id,
+      //   //     messages: [
+      //   //       {
+      //   //         //id of the message
+      //   //         _id: 2,
+      //   //         text: `Hello, ${this.props.route.params.name}. I am Mr.Bot,your automated Nutriguide`,
+      //   //         createdAt: new Date().getTime(),
+      //   //         user: BOT,
+      //   //       },
+      //   //     ],
+      //   //   });
+      //   // }
+      // })
+      // .catch(function (err) {
+      //   console.log(err);
+      // });
   }
 
   render() {

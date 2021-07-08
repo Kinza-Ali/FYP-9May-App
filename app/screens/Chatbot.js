@@ -250,9 +250,58 @@ class Chatbot extends Component {
               console.log("User added!");
             });
           console.log(res.data);
-          this.sendBotResponse(JSON.stringify(res.data));
+          const dietPlanParsed = res.data
+      console.log("************** DIET PLAN *************")
+      // console.log(text)
+      console.log(dietPlanParsed.Breakfast)
+      console.log(dietPlanParsed.Lunch)
+      console.log(dietPlanParsed.Dinner)
+      console.log(dietPlanParsed.Snacks)
+      console.log("************** DIET PLAN *************")
+      let breakfast = ""
+      let lunch = ""
+      let dinner = ""
+      let snacks = ""
+      Object.keys(dietPlanParsed.Breakfast).map((item,index) => {
+        if(index === 0) {
+          breakfast = breakfast + "Breakfast: \n" + item + ": " + dietPlanParsed.Breakfast[item] + " grams\n"
+          
+        }else{
+          breakfast = breakfast + item + ": " + dietPlanParsed.Breakfast[item] +  " grams\n"
+        }
+      })
+      console.log(breakfast)
+      Object.keys(dietPlanParsed.Lunch).map((item, index) => {
+        if(index === 0) {
+          lunch = lunch + "\nLunch: \n" + item + ": " + dietPlanParsed.Lunch[item] + " grams"+ "\n"
+          
+        }else{
+          lunch = lunch + item + ": " + dietPlanParsed.Lunch[item] + " grams"+ "\n"
+        }
+      })
+      console.log(lunch)
+      Object.keys(dietPlanParsed.Snacks).map((item, index) => {
+        if(index === 0) {
+          snacks = snacks + "\nSnacks: \n" + item + ": " + dietPlanParsed.Snacks[item] + " grams"+ "\n"
+          
+        }else{
+          snacks = snacks + item + ": " + dietPlanParsed.Snacks[item] + " grams"+ "\n"
+          console.log(index)
+        }
+      })
+      console.log(snacks)
+      Object.keys(dietPlanParsed.Dinner).map((item, index) => {
+        if(index === 0) {
+          dinner = dinner + "\nDinner: \n" + item + ": " + dietPlanParsed.Dinner[item] + " grams"+ "\n"
+          
+        }else{
+          dinner = dinner + item + ": " + dietPlanParsed.Dinner[item] + " grams"+ "\n"
+        }
+      })
+      console.log(dinner)
+          this.sendBotResponse(breakfast + lunch + snacks + dinner);
           // }
-          this.setState({ Breakfastupd: this.state.Breakfast });
+          // this.setState({ Breakfastupd: this.state.Breakfast });
         })
         .catch((err) => {
           reject(err);
@@ -266,6 +315,7 @@ class Chatbot extends Component {
     // sends the response from dialogFlow
     let text = result.queryResult.fulfillmentMessages[0].text.text[0];
     // sending that response to the user
+
     this.sendBotResponse(text);
   }
   testAlert() {
