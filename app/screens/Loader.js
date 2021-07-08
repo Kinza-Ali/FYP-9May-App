@@ -6,22 +6,26 @@ const Loader = (props) => {
   useEffect(() => {
     readData();
   }, []);
+
   const readData = async () => {
     try {
       const loggedIn = await asyncStorage.getItem("loggedIn");
       const admin = await asyncStorage.getItem("isAdmin");
-      if (loggedIn) {
-        if(admin){
-          props.navigation.replace("AdminScreen");
-
-        }else{
-
-          props.navigation.replace("UserScreens");
+      setTimeout(() => {
+        if (loggedIn) {
+          if(admin){
+            props.navigation.replace("AdminScreen");
+  
+          }else{
+  
+            props.navigation.replace("UserScreens");
+          }
         }
-      }
-      else {
-        props.navigation.replace("Start");
-      }
+        else {
+          props.navigation.replace("Start");
+        }
+
+      }, 1000)
     } catch (e) {
       console.log("ERROR");
       console.log(e);

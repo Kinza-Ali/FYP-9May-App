@@ -78,7 +78,7 @@ export default function SignUp({ navigation }) {
             console.log(auth().currentUser);
           });
 
-        navigation.navigate("HomeScreen");
+        navigation.navigate("UserScreens");
 
         var value = this.formula(gender);
         // console.log(BMI + "BMI");

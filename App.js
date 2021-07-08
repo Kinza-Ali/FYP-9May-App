@@ -15,6 +15,7 @@ import Loader from "./app/screens/Loader";
 import Blogs from "./app/screens/Blogs";
 import Recipes from "./app/screens/Recipes";
 import SuccessStories from "./app/screens/SuccessStories";
+import SignUp from "./app/screens/Signup";
 // ADMIN SCREENS FOR NAV ********
 import AdminScreen from "./app/screens/AdminScreen";
 
@@ -48,10 +49,14 @@ const UserScreens = () => (
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Loader" screenOptions={{ headerShown: false }}>          
+      <RootStack.Navigator initialRouteName="Loader" screenOptions={{ headerShown: false }}>
+        {/* ******** SPLASH SCREENS ******** */}
         <RootStack.Screen name="Loader" component={Loader} />
+        {/* ******** AUTH SCREENS ******** */}
         <RootStack.Screen name="Start" component={Start} />
         <RootStack.Screen name="Login" component={LoginScreen} />
+        <RootStack.Screen name="SignUp" component={SignUp} />
+        {/* ******** USER SCREENS ******** */}
         <RootStack.Screen name="AdminScreen" component={AdminStack} />
         <RootStack.Screen name="UserScreens" component={UserScreens} />
       </RootStack.Navigator>

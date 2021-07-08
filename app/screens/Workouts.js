@@ -20,19 +20,21 @@ import { NavigationContainer } from "@react-navigation/native";
 const Workouts = ({ navigation }) => {
   return (
     <View>
-      {/* <View style={{ marginTop:20, backgroundColor:'#484C7F',height:33}} >
-    <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
       
-    }>
-    <FontAwesomeIcons name="chevron-left" color="black" size={20} style={{marginTop:7}}/>
-    </TouchableOpacity>
-    </View>  */}
       <ScrollView>
         <View style={styles.container}>
           {/* <StatusBar backgroundColor ='#484C7F' barStyle="Light-content"/> */}
           <View style={styles.header}>
+          <TouchableOpacity title ="ChatBot" onPress = {()=> navigation.goBack()
+      
+    }>
+    <FontAwesomeIcons name="chevron-left" color="black" size={20} />
+    </TouchableOpacity>
+
             <Text style={styles.textheader}> Pick your Today's Workout</Text>
+            <View />
           </View>
+
           <View style={styles.footer}>
             <ScrollView contentContainerStyle={{ alignSelf: "center" }}>
               <View style={styles.Button}>
@@ -173,9 +175,13 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    justifyContent: "flex-end",
-    paddingHorizontal: 10,
-    paddingBottom: 30,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 40,
+    marginBottom: 20,
+    width: "90%",
+    alignSelf: 'center',
+    alignItems: 'center'
   },
   footer: {
     flex: 3,
@@ -189,9 +195,9 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     fontSize: 25,
-    marginTop: 40,
     fontFamily: "IowanOldStyle-Roman",
-    alignSelf: "center",
+    width: "85%",
+    textAlign: 'center'
   },
   textfooter: {
     color: "black",

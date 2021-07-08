@@ -81,12 +81,7 @@ const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator
     screenOptions={{
       headerShown: false,
-      headerTintColor: "white",
-      headerTitleStyle: {
-        alignItems: "center",
-        fontWeight: "bold",
-        fontFamily: "IowanOldStyle-Roman",
-      },
+      
     }}
   >
     <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
@@ -100,15 +95,7 @@ const HomeStackScreen = ({ navigation }) => (
 const WorkoutStackScreen = ({ navigation }) => (
   <WorkoutStack.Navigator
     screenOptions={{
-      headerStyle: {
-        backgroundColor: "#5f9ea0",
-      },
-      headerTintColor: "white",
-      headerTitleStyle: {
-        alignItems: "center",
-
-        fontWeight: "bold",
-      },
+      headerShown: false
     }}
   >
     <WorkoutStack.Screen

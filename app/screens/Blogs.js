@@ -126,12 +126,8 @@ export default function Blogs({ navigation }) {
   };
   //-------------
   return (
-    <View>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
+    <View style={{ flex: 1 }}>
+      
         <View style={styles.container}>
           <View
             style={{
@@ -162,9 +158,8 @@ export default function Blogs({ navigation }) {
             <View />
           </View>
 
-          <ScrollView contentContainerStyle={styles.scrollView}>
+          
             <View style={styles.container}>
-              <View style={styles.header}></View>
 
               <Animatable.View animation="fadeInUpBig" style={styles.footer}>
                 {isAdmin ? (
@@ -454,6 +449,9 @@ export default function Blogs({ navigation }) {
                 ) : (
                   <FlatList
                     data={data}
+                    refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
                       <View>
@@ -572,9 +570,7 @@ export default function Blogs({ navigation }) {
                 )}
               </Animatable.View>
             </View>
-          </ScrollView>
         </View>
-      </ScrollView>
     </View>
   );
 }
@@ -585,9 +581,9 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    // paddingBottom: 10,
   },
   footer: {
     flex: 3,
