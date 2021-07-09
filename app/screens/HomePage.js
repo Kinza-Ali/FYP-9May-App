@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
+
 const HomePage = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -30,7 +31,7 @@ const HomePage = ({ navigation }) => {
           borderBottomRightRadius: 7,
         }}
       >
-        <TouchableOpacity title="ChatBot" onPress={() => navigation.goBack()}>
+        <TouchableOpacity title="ChatBot" onPress={() => navigation.navigate("Start")}>
           <FontAwesomeIcons
             name="chevron-left"
             color="black"

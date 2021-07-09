@@ -16,8 +16,10 @@ import Blogs from "./app/screens/Blogs";
 import Recipes from "./app/screens/Recipes";
 import SuccessStories from "./app/screens/SuccessStories";
 import SignUp from "./app/screens/Signup";
+import HomePage from "./app/screens/HomePage";
 // ADMIN SCREENS FOR NAV ********
 import AdminScreen from "./app/screens/AdminScreen";
+
 
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -56,6 +58,7 @@ export default function App() {
         <RootStack.Screen name="Start" component={Start} />
         <RootStack.Screen name="Login" component={LoginScreen} />
         <RootStack.Screen name="SignUp" component={SignUp} />
+        <RootStack.Screen name="HomePage" component={HomePage} />
         {/* ******** USER SCREENS ******** */}
         <RootStack.Screen name="AdminScreen" component={AdminStack} />
         <RootStack.Screen name="UserScreens" component={UserScreens} />

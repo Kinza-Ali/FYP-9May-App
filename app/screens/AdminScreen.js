@@ -42,8 +42,9 @@ const AdminScreen = ({ navigation }) => {
       // await GoogleSignin.signOut();
       auth()
         .signOut()
-        .then(() => alert("You are signed Out! "));
-      console.log("signOut");
+        .then(() => 
+      console.log("signOut")
+      );
       clearStorage();
 
       // setLoggedIn(false);
