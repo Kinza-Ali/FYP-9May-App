@@ -19,6 +19,8 @@ import Legs from './Legs';
 import WarmUp from './WarmUp';
 import Shoulders from './Shoulders';
 import SuccessStories from './SuccessStories';
+import ProfileNew from './ProfileNew';
+
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const WorkoutStack = createStackNavigator();
@@ -41,8 +43,8 @@ const MainTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Profile"
-      component={Profile}
+      name="ProfileNew"
+      component={ProfileNew}
       options={{
         tabBarLabel: "Profile",
         tabBarColor: "#B9BBDF",
