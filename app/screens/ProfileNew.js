@@ -191,19 +191,15 @@ render(){
         height: perfectSize(56), width: perfectSize(56)}]}
             >
         <TouchableOpacity
-            style={{paddingRight:150}}
+            // style={{paddingRight:150}}
             onPress={() => {
                 this.props.navigation.goBack();
             }}
             >
-            <LinearGradient
-            colors={["#3f87df", "#3f87df"]}
-            style={styles.login}
-        >
+           
              <FontAwesome name="arrow-left" size={20} color="black" 
             // style={{color: Colors.headerTextColor}}
                 />
-                    </LinearGradient>
         </TouchableOpacity>
         </Neomorph>
         </View>
@@ -362,14 +358,13 @@ render(){
                         height: perfectSize(56), width: perfectSize(56)}]}
                             >
                         <TouchableOpacity
-                            style={{paddingRight:150}}
                             onPress={()=> {this.setState({showModal:false})}}
                             >
                             {/* <LinearGradient
                             colors={["#e8634f", "#e8634f"]}
                             style={styles.login}
                         > */}
-                                <FontAwesome name="times" size={50} color="black" 
+                                <FontAwesome name="times" size={25} color="black" 
                             // style={{color: Colors.headerTextColor}}
                                 />
                                     {/* </LinearGradient> */}

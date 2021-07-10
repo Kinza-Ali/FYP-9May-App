@@ -3,6 +3,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import perfectSize from '../assets/themes/Screen';
+import Images from '../assets/themes/Images';
+import Colors from '../assets/themes/Colors';
+
 
 import HomeScreen from './HomeScreen';
 import Recipes from './Recipes';
@@ -29,14 +33,15 @@ const MainTabScreen = () => (
   <Tab.Navigator
     initialRouteName="HomeScreen"
     activeColor="#484C7F"
-    barStyle={{ backgroundColor: "black" }}
+    inactiveColor={Colors.gray}
   >
     <Tab.Screen
       name="HomeScreen"
       component={HomeStackScreen}
       options={{
         tabBarLabel: "Home",
-        tabBarColor: "#B9BBDF",
+        tabBarColor:Colors.containerBg,
+
         tabBarIcon: ({ color }) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
@@ -47,7 +52,8 @@ const MainTabScreen = () => (
       component={ProfileNew}
       options={{
         tabBarLabel: "Profile",
-        tabBarColor: "#B9BBDF",
+        tabBarColor:Colors.containerBg,
+
         tabBarIcon: ({ color }) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
@@ -58,7 +64,8 @@ const MainTabScreen = () => (
       component={Recipes}
       options={{
         tabBarLabel: "Recipes",
-        tabBarColor: "#B9BBDF",
+        tabBarColor:Colors.containerBg,
+
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="chef-hat" color={color} size={26} />
         ),
@@ -69,9 +76,10 @@ const MainTabScreen = () => (
       component={Blogs}
       options={{
         tabBarLabel: "Blogs",
-        tabBarColor: "#B9BBDF",
+        tabBarColor:Colors.containerBg,
+
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-book" color={color} size={26} />
+          <Icon name="ios-book" color={color} size={26}/>
         ),
       }}
     />

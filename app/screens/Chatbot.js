@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from "react";
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../env";
@@ -8,12 +8,17 @@ import uuid from "react-native-uuid";
 import asyncStorage from "@react-native-community/async-storage";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HomeScreen from "./HomeScreen";
 import axios from "axios";
 import Breakfast from "./Breakfast";
 import { color } from "react-native-reanimated";
 import { handleScheduleNotification } from "../../src/notification.ios";
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Images from '../assets/themes/Images';
+import Colors from '../assets/themes/Colors';
+
 
 //Bot Image
 const botAvatar = require("../assets/images/bot.png");
@@ -329,7 +334,7 @@ class Chatbot extends Component {
       msg = {
         // _id: this.state.messages.length + 1,
 
-        text: "Let me ask you some questions",
+        text: "Let me ask you some questions first.",
         createdAt: new Date().getTime(),
         user: BOT,
       };
@@ -337,23 +342,23 @@ class Chatbot extends Component {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
 
-        text: "When were you first diagnosed with diabetes?",
+        text: "What kind of diabetes type do you have?",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
           type: "radio",
           keepIt: true,
           values: [
-            { title: "Type1", value: "Type 1*1", _id: uuid.v4() },
-            { title: "Type2", value: "Type 2*2", _id: uuid.v4() },
-            { title: "Type3", value: "Type 3*3", _id: uuid.v4() },
+            { title: "Type1 (Diabetes Mellitus)", value: "Type 1*1", _id: uuid.v4() },
+            { title: "Type2 (Adult On-Set Diabetes)", value: "Type 2*2", _id: uuid.v4() },
+            { title: "Type3 (GDM-Gestational Diabetes Mellitus )", value: "Type 3*3", _id: uuid.v4() },
           ],
         },
       };
     } else if (text == "second question") {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
-        text: "Do you take insulin?",
+        text: "Do you take any external insulin injection?",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -368,7 +373,7 @@ class Chatbot extends Component {
     } else if (text == "third question") {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
-        text: "What’s your lifestyle like?",
+        text: "What’s your Lifestyle like?",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -376,7 +381,7 @@ class Chatbot extends Component {
           keepIt: true,
           values: [
             {
-              title: "Sedentary Lifestyle (0 mins)",
+              title: "Sedentary Lifestyle (Exercise for 0 mins)",
               value: "Sedentary Lifestyle (0 mins)*1",
               _id: uuid.v4(),
             },
@@ -401,7 +406,7 @@ class Chatbot extends Component {
     } else if (text == "fourth question") {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
-        text: "Have you had symptoms of high blood sugar lately? ",
+        text: "Have you had any symptoms of high blood sugar lately? ",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -424,7 +429,7 @@ class Chatbot extends Component {
     } else if (text == "fifth question") {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
-        text: "Style of eating:",
+        text: "What's your style of eating like?",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -432,17 +437,17 @@ class Chatbot extends Component {
           keepIt: true,
           values: [
             {
-              title: "All day",
+              title: "Eat all day",
               value: "All day*0",
               _id: uuid.v4(),
             },
             {
-              title: "Only when hungry",
+              title: "Eat only when hungry",
               value: "Only when hungry*1",
               _id: uuid.v4(),
             },
             {
-              title: "Fairly regular meal times",
+              title: "Eat at fairly regular meal times",
               value: "Fairly regular meal times*2",
               _id: uuid.v4(),
             },
@@ -452,7 +457,7 @@ class Chatbot extends Component {
     } else if (text == "sixth question") {
       msg = {
         //     //   // _id: this.state.messages.length + 1,
-        text: "	Do you check your blood sugar?  ",
+        text:"Do you check your blood sugar regularly? ",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -639,27 +644,27 @@ class Chatbot extends Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#fff" }}>
-        <View
-          style={{
-            marginTop: 20,
-            backgroundColor: "#B9BBDF",
-            height: 33,
-            borderTopLeftRadius: 5,
-            borderBottomRightRadius: 7,
-          }}
-        >
-          <TouchableOpacity
-            title="ChatBot"
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <FontAwesomeIcons
-              name="chevron-left"
-              color="black"
-              size={20}
-              style={{ marginTop: 7 }}
-            />
-          </TouchableOpacity>
+      <View style={{ flex: 1, backgroundColor: "#fff",
+      fontFamily:Colors.fontFamily }}>
+        <View style={{ paddingTop: 20,paddingLeft:10}}>
+        <Neomorph 
+        style={
+            [styles.BackIcons,
+        {borderRadius: perfectSize(30), 
+        height: perfectSize(56), width: perfectSize(56)}]}
+            >
+        <TouchableOpacity
+            // style={{paddingRight:150}}
+            onPress={() => {
+                this.props.navigation.goBack();
+            }}
+            >
+           
+             <FontAwesome name="arrow-left" size={20} color="black" 
+            // style={{color: Colors.headerTextColor}}
+                />
+        </TouchableOpacity>
+        </Neomorph>
         </View>
 
         <GiftedChat
@@ -674,3 +679,17 @@ class Chatbot extends Component {
 }
 
 export default Chatbot;
+
+const styles = StyleSheet.create({
+    
+  BackIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 5,
+    borderRadius: 23,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+
+});

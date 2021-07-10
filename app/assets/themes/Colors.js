@@ -10,6 +10,7 @@ export default Colors = {
     greenDotColor: '#5b9b6d',
     blackColor: '#000000',
     pastelPink:'#FFCDA4',
-    peach:'#C6B4CE'
+    peach:'#C6B4CE',
+    gray:'#C8C6C9'
     
 }

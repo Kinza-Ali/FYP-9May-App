@@ -11,4 +11,8 @@ export default Images = {
     DietPlan:require('../images/dietplan.png'),
     BMI:require('../images/bmi.png'),
     ToDo:require('../images/todo.png'),
+    Chatbot:require("../images/chatbot.png"),
+    Workouts:require("../images/workout.png"),
+    Nutritionist:require("../images/nutritionist.png"),
+    SuccessStories:require("../images/note-book.png")
 }
