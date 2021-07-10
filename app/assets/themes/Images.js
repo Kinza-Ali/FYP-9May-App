@@ -1,4 +1,5 @@
 export default Images = {
+    Bot:require("../images/bot.png"),
     Age:require ('../images/age.png'),
     Avatar:require('../images/avatar.png'),
     IBF:require('../images/ibf.png'),
@@ -24,4 +25,6 @@ export default Images = {
     Shoulders:require("../images/shoulder.png"),
     Facial:require("../images/face.png"),
     WarmUp:require("../images/warmup.png"),
+    Logout:require("../images/logout.png"),
+ 
 }

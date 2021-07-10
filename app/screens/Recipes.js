@@ -27,7 +27,7 @@ import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://d917a1207e2f.ngrok.io/api/recipes";
+const recipesUrl = "http://6d1af125ba51.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {

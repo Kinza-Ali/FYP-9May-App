@@ -21,12 +21,12 @@ import Colors from '../assets/themes/Colors';
 
 
 //Bot Image
-const botAvatar = require("../assets/images/bot.png");
+// const botAvatar = require("../assets/images/bot.png");
 //Bot User
 const BOT = {
   _id: 2,
   name: "Mr Bot",
-  avatar: botAvatar,
+  avatar: Images.Bot,
 };
 
 class Chatbot extends Component {

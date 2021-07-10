@@ -27,7 +27,7 @@ import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Avatar, Card } from "react-native-paper";
 // import AsyncStorage from '@react-native-community/async-storage';
-const blogUrl = "http://d917a1207e2f.ngrok.io/api/successStories";
+const blogUrl = "http://6d1af125ba51.ngrok.io/api/successStories";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
