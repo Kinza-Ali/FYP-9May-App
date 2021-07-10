@@ -4,7 +4,6 @@ import methods from "../connect/index";
 // import Clipboard from '@react-native-community/clipboard';
 import {
   Text,
-  SafeAreaView,
   View,
   Button,
   ActivityIndicator,
@@ -13,25 +12,28 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
-  Linking,
   Modal,
   TextInput,
+  Linking,
 } from "react-native";
+
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Colors from '../assets/themes/Colors';
+
 import LinearGradient from "react-native-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
-import { Card } from "react-native-paper";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-
-// import { handleScheduleNotification } from "../../src/notification.ios";
-// // import { deleteStory } from "./CrudApi";
-// // import AsyncStorage from '@react-native-community/async-storage';
-const baseUrl ='http://fca3858760ac.ngrok.io/api/blogs';
+import { Avatar, Card } from "react-native-paper";
+// import AsyncStorage from '@react-native-community/async-storage';
+const baseUrl = "http://6d1af125ba51.ngrok.io/api/blogs";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
+
 const OpenURLButton = ({ url, children }) => {
   const handlePress = useCallback(async () => {
     // Checking if the link is supported for links with custom URL scheme.
@@ -48,6 +50,8 @@ const OpenURLButton = ({ url, children }) => {
 
   return <Button title={children} onPress={handlePress} />;
 };
+
+
 export default function Blogs({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -56,13 +60,11 @@ export default function Blogs({ navigation }) {
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
   const [url, setUrl] = useState("");
-
-  const [showModal, setShowModal] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
   const [activeBlog, setActiveBlog] = React.useState("");
-
+  const [showModal, setShowModal] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   // Pull to refresh method
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -84,16 +86,14 @@ export default function Blogs({ navigation }) {
         setAdmin(adminState);
       }
     } catch (e) {
-      // alert("Failed to fetch the data from storage");
+      alert("Failed to fetch the data from storage");
     }
   };
-
-
   //fetching data from blogs api
   // console.log(isAdmin);
 
   useEffect(() => {
-    readData()
+    readData();
     fetch(baseUrl)
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -101,7 +101,6 @@ export default function Blogs({ navigation }) {
       .finally(setLoading(false));
   }, []);
 
-  //---------
   const updateStory = async (blog) => {
     blogUrl = url;
     var response = await methods.put("blogs/" + blog._id, {
@@ -117,8 +116,8 @@ export default function Blogs({ navigation }) {
   // //-------------- Add Story Method
   addStory = async () => {
     blogUrl = url;
+    console.log("============" + title + "==========" + paragraph+ "-----------" +blogUrl);
     await methods.post("blogs", { title, paragraph, blogUrl });
-
     console.log("============" + title + "==========" + paragraph);
   };
   //------------
@@ -128,103 +127,104 @@ export default function Blogs({ navigation }) {
     console.log(response)
   };
 
-  //-------------
   //............ SWIPEABLE
-  const leftSwipe = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: 'clamp',
-    });
-    return (
-      // <TouchableOpacity 
-      // // onPress={props.handleDelete} 
-      // activeOpacity={0.6}>
-      //   <View style={styles.deleteBox}>
-      //     <Animated.Text style={{transform: [{scale: scale}]}}>
-      //       Delete
-      //     </Animated.Text>
-      //    </View>
-      // </TouchableOpacity>
-      <View>
-      <TouchableOpacity
-        onPress={() => deleteRecipe(activeBlog._id)}
+const leftSwipe = (progress, dragX) => {
+  const scale = dragX.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+  return (
+    // <TouchableOpacity 
+    // // onPress={props.handleDelete} 
+    // activeOpacity={0.6}>
+    //   <View style={styles.deleteBox}>
+    //     <Animated.Text style={{transform: [{scale: scale}]}}>
+    //       Delete
+    //     </Animated.Text>
+    //    </View>
+    // </TouchableOpacity>
+    <View style={{marginTop: perfectSize(100)}}>
+    <View>
+    <TouchableOpacity
+      onPress={() => deleteRecipe(activeBlog._id)}
+    style={{
+      // backgroundColor: "#B9BBDF",
+      // width: 50,
+      // height:50,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: 20,
+      // borderRadius: 100,
+    }}
+  >
+    <FontAwesome name="trash" size={30} 
+    // style={{borderRadius:100, color:"#B9BBDF" }}
+      color="black" />
+  </TouchableOpacity>
+  </View>
+  
+  <View style={{marginTop: perfectSize(30)}}>
+  <TouchableOpacity
+      onPress={() => {
+                setActiveBlog(item)
+                setShowModalUpdate(true)
+              }}
       style={{
-        backgroundColor: "#B9BBDF",
+        // backgroundColor: "#B9BBDF",
         // width: 50,
         // height:50,
         justifyContent: "center",
         alignItems: "center",
-        // padding: 10,
+        paddingLeft: 20,
         // borderRadius: 100,
       }}
     >
-      <FontAwesome name="trash" size={25} 
+      <FontAwesome name="edit" size={30} 
       // style={{borderRadius:100, color:"#B9BBDF" }}
         color="black" />
     </TouchableOpacity>
-    <TouchableOpacity
-        onPress={() => {
-                  setActiveBlog(item)
-                  setShowModalUpdate(true)
-                }}
-        style={{
-          backgroundColor: "#B9BBDF",
-          // width: 50,
-          // height:50,
-          justifyContent: "center",
-          alignItems: "center",
-          // padding: 10,
-          // borderRadius: 100,
-        }}
-      >
-        <FontAwesome name="edit" size={25} 
-        // style={{borderRadius:100, color:"#B9BBDF" }}
-          color="black" />
-      </TouchableOpacity>
-      </View>
-    );
-  };
-
+    </View>
+    </View>
+  );
+};
 
   return (
-    <View style={{ flex: 1 }}>
-      
-        <View style={styles.container}>
-          <View
-            style={{
-              marginHorizontal: 10,
-              marginTop: 40,
-              marginBottom: 20,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
-            >
-              <FontAwesome name="chevron-left" size={20} color="black" />
-            </TouchableOpacity>
-            <Text
-              style={{
-                color: "black",
-                fontSize: 20,
-                fontFamily: "IowanOldStyle-Roman",
-              }}
-            >
-              Blogs
-            </Text>
-            <View />
-          </View>
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    <View style={styles.container}>
+
+      <View style={styles.drawerHeader}>
+            <Neomorph 
+            style={
+                [styles.BackIcons,
+            {borderRadius: perfectSize(30), 
+            height: perfectSize(56), 
+            width: perfectSize(56)  }]}
+                >
+                <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <FontAwesome name="arrow-left" size={20} color="black" />
+              </TouchableOpacity>
+                  
+            </Neomorph>  
+                <Text style={{color: Colors.defaultDark, 
+                fontWeight: 'bold',
+                fontFamily:Colors.fontFamily,
+                paddingRight:150,
+                fontSize:25
+                }}> Blogs
+                </Text>
+        </View>
+
+  {/* // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
 
           
-            <View style={styles.container}>
-
-              <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-                {isAdmin ? (
+            {/* <Animatable.View animation="fadeInUpBig" style={styles.footer}> */}
+            {isAdmin ? (
                   <View>
                     <View
                       style={{
@@ -237,7 +237,7 @@ export default function Blogs({ navigation }) {
                       <TouchableOpacity
                         onPress={() => setShowModal(true)}
                         style={{
-                          backgroundColor: "#B9BBDF",
+                          // backgroundColor: "#B9BBDF",
                           width: 60,
                           height: 60,
                           justifyContent: "center",
@@ -246,7 +246,14 @@ export default function Blogs({ navigation }) {
                           borderRadius: 100,
                         }}
                       >
+                         <Neomorph 
+                            darkShadowColor={Colors.blackColor}
+                            // lightShadowColor='white'
+                            swapShadows
+                            style={styles.headerEndSection}
+                            >
                         <FontAwesome name="plus" size={30} color="black" />
+                        </Neomorph>
                       </TouchableOpacity>
                     </View>
                     <Modal
@@ -260,37 +267,36 @@ export default function Blogs({ navigation }) {
                                   paddingLeft: 40,
                                 }}
                               >
-                              <View style={{
-                              flexDirection:'row'
-                            }}>
-                              <TouchableOpacity
+                          
+                    <View style={styles.drawerHeader}>
+                              <Neomorph 
+                              style={
+                                  [styles.BackIcons,
+                              {borderRadius: perfectSize(30), 
+                              height: perfectSize(56), 
+                              width: perfectSize(56)  }]}
+                                  >
+                                  <TouchableOpacity
                                   onPress={() => setShowModalUpdate(false)}
-                                  style={{
-                                    backgroundColor: "#484C7F",
-                                    width: 30,
-                                    height: 30,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    // padding: 10,
-                                    borderRadius: 100,
-                                    marginTop:35,
-                                    marginRight:5
-                                  }}
                                 >
-                                 <FontAwesome name="arrow-circle-left" size={25} color="white" />
+                                  <FontAwesome name="arrow-left" size={20} color="black" />
                                 </TouchableOpacity>
-
-                                <Text style={styles.textSignModal}>
-                                  Edit Story
-                                </Text>
-                                </View>
-
+                                    
+                              </Neomorph>  
+                                  <Text style={{color: Colors.defaultDark, 
+                                  fontWeight: 'bold',
+                                  fontFamily:Colors.fontFamily,
+                                  paddingRight:80,
+                                  fontSize:25
+                                  }}> Edit Blog
+                                  </Text>
+                          </View>
                                 <View style={styles.action}>
                                   <TextInput
                                     placeholder={activeBlog.title}
                                     defaultValue={activeBlog.title}
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily: Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -307,7 +313,7 @@ export default function Blogs({ navigation }) {
                                   <TextInput
                                     placeholder="Add paragraph"
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily: Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -317,26 +323,6 @@ export default function Blogs({ navigation }) {
                                     onChangeText={(text) => {
                                       let objectLol = {...activeBlog}
                                       objectLol.paragraph = text
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    style={{
-                                      fontFamily: "IowanOldStyle-Roman",
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={activeBlog.blogUrl}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.blogUrl = text
-                                      console.log("TESTING ********")
-                                      console.log(objectLol)
-                                      console.log("TESTING ********")
                                       setActiveBlog(objectLol);
                                     }}
                                   />
@@ -368,7 +354,7 @@ export default function Blogs({ navigation }) {
                                         styles.textSign,
                                         {
                                           color: "white",
-                                          fontFamily: "IowanOldStyle-Roman",
+                                          fontFamily: Colors.fontFamily,
                                         },
                                       ]}
                                     >
@@ -381,47 +367,45 @@ export default function Blogs({ navigation }) {
                               </ScrollView>
                             </Modal>
 
-            {/* ADD BLOGS MODAL */}
+            {/* ADD Blogs MODAL */}
 
                     <Modal visible={showModal} transparent={false}>
                       <ScrollView
                         style={{
                           width: "100%",
                           height: "30%",
-
                           alignSelf: "center",
                         }}
                       >
-                      <View style={{
-                              flexDirection:'row',
-                              marginLeft:10
-                            }}>
-                              <TouchableOpacity
+                      <View style={styles.drawerHeader}>
+                              <Neomorph 
+                              style={
+                                  [styles.BackIcons,
+                              {borderRadius: perfectSize(30), 
+                              height: perfectSize(56), 
+                              width: perfectSize(56)  }]}
+                                  >
+                                  <TouchableOpacity
                                   onPress={() => setShowModal(false)}
-                                  style={{
-                                    backgroundColor: "#484C7F",
-                                    width: 30,
-                                    height: 30,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    // padding: 10,
-                                    borderRadius: 100,
-                                    marginTop:35,
-                                    marginRight:5
-                                  }}
                                 >
-                                 <FontAwesome name="arrow-circle-left" size={25} color="white" />
+                                  <FontAwesome name="arrow-left" size={20} color="black" />
                                 </TouchableOpacity>
-
-                                <Text style={styles.textSignModal}>
-                                  Add Story
-                                </Text>
-                                </View>
+                                    
+                              </Neomorph>  
+                                  <Text style={{color: Colors.defaultDark, 
+                                  fontWeight: 'bold',
+                                  fontFamily:Colors.fontFamily,
+                                  paddingRight:120,
+                                  fontSize:25
+                                  }}> Add Blog
+                                  </Text>
+                          </View>
+                      
                         <View style={styles.action}>
                           <TextInput
                             placeholder="Add title"
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -437,7 +421,7 @@ export default function Blogs({ navigation }) {
                           <TextInput
                             placeholder="Add paragraph"
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily:Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -451,7 +435,7 @@ export default function Blogs({ navigation }) {
                         <View style={styles.action}>
                           <TextInput
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -488,8 +472,8 @@ export default function Blogs({ navigation }) {
                                 styles.textSign,
                                 {
                                   color: "white",
-                                  fontFamily: "IowanOldStyle-Roman",
-                                  // paddingLeft: 20,
+                                  fontFamily: Colors.fontFamily,
+                                  // padding: 20,
                                 },
                               ]}
                             >
@@ -498,168 +482,114 @@ export default function Blogs({ navigation }) {
                             </Text>
                           </LinearGradient>
                         </TouchableOpacity>
+                        
                       </ScrollView>
                     </Modal>
                   </View>
                 ) : (
                   <Text> </Text>
                 )}
-                {loading ? (
-                  <ActivityIndicator />
-                ) : (
-                  <FlatList
-                    data={data}
-                    refreshControl={
+              {loading ? (
+                <ActivityIndicator />
+              ) : (
+                
+                <FlatList
+                  data={data}
+                  refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-                    keyExtractor={({ id }, index) => id}
-                    renderItem={({ item }) => (
-                      <View> 
-
-                      {isAdmin ? 
-                      (
+                  keyExtractor={({ id }, index) => id}
+                  renderItem={({ item }) => (
+                    
+                    <View>
+                      {isAdmin? (
                         <Swipeable renderLeftActions={leftSwipe}>
-                        <Card>
-                        <Text style={styles.textSign}>
-                          {item.title}
-                          
-                        </Text>
-
-                        <Text style={styles.InputField}>
-                          {item.paragraph}
-                        </Text>
-                        <OpenURLButton url={item.blogUrl}>
-                          Read More...
-                        </OpenURLButton>
-                        <Text> {"\n"}</Text>
-                        </Card>
-                        </Swipeable>
-                      )
-                      :
-                      (
-                        <Card>
-                        <Text style={styles.textSign}>
-                          {item.title}
-                        
-                        </Text>
-
-                        <Text style={styles.InputField}>
-                          {item.paragraph}
-                  
-                        </Text>
-                        <OpenURLButton url={item.blogUrl}>
-                          Read More...
-                        </OpenURLButton>
-                        <Text> {"\n"}</Text>
-                        </Card>
-                        )}
+                        <ScrollView>
+        
+        <View style={{marginTop: perfectSize(50)}}>
+          <View>
+          
+            <View style={styles.cardDesigns}>    
+                      <Neomorph 
+                      // lightShadowColor="#D0E6A5"
+                      // darkShadowColor="#D0E6A5" // <- set this
+                          swapShadows
+                          style={styles.menuItems}
+                      >
+                     <View style={{flexDirection:'row', paddingLeft:20, marginTop:15}}>
+                        <View>
+                      <Text style={styles.textSign}>{item.title} 
+                       </Text>
                        
-                        {/* {isAdmin ? (
-                          <View
-                            style={[
-                              {
-                                // flexDirection: "row",
-                                marginTop: 10,
-                                // padding: 20,
-                              },
-                            ]}
-                          >
-                            <View
-                              style={
-                                {
-                                  // flex: 2,
-                                }
-                              }
-                            >
-                              <TouchableOpacity
-                                onPress={() => {
-                                  setActiveBlog(item)
-                                  setShowModalUpdate(true)
-                                }}
-                                style={[
-                                  styles.signUp,
-                                  {
-                                    borderColor: "#484C7F",
-                                    alignItems: "flex-end",
-                                  },
-                                ]}
-                              >
-                                <LinearGradient
-                                  colors={["#484C7F", "#484C7F"]}
-                                  style={styles.login}
-                                >
-                                  <Text
-                                    style={[
-                                      styles.textSigns,
-                                      { color: "white" },
-                                    ]}
-                                  >
-                                    {" "}
-                                    Edit{" "}
-                                  </Text>
-                                </LinearGradient>
-                              </TouchableOpacity>
-                            </View>
-                            
-
-                            <View
-                              style={{
-                                // flex: 1,
-
-                                paddingLeft: 20,
-                              }}
-                            >
-                              <TouchableOpacity
-                                onPress={() => deleteStory(activeBlog._id)}
-                                style={[
-                                  styles.signUp,
-                                  {
-                                    borderColor: "#484C7F",
-                                    alignItems: "flex-end",
-                                    marginTop: 20,
-                                  },
-                                ]}
-                              >
-                                <LinearGradient
-                                  colors={["#484C7F", "#484C7F"]}
-                                  style={styles.login}
-                                >
-                                  <Text
-                                    style={[
-                                      styles.textSign,
-                                      { color: "white" },
-                                    ]}
-                                  >
-                                    {" "}
-                                    Delete{" "}
-                                  </Text>
-                                </LinearGradient>
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        ) : (
-                          <Text></Text>
-                        )} */}
+                      <Text style={styles.InputField}>
+                        {item.paragraph}
+                        {"\n"}
+                      </Text>
+                      <OpenURLButton url={item.blogUrl}>
+                          Read More...
+                        </OpenURLButton>
+                        <Text> {"\n"}</Text>
                       </View>
-                    )}
-                  />
-                )}
-              </Animatable.View>
-            </View>
+                      </View>
+                  </Neomorph>        
+        </View>                      
         </View>
+        </View>
+        </ScrollView>
+        </Swipeable>
+      )
+                      :(
+                        <ScrollView>
+                  <View style={{marginTop: perfectSize(30)}}>
+                   <View>
+                   <View style={styles.cardDesigns}>    
+                      <Neomorph 
+                      // lightShadowColor="#D0E6A5"
+                      // darkShadowColor="#D0E6A5" // <- set this
+                          swapShadows
+                          style={styles.menuItems}
+                      >
+                     <View style={{flexDirection:'row', paddingLeft:20, marginTop:15}}>
+                       <View>
+                      <Text style={styles.textSign}>{item.title} 
+                       </Text>
+                       
+                      <Text style={styles.InputField}>
+                        {item.paragraph}
+                        {"\n"}
+                      </Text>
+                      <OpenURLButton url={item.blogUrl}>
+                          Read More...
+                        </OpenURLButton>
+                        <Text> {"\n"}</Text>
+                      </View>
+                      </View>
+                  </Neomorph>        
+        </View>                      
+</View> 
+          </View>
+        </ScrollView>
+        )}
+                    </View>
+                 )}
+                />
+              )} 
+            {/* </Animatable.View> */}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B9BBDF",
+    backgroundColor: Colors.containerBg,
+    fontFamily:Colors.fontFamily
   },
   header: {
     flex: 1,
-    // justifyContent: "flex-end",
+    justifyContent: "flex-end",
     paddingHorizontal: 10,
-    // paddingBottom: 10,
+    paddingBottom: 10,
   },
   footer: {
     flex: 3,
@@ -680,11 +610,12 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: "row",
-    marginTop: 0,
-    borderBottomWidth: 1,
+    marginTop: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: "#484C7F",
+    paddingBottom: 2,
+    // paddingTop:40,
     alignSelf: "center",
-    borderBottomColor: "#5f9ea0",
-    paddingBottom: 5,
   },
   textInput: {
     flex: 1,
@@ -713,10 +644,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "center",
-    paddingLeft: 10,
+    // alignSelf: "center",
+    // paddingLeft: 10,
     paddingRight: 10,
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   textSigns: {
     fontSize: 20,
@@ -724,7 +655,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
+  },
+  modalButton: {
+    width: 120,
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   signUp: {
     width: "150%",
@@ -739,57 +679,198 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#5f9ea0",
   },
-  InputField: {
+  InputFields: {
     fontSize: 18,
-    marginTop: 10,
-    // marginBottom: 10,
+    marginTop: 40,
+    marginBottom: 30,
     marginLeft: 30,
-    lineHeight: 25,
-    fontFamily: "IowanOldStyle-Roman",
-  },
-  button: {
-    alignItems: "center",
-    marginTop: 20,
-  },
-  modalButton: {
-    width: 120,
-    height: 55,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  selectButton: {
-    width: 160,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    paddingLeft: 15,
-    paddingRight: 10,
-    alignSelf: "center",
-    paddingBottom: -80,
+    fontFamily:Colors.fontFamily,
   },
   textSignModal: {
     fontSize: 25,
     fontWeight: "bold",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     paddingRight: 20,
-    paddingLeft:100,
     marginBottom: 10,
     marginTop: 35,
-    fontFamily: "IowanOldStyle-Roman",
+    paddingLeft:10,
+    fontFamily: Colors.fontFamily,
     alignSelf: "center",
   },
-  action: {
-    flexDirection: "row",
-    marginTop: 5,
-    borderBottomWidth: 2,
-    borderBottomColor: "#484C7F",
-    paddingBottom: 2,
-    // paddingTop:40,
-    alignSelf: "center",
-  },
+
+
+
+// NEW................................................
+  
+drawerHeader: {
+  height: perfectSize(50),
+  width: '100%',
+  marginTop: perfectSize(50),
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingLeft:20,
+  justifyContent: 'space-between'
+},
+user :{
+  height: perfectSize(50),
+  width: '100%',
+  // marginTop: perfectSize(50),
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-evenly'
+},
+headerText: {
+  color: Colors.defaultDark,
+  fontSize: perfectSize(15),
+  alignSelf:'center'
+},
+headerEndSection: {
+  height: perfectSize(60), 
+  width: perfectSize(60), 
+  borderRadius: perfectSize(30),
+  backgroundColor: '#B9BBDF', 
+  shadowRadius: 20, 
+  // borderRadius: perfectSize(23),
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-evenly'
+},
+headerNotificationIcon: {
+  height: perfectSize(25),
+  width: perfectSize(25), 
+  tintColor: Colors.defaultDark
+},
+dot: {
+  height: 10,
+  width: 10, 
+  borderRadius: 23, 
+},
+headerDate: {
+  fontFamily: Colors.fontFamily,
+  color: Colors.defaultDark,
+  fontSize: perfectSize(22),
+  // textAlign: 'right',
+  right: perfectSize(60),
+  // marginTop: perfectSize(23)
+},
+menuItems: {
+  height: perfectSize(240),
+  width: perfectSize(380),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 6,
+  borderRadius: 23,
+  // alignItems: 'center',
+  borderColor:Colors.defaultDark,
+  borderRadius: 23,
+  // borderWidth:1
+},
+menuItemsSnacks:{
+  height: perfectSize(120),
+  width: perfectSize(400),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 12,
+  borderRadius: 23,
+  // alignItems: 'center',
+  borderColor:Colors.defaultDark,
+  borderRadius: 23,
+  // borderWidth:1
+},
+menuIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+ModalIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.backgroundColor,
+  // shadowRadius: 10,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+BackIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 5,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+crossIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.redDotColor,
+  shadowRadius: 5,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+ageIcons: {
+  height: perfectSize(50),
+  width: perfectSize(100),
+  borderRadius: perfectSize(18),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  flexDirection:'row',
+},
+icon: {
+  height: perfectSize(25),
+  width: perfectSize(25),
+  marginBottom:4
+},
+Modalicon: {
+  height: perfectSize(150),
+  width: perfectSize(150),
+  marginBottom:4,
+  marginTop:100,
+  borderRadius:150,
+  borderColor:'#D7E1F3',
+  borderWidth:10
+},
+dietIcon:{
+  height: perfectSize(60),
+  width: perfectSize(60),
+  marginBottom:4 
+},
+textIcon: {
+  fontFamily:Colors.fontFamily,
+  fontWeight: 'bold',
+   fontSize: perfectSize(22),
+    marginTop: perfectSize(5)
+},
+
+footer: {
+  height: perfectSize(50),
+  width: perfectSize(300),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  borderRadius: 23,
+  marginTop: perfectSize(23),
+  alignSelf: 'center',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  flexDirection: 'row'
+},
+footerIcon: {
+  height: perfectSize(18),
+  width: perfectSize(18),
+  tintColor: Colors.headerTextColor
+},
+cardDesigns: {
+flexDirection: 'row', 
+alignItems: 'center',
+justifyContent: 'space-around',
+marginBottom: perfectSize(20)
+}
+
+
 });

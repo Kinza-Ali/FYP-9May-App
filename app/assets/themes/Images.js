@@ -14,5 +14,14 @@ export default Images = {
     Chatbot:require("../images/chatbot.png"),
     Workouts:require("../images/workout.png"),
     Nutritionist:require("../images/nutritionist.png"),
-    SuccessStories:require("../images/note-book.png")
+    SuccessStories:require("../images/note-book.png"),
+    Blogs:require("../images/blogs.png"),
+    Recipes:require("../images/recepie.png"),
+    Abs:require("../images/abs.png"),
+    FullBody:require("../images/full.png"),
+    Arms:require("../images/arm.png"),
+    Legs:require("../images/legs.png"),
+    Shoulders:require("../images/shoulder.png"),
+    Facial:require("../images/face.png"),
+    WarmUp:require("../images/warmup.png"),
 }

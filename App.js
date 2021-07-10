@@ -17,8 +17,18 @@ import Recipes from "./app/screens/Recipes";
 import SuccessStories from "./app/screens/SuccessStories";
 import SignUp from "./app/screens/Signup";
 import HomePage from "./app/screens/HomePage";
+import FullBody from './app/screens/FullBody';
+import Arms from './app/screens/Arms';
+import Abs from './app/screens/Abs';
+import Facial from './app/screens/Facial';
+import Legs from './app/screens/Legs';
+import WarmUp from './app/screens/WarmUp';
+import Shoulders from './app/screens/Shoulders';
+import Workouts from './app/screens/Workouts';
+import Nutritionists from './app/screens/Nutritionists';
 // ADMIN SCREENS FOR NAV ********
 import AdminScreen from "./app/screens/AdminScreen";
+
 
 
 const RootStack = createStackNavigator();
@@ -62,6 +72,19 @@ export default function App() {
         {/* ******** USER SCREENS ******** */}
         <RootStack.Screen name="AdminScreen" component={AdminStack} />
         <RootStack.Screen name="UserScreens" component={UserScreens} />
+        <RootStack.Screen name="Recipes" component={Recipes} />
+        <RootStack.Screen name="Blogs" component={Blogs} />
+        <RootStack.Screen name="Nutritionists" component={Nutritionists} />
+        <RootStack.Screen name="SuccessStories" component={SuccessStories} />
+        <RootStack.Screen name="Workouts" component={Workouts} />
+        {/* ************ Workouts *********** */}
+        <RootStack.Screen name="FullBody" component={FullBody} />
+        <RootStack.Screen name="WarmUp" component={WarmUp} />
+        <RootStack.Screen name="Facial" component={Facial} />
+        <RootStack.Screen name="Legs" component={Legs} />
+        <RootStack.Screen name="Arms" component={Arms} />
+        <RootStack.Screen name="Shoulders" component={Shoulders} />
+        <RootStack.Screen name="Abs" component={Abs} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

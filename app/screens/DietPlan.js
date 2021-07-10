@@ -5,25 +5,14 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  RefreshControl,
   ImageBackground,
-  Image
 } from "react-native";
-import Breakfast from "./Breakfast";
-import axios from "axios";
-
 import { Neomorph } from 'react-native-neomorph-shadows';
 import perfectSize from '../assets/themes/Screen';
-import Images from '../assets/themes/Images';
 import Colors from '../assets/themes/Colors';
-
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import asyncStorage from "@react-native-community/async-storage";
-// import Card from "../assets/Card";
-import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 export default class DietPlan extends Component {
   state = {
     Breakfast: [],
@@ -358,213 +347,7 @@ export default class DietPlan extends Component {
                         
                       </Neomorph>        
                       </View>
-</View>
-
-{/* ********************************************************************* */}
-
-            {/* <Text>{this.state.email}</Text> */}
-              {/* <Card
-                style={{
-                  borderRadius: 10,
-                  paddingTop: 10,
-                  paddingLeft: 5,
-                  backgroundColor: "#B9BBDF",
-                  marginBottom: 15,
-                  marginTop: 30,
-                  marginLeft: 20,
-                  marginRight: 20,
-                }}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      fontFamily: "IowanOldStyle-Roman",
-                      color: "#484C7F",
-                      paddingLeft: 10,
-                      fontWeight: "bold",
-                    },
-                  ]}
-                >
-                  {" "}
-                  Breakfast{" "}
-                </Text>
-
-                {Object.keys(this.state.dietPlan).length > 0
-                  ? Object.keys(this.state.dietPlan.Breakfast).map((item) => {
-                      if (this.state.dietPlan.Breakfast[item])
-                        return (
-                          <View>
-                            <Text
-                              style={{
-                                margin: 10,
-                                fontFamily: "IowanOldStyle-Roman",
-                              }}
-                            >
-                              {"• " +
-                                item +
-                                "    " +
-                                this.state.dietPlan.Breakfast[item] +
-                                "     " +
-                                "grams"}
-                            </Text>
-                          </View>
-                        );
-                    })
-                  : undefined}
-              </Card> */}
-              {/* <Card
-                style={{
-                  borderRadius: 10,
-                  paddingTop: 10,
-                  paddingLeft: 5,
-                  backgroundColor: "#B9BBDF",
-                  marginBottom: 15,
-                  marginTop: 10,
-                  marginRight: 20,
-                  marginLeft: 20,
-                }}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      fontFamily: "IowanOldStyle-Roman",
-                      color: "#484C7F",
-                      fontWeight: "bold",
-                      paddingLeft: 10,
-                    },
-                  ]}
-                >
-                  {" "}
-                  Snacks{" "}
-                </Text>
-
-                {Object.keys(this.state.dietPlan).length > 0
-                  ? Object.keys(this.state.dietPlan.Snacks).map((item) => {
-                      if (this.state.dietPlan.Snacks[item])
-                        return (
-                          <Text
-                            style={{
-                              margin: 10,
-                              fontFamily: "IowanOldStyle-Roman",
-                            }}
-                          >
-                            {"•	 " +
-                              item +
-                              "   " +
-                              this.state.dietPlan.Snacks[item] +
-                              " " +
-                              "grams"}
-                          </Text>
-                        );
-                    })
-                  : undefined}
-              </Card> */}
-              {/* <Card
-                style={{
-                  borderRadius: 10,
-                  paddingTop: 10,
-                  paddingLeft: 5,
-                  backgroundColor: "#B9BBDF",
-                  marginBottom: 15,
-                  marginTop: 10,
-                  marginLeft: 20,
-                  marginRight: 20,
-                }}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      fontFamily: "IowanOldStyle-Roman",
-                      color: "#484C7F",
-                      fontWeight: "bold",
-                      paddingLeft: 10,
-                    },
-                  ]}
-                >
-                  {" "}
-                  Lunch{" "}
-                </Text>
-
-                {Object.keys(this.state.dietPlan).length > 0
-                  ? Object.keys(this.state.dietPlan.Lunch).map((item) => {
-                      if (this.state.dietPlan.Lunch[item])
-                        return (
-                          <Text
-                            style={{
-                              margin: 10,
-                              fontFamily: "IowanOldStyle-Roman",
-                            }}
-                          >
-                            {"•	 " +
-                              item +
-                              "   " +
-                              this.state.dietPlan.Lunch[item] +
-                              " " +
-                              "grams"}
-                          </Text>
-                        );
-                    })
-                  : undefined}
-              </Card> */}
-
-              {/* <Card
-                style={{
-                  borderRadius: 10,
-                  paddingTop: 10,
-                  paddingLeft: 5,
-                  backgroundColor: "#B9BBDF",
-                  marginBottom: 15,
-                  marginTop: 10,
-                  marginLeft: 20,
-                  marginRight: 20,
-                }}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      fontSize: 20,
-                      fontFamily: "IowanOldStyle-Roman",
-                      color: "#484C7F",
-                      // color: "white",
-                      fontWeight: "bold",
-                      paddingLeft: 10,
-                    },
-                  ]}
-                >
-                  {" "}
-                  Dinner{" "}
-                </Text>
-                {/* </Card> */}
-
-                {/* {Object.keys(this.state.dietPlan).length > 0
-                  ? Object.keys(this.state.dietPlan.Dinner).map((item) => {
-                      if (this.state.dietPlan.Dinner[item])
-                        return (
-                          <Text
-                            style={{
-                              margin: 10,
-                              fontFamily: "IowanOldStyle-Roman",
-                            }}
-                          >
-                            {"•	 " +
-                              item +
-                              "  " +
-                              this.state.dietPlan.Dinner[item] +
-                              " " +
-                              "grams"}
-                          </Text>
-                        );
-                    })
-                  : undefined}
-              </Card> */} 
-
-{/* **************************************************************** */}
-
-            
+</View>          
           {/* </Animatable.View> */}
           </View>
         </ScrollView>
@@ -574,6 +357,7 @@ export default class DietPlan extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

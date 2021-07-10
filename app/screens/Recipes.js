@@ -16,6 +16,10 @@ import {
   TextInput,
   Animated
 } from "react-native";
+
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Colors from '../assets/themes/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Animatable from "react-native-animatable";
@@ -23,7 +27,7 @@ import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://fca3858760ac.ngrok.io/api/recipes";
+const recipesUrl = "http://d917a1207e2f.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -145,42 +149,47 @@ const leftSwipe = (progress, dragX) => {
     //     </Animated.Text>
     //    </View>
     // </TouchableOpacity>
+    <View style={{marginTop: perfectSize(50)}}>
     <View>
     <TouchableOpacity
       onPress={() => deleteRecipe(activeBlog._id)}
     style={{
-      backgroundColor: "#B9BBDF",
-      width: 50,
-      height:50,
+      // backgroundColor: "#B9BBDF",
+      // width: 50,
+      // height:50,
       justifyContent: "center",
       alignItems: "center",
-      // padding: 10,
+      paddingLeft: 20,
       // borderRadius: 100,
     }}
   >
-    <FontAwesome name="trash" size={25} 
+    <FontAwesome name="trash" size={30} 
     // style={{borderRadius:100, color:"#B9BBDF" }}
       color="black" />
   </TouchableOpacity>
+  </View>
+  
+  <View style={{marginTop: perfectSize(40)}}>
   <TouchableOpacity
       onPress={() => {
                 setActiveBlog(item)
                 setShowModalUpdate(true)
               }}
       style={{
-        backgroundColor: "#B9BBDF",
-        width: 50,
-        height:50,
+        // backgroundColor: "#B9BBDF",
+        // width: 50,
+        // height:50,
         justifyContent: "center",
         alignItems: "center",
-        // padding: 10,
+        paddingLeft: 20,
         // borderRadius: 100,
       }}
     >
-      <FontAwesome name="edit" size={25} 
+      <FontAwesome name="edit" size={30} 
       // style={{borderRadius:100, color:"#B9BBDF" }}
         color="black" />
     </TouchableOpacity>
+    </View>
     </View>
   );
 };
@@ -204,71 +213,62 @@ const rightSwipe = (progress, dragX) => {
     //    </View>
     // </TouchableOpacity>
     <View 
-    // style={styles.button}
+    style={{marginTop: perfectSize(90)}}
     >
       <TouchableOpacity onPress={() => {
       setActiveRecipe(item)
       setShowModalRecipe(true)}}
       style={{
         // backgroundColor: "#B9BBDF",
-        width: 100,
-        height:100,
+        // width: 100,
+        // height:100,
         justifyContent: "center",
         alignItems: "center",
+        paddingRight: 20,
         // padding: 10,
         // borderRadius: 100,
       }}
       >
-        <LinearGradient
-          colors={["#B9BBDF", "#B9BBDF"]}
-          // style={styles.selectButton}
-        >
-          <Text style={[styles.textSign, { color: "black" }]}>
+      <FontAwesome name="eye" size={30} 
+    // style={{borderRadius:100, color:"#B9BBDF" }}
+      color="black" />
+          {/* <Text style={[styles.textSign, { color: "black" }]}>
             Show Recipe
-          </Text>
-        </LinearGradient>
+          </Text> */}
       </TouchableOpacity>
     </View>
   );
 };
 
   return (
-    <View style={{flex:1}}>
+    
         <View style={styles.container}>
-          <View
-            style={{
-              marginHorizontal: 10,
-              marginTop: 40,
-              marginBottom: 20,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
-            >
-              <FontAwesome name="chevron-left" size={20} color="black" />
-            </TouchableOpacity>
-            <Text
-              style={{
-                color: "black",
-                fontSize: 20,
-                marginRight: 140,
-                // alignSelf:"center",
-                fontFamily: "IowanOldStyle-Roman",
-              }}
-            >
-              Recipes
-            </Text>
-          </View>
-
-            <View style={styles.container}>
-            {/* <View style={styles.header}></View> */}
-
-            <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+          
+          <View style={styles.drawerHeader}>
+            <Neomorph 
+            style={
+                [styles.BackIcons,
+            {borderRadius: perfectSize(30), 
+            height: perfectSize(56), 
+            width: perfectSize(56)  }]}
+                >
+                <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <FontAwesome name="arrow-left" size={20} color="black" />
+              </TouchableOpacity>
+                  
+            </Neomorph>  
+                <Text style={{color: Colors.defaultDark, 
+                fontWeight: 'bold',
+                fontFamily:Colors.fontFamily,
+                paddingRight:140,
+                fontSize:25
+                }}> Recipes
+                </Text>
+        </View>
             {isAdmin ? (
               <View>
                     <View
@@ -305,15 +305,36 @@ const rightSwipe = (progress, dragX) => {
                                   paddingLeft: 40,
                                 }}
                               >
-                                <Text style={styles.textSignModal}>
-                                  Edit Recipe
-                                </Text>
+                              <View style={styles.drawerHeader}>
+                              <Neomorph 
+                              style={
+                                  [styles.BackIcons,
+                              {borderRadius: perfectSize(30), 
+                              height: perfectSize(56), 
+                              width: perfectSize(56)  }]}
+                                  >
+                                  <TouchableOpacity
+                                  onPress={() => setShowModalUpdate(false)}
+                                >
+                                  <FontAwesome name="arrow-left" size={20} color="black" />
+                                </TouchableOpacity>
+                                    
+                              </Neomorph>  
+                                  <Text style={{color: Colors.defaultDark, 
+                                  fontWeight: 'bold',
+                                  fontFamily:Colors.fontFamily,
+                                  paddingRight:80,
+                                  fontSize:25
+                                  }}> Edit Recipes
+                                  </Text>
+                          </View>
+                                
                                 <View style={styles.action}>
                                   <TextInput
                                     placeholder={activeBlog.dishName}
                                     defaultValue={activeBlog.dishName}
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily: Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -330,7 +351,7 @@ const rightSwipe = (progress, dragX) => {
                                   <TextInput
                                     placeholder="Add Ingredients"
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily:Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -347,7 +368,7 @@ const rightSwipe = (progress, dragX) => {
                                 <View style={styles.action}>
                                   <TextInput
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily: Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -367,7 +388,7 @@ const rightSwipe = (progress, dragX) => {
                                 <View style={styles.action}>
                                   <TextInput
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily:Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -387,7 +408,7 @@ const rightSwipe = (progress, dragX) => {
                                 <View style={styles.action}>
                                   <TextInput
                                     style={{
-                                      fontFamily: "IowanOldStyle-Roman",
+                                      fontFamily: Colors.fontFamily,
                                       fontSize: 20,
                                       paddingBottom: 20,
                                       paddingTop: 20,
@@ -431,7 +452,7 @@ const rightSwipe = (progress, dragX) => {
                                         styles.textSign,
                                         {
                                           color: "white",
-                                          fontFamily: "IowanOldStyle-Roman",
+                                          fontFamily: Colors.fontFamily,
                                         },
                                       ]}
                                     >
@@ -440,27 +461,7 @@ const rightSwipe = (progress, dragX) => {
                                     </Text>
                                   </LinearGradient>
                                 </TouchableOpacity>
-                                <View style={styles.button}>
-                                  <TouchableOpacity
-                                    style={{ marginTop: 20 }}
-                                    onPress={() => setShowModalUpdate(false)}
-                                  >
-                                    <LinearGradient
-                                      colors={["#484C7F", "#484C7F"]}
-                                      style={styles.modalButton}
-                                    >
-                                      <Text
-                                        style={[
-                                          styles.textSigns,
-                                          { color: "white" },
-                                        ]}
-                                      >
-                                        {" "}
-                                        Return{" "}
-                                      </Text>
-                                    </LinearGradient>
-                                  </TouchableOpacity>
-                                </View>
+                                
                               </ScrollView>
                             </Modal>
                   
@@ -475,12 +476,35 @@ const rightSwipe = (progress, dragX) => {
                           alignSelf: "center",
                         }}
                       >
-                        <Text style={styles.textSignModal}>Add Recipe</Text>
+                      <View style={styles.drawerHeader}>
+                              <Neomorph 
+                              style={
+                                  [styles.BackIcons,
+                              {borderRadius: perfectSize(30), 
+                              height: perfectSize(56), 
+                              width: perfectSize(56)  }]}
+                                  >
+                                  <TouchableOpacity
+                                  onPress={() => setShowModal(false)}
+                                >
+                                  <FontAwesome name="arrow-left" size={20} color="black" />
+                                </TouchableOpacity>
+                                    
+                              </Neomorph>  
+                                  <Text style={{color: Colors.defaultDark, 
+                                  fontWeight: 'bold',
+                                  fontFamily:Colors.fontFamily,
+                                  paddingRight:80,
+                                  fontSize:25
+                                  }}> Add Recipes
+                                  </Text>
+                          </View>
+                       
                         <View style={styles.action}>
                           <TextInput
                             placeholder="Add Dish Name"
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -496,7 +520,7 @@ const rightSwipe = (progress, dragX) => {
                           <TextInput
                             placeholder="Add Ingredients"
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -510,7 +534,7 @@ const rightSwipe = (progress, dragX) => {
                         <View style={styles.action}>
                           <TextInput
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -525,7 +549,7 @@ const rightSwipe = (progress, dragX) => {
                         <View style={styles.action}>
                           <TextInput
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily: Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -540,7 +564,7 @@ const rightSwipe = (progress, dragX) => {
                         <View style={styles.action}>
                           <TextInput
                             style={{
-                              fontFamily: "IowanOldStyle-Roman",
+                              fontFamily:Colors.fontFamily,
                               fontSize: 20,
                               paddingBottom: 20,
                               paddingTop: 20,
@@ -577,7 +601,7 @@ const rightSwipe = (progress, dragX) => {
                                 styles.textSign,
                                 {
                                   color: "white",
-                                  fontFamily: "IowanOldStyle-Roman",
+                                  fontFamily: Colors.fontFamily,
                                   // padding: 20,
                                 },
                               ]}
@@ -587,37 +611,6 @@ const rightSwipe = (progress, dragX) => {
                             </Text>
                           </LinearGradient>
                         </TouchableOpacity>
-                        <View style={styles.button}>
-                          <TouchableOpacity
-                            onPress={() => setShowModal(false)}
-                            style={[
-                              styles.signUp,
-                              {
-                                borderColor: "#484C7F",
-                                alignSelf: "center",
-                                borderWidth: 0,
-                                marginTop: 30,
-                                // paddingRight: 100,
-                                // margin: 20,
-                                // width: "170%",
-                                // paddingLeft: 100,
-                              },
-                            ]}
-                          >
-                            <LinearGradient
-                              colors={["#484C7F", "#484C7F"]}
-                              style={styles.modalButton}
-                            >
-                              <Text
-                                style={[styles.textSigns, 
-                                { color: "white" }]}
-                              >
-                                {" "}
-                                Return{" "}
-                              </Text>
-                            </LinearGradient>
-                          </TouchableOpacity>
-                        </View>
                       </ScrollView>
                     </Modal>
 
@@ -647,7 +640,7 @@ const rightSwipe = (progress, dragX) => {
                             style={
                               (styles.InputField,
                               {
-                                fontFamily: "IowanOldStyle-Roman",
+                                fontFamily: Colors.fontFamily,
                                 fontWeight: "bold",
                                 fontSize: 16,
                                 marginBottom: 10,
@@ -661,7 +654,7 @@ const rightSwipe = (progress, dragX) => {
                             style={
                               (styles.InputField,
                               {
-                                fontFamily: "IowanOldStyle-Roman",
+                                fontFamily: Colors.fontFamily,
                                 paddingLeft: 30,
                               })
                             }
@@ -673,7 +666,7 @@ const rightSwipe = (progress, dragX) => {
                             style={
                               (styles.InputField,
                               {
-                                fontFamily: "IowanOldStyle-Roman",
+                                fontFamily: Colors.fontFamily,
                                 fontWeight: "bold",
                                 fontSize: 16,
                                 marginBottom: 10,
@@ -687,7 +680,7 @@ const rightSwipe = (progress, dragX) => {
                             style={
                               (styles.InputField,
                               {
-                                fontFamily: "IowanOldStyle-Roman",
+                                fontFamily: Colors.fontFamily,
                                 paddingLeft: 30,
                               })
                             }
@@ -735,37 +728,74 @@ const rightSwipe = (progress, dragX) => {
                       {isAdmin? 
                     (
                       <View>
-                      <Text style={styles.textSign}>{item.dishName}</Text>
-
-                      <Swipeable renderLeftActions={leftSwipe}
+                      <ScrollView>
+        <View style={{marginTop: perfectSize(30)}}>
+          <View>
+          <Swipeable renderLeftActions={leftSwipe}
                       renderRightActions={rightSwipe}>
+            <View style={styles.cardDesigns}>    
+                      <Neomorph 
+                      // lightShadowColor="#D0E6A5"
+                      // darkShadowColor="#D0E6A5" // <- set this
+                          swapShadows
+                          style={styles.menuItems}
+                      >
+                     <View style={{flexDirection:'column', paddingLeft:20, marginTop:15}}>
+                      <Text style={styles.textSign}>{item.dishName}</Text>
                       <Image
                         style={{
-                          marginTop: -30,
+                          marginTop: 2,
                           width: 200,
                           height: 135,
                           alignSelf: "center",
                         }}
                         source={{ uri: item.dishUrl }}
                       />
-                      </Swipeable>
+                      
+                      </View> 
+                      </Neomorph>        
+        </View>  
+        </Swipeable>                    
+          </View>          
+          </View>
+        </ScrollView>
                       </View>
                     ): 
-                    (<View>
+                    (
+                      <View>
+                      <ScrollView>
+        <View style={{marginTop: perfectSize(50)}}>
+          <View>
+          <Swipeable 
+                      renderRightActions={rightSwipe}>
+            <View style={styles.cardDesigns}>    
+                      <Neomorph 
+                      // lightShadowColor="#D0E6A5"
+                      // darkShadowColor="#D0E6A5" // <- set this
+                          swapShadows
+                          style={styles.menuItems}
+                      >
+                     <View style={{flexDirection:'column', paddingLeft:20, marginTop:15}}>
                       <Text style={styles.textSign}>{item.dishName}</Text>
 
-                      <Swipeable 
-                      renderRightActions={rightSwipe}>
+                      
                       <Image
                         style={{
-                          marginTop: -30,
+                          marginTop: 2,
                           width: 200,
                           height: 135,
                           alignSelf: "center",
                         }}
                         source={{ uri: item.dishUrl }}
                       />
-                      </Swipeable>
+                      
+                      </View> 
+                      </Neomorph>        
+        </View>  
+        </Swipeable>                    
+          </View>          
+          </View>
+        </ScrollView>
                       </View>
                       )}
 
@@ -855,18 +885,16 @@ const rightSwipe = (progress, dragX) => {
                   )}
                 />
               )}
-              
-            </Animatable.View>
-            </View>
         </View>
-    </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B9BBDF",
+    backgroundColor: Colors.containerBg,
+    fontFamily:Colors.fontFamily
   },
   header: {
     flex: 1,
@@ -931,7 +959,7 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
     // marginTop: 5,
     // alignSelf: "center",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   textSigns: {
     fontSize: 20,
@@ -939,7 +967,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   textSignModal: {
     fontSize: 30,
@@ -949,7 +977,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 10,
     marginTop: 35,
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
     alignSelf: "center",
   },
   signUp: {
@@ -970,7 +998,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 30,
     marginLeft: 30,
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily:Colors.fontFamily,
     lineHeight: 25,
   },
 
@@ -998,4 +1026,179 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // paddingBottom: -80,
   },
+
+
+
+
+// NEW................................................
+  
+drawerHeader: {
+  height: perfectSize(50),
+  width: '100%',
+  marginTop: perfectSize(50),
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingLeft:20,
+  justifyContent: 'space-between'
+},
+user :{
+  height: perfectSize(50),
+  width: '100%',
+  // marginTop: perfectSize(50),
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-evenly'
+},
+headerText: {
+  color: Colors.defaultDark,
+  fontSize: perfectSize(15),
+  alignSelf:'center'
+},
+headerEndSection: {
+  height: perfectSize(60), 
+  width: perfectSize(60), 
+  borderRadius: perfectSize(30),
+  backgroundColor: '#B9BBDF', 
+  shadowRadius: 20, 
+  // borderRadius: perfectSize(23),
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-evenly'
+},
+headerNotificationIcon: {
+  height: perfectSize(25),
+  width: perfectSize(25), 
+  tintColor: Colors.defaultDark
+},
+dot: {
+  height: 10,
+  width: 10, 
+  borderRadius: 23, 
+},
+headerDate: {
+  fontFamily: Colors.fontFamily,
+  color: Colors.defaultDark,
+  fontSize: perfectSize(22),
+  // textAlign: 'right',
+  right: perfectSize(60),
+  // marginTop: perfectSize(23)
+},
+menuItems: {
+  height: perfectSize(240),
+  width: perfectSize(380),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 6,
+  borderRadius: 23,
+  // alignItems: 'center',
+  borderColor:Colors.defaultDark,
+  borderRadius: 23,
+  // borderWidth:1
+},
+menuItemsSnacks:{
+  height: perfectSize(120),
+  width: perfectSize(400),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 12,
+  borderRadius: 23,
+  // alignItems: 'center',
+  borderColor:Colors.defaultDark,
+  borderRadius: 23,
+  // borderWidth:1
+},
+menuIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+ModalIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.backgroundColor,
+  // shadowRadius: 10,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+BackIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 5,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+crossIcons: {
+  height: perfectSize(50),
+  width: perfectSize(50),
+  backgroundColor: Colors.redDotColor,
+  shadowRadius: 5,
+  borderRadius: 23,
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+ageIcons: {
+  height: perfectSize(50),
+  width: perfectSize(100),
+  borderRadius: perfectSize(18),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  flexDirection:'row',
+},
+icon: {
+  height: perfectSize(25),
+  width: perfectSize(25),
+  marginBottom:4
+},
+Modalicon: {
+  height: perfectSize(150),
+  width: perfectSize(150),
+  marginBottom:4,
+  marginTop:100,
+  borderRadius:150,
+  borderColor:'#D7E1F3',
+  borderWidth:10
+},
+dietIcon:{
+  height: perfectSize(60),
+  width: perfectSize(60),
+  marginBottom:4 
+},
+textIcon: {
+  fontFamily:Colors.fontFamily,
+  fontWeight: 'bold',
+   fontSize: perfectSize(22),
+    marginTop: perfectSize(5)
+},
+
+footer: {
+  height: perfectSize(50),
+  width: perfectSize(300),
+  backgroundColor: Colors.backgroundColor,
+  shadowRadius: 10,
+  borderRadius: 23,
+  marginTop: perfectSize(23),
+  alignSelf: 'center',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  flexDirection: 'row'
+},
+footerIcon: {
+  height: perfectSize(18),
+  width: perfectSize(18),
+  tintColor: Colors.headerTextColor
+},
+cardDesigns: {
+flexDirection: 'row', 
+alignItems: 'center',
+justifyContent: 'space-around',
+marginBottom: perfectSize(10)
+}
+  
 });

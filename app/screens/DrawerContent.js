@@ -1,42 +1,30 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import {
-  useTheme,
   Avatar,
-  Title,
-  Caption,
-  Paragraph,
   Drawer,
   Text,
   TouchableRipple,
   Switch,
+  Title
 } from "react-native-paper";
+
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Images from '../assets/themes/Images';
+import Colors from '../assets/themes/Colors';
 import auth from "@react-native-firebase/auth";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import asyncStorage from "@react-native-community/async-storage";
-import { color } from "react-native-reanimated";
-// import Feather from 'react-native-vector-icons/Feather'
-// import{ AuthContext } from '../components/context';
 export function DrawerContent(props) {
-  const [name, setName] = useState("");
+
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
   // const {LogOut} = React.useContext(AuthContext);
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
-  //------ read Data---
-  const readData = async () => {
-    try {
-      const name = await asyncStorage.getItem("name");
-      setName(name);
-      // console.log("=======");
-      // console.log(name);
-    } catch (e) {
-      alert("Failed to fetch the data from storage");
-    }
-  };
-  readData();
+
   //--- signOut-------
   signOut = async () => {
     try {
@@ -53,12 +41,12 @@ export function DrawerContent(props) {
     try {
       await asyncStorage.clear();
     } catch (e) {
-      alert("Failed to clear the async storage.");
+      // alert("Failed to clear the async storage.");
     }
   };
   //----------------------
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -68,14 +56,14 @@ export function DrawerContent(props) {
                   uri:
                     "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
                 }}
-                size={50}
-                backgroundColor="#B9BBDF"
+                size={40}
+                backgroundColor={Colors.containerBg}
               />
-              <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                {/* <Title style={styles.title}>
+              <View style={{  flexDirection: "column" }}>
+                <Title style={styles.title}>
                   {" "}
                   {auth().currentUser.displayName}
-                </Title> */}
+                </Title>
                 {/* <Caption style={styles.caption}>@123user</Caption> */}
               </View>
             </View>
@@ -142,8 +130,14 @@ export function DrawerContent(props) {
 }
 
 const styles = StyleSheet.create({
-  drawerContent: {
+  container:{
     flex: 1,
+    backgroundColor: Colors.backgroundColor,
+    fontFamily:Colors.fontFamily
+  },
+  drawerContent: {
+    backgroundColor: Colors.backgroundColor,
+    fontFamily:Colors.fontFamily
   },
   userInfoSection: {
     paddingLeft: 20,
@@ -152,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
+    fontFamily: Colors.fontFamily
     // fontFamily: "IowanOldStyle-Roman",
   },
   caption: {
