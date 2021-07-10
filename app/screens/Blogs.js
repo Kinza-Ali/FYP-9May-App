@@ -1,4 +1,3 @@
-// import {json, response} from 'express';
 import React, { useState, useEffect, useCallback } from "react";
 import methods from "../connect/index";
 // import Clipboard from '@react-native-community/clipboard';

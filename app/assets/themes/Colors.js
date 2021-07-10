@@ -11,6 +11,7 @@ export default Colors = {
     blackColor: '#000000',
     pastelPink:'#FFCDA4',
     peach:'#C6B4CE',
-    gray:'#C8C6C9'
+    gray:'#C8C6C9',
+    lilac:'#B9BBDF'
     
 }

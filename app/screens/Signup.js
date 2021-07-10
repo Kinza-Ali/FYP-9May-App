@@ -8,7 +8,7 @@ import firestore from '@react-native-firebase/firestore';
 import asyncStorage from "@react-native-community/async-storage";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import { RadioButton } from 'react-native-paper';
 // import auth from '@react-native-firebase/auth'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Picker } from "@react-native-picker/picker";
@@ -29,6 +29,10 @@ import {
   Modal,
   Pressable,
 } from "react-native";
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Colors from '../assets/themes/Colors';
+
 // import {NavigationContainer} from '@react-navigation/native';
 export default function SignUp({ navigation }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -57,6 +61,7 @@ export default function SignUp({ navigation }) {
   const [WaterIntake, setWaterIntake] = useState();
   const [heightValid, setHeightValid] = useState("");
   const [weightValid, setWeightValid] = useState("");
+  const [checked, setChecked] = React.useState('first');
   //------------  Sign-In Configuration
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -181,7 +186,8 @@ export default function SignUp({ navigation }) {
   //---- register -------
   const onRegister = () => {
     console.log;
-    let regx = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
+    // let regx = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
+    let regx= /^(?!\s)([a-z ,.'-]+)$/i;
     let eregx = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
     let numregx = /^[0-9]+$/;
     // let nregx = /^[0-9]+$/;
@@ -202,7 +208,7 @@ export default function SignUp({ navigation }) {
     } else if (!weightValid) {
       setWeightValid("Enter numbers only");
     } else if (!heightValid) {
-      setHeightValid("Enet height in feet and inches");
+      setHeightValid("Enter height in feet and inches");
     } else {
       this.createUser();
     }
@@ -290,43 +296,51 @@ export default function SignUp({ navigation }) {
 
   //-------------------------------------------------
   return (
-    <View>
-      <ScrollView>
         <View style={styles.container}>
-          <View
-            style={{
-              marginHorizontal: 10,
-              marginTop: 40,
-              marginBottom: 20,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
+
+        {/* ************************************ DRAWER HEADER!!!!!  ************************** */}
+
+      <View style={styles.drawerHeader}>
+      <View style={{paddingRight:50}}>
+        <Neomorph 
+        style={
+            [styles.BackIcons,
+        {borderRadius: perfectSize(30), 
+        height: perfectSize(56), 
+        width: perfectSize(56)        }]}
             >
-              <FontAwesome name="chevron-left" size={20} color="black" />
-            </TouchableOpacity>
-            <Text
-              style={{
-                color: "black",
-                fontSize: 20,
-                paddingRight: 160,
-                fontFamily: "IowanOldStyle-Roman",
-              }}
-            >
-              SignUp
-            </Text>
-          </View>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+               <FontAwesome name="arrow-left" size={20} color="black" />
+             </TouchableOpacity>
+             
+        </Neomorph>  
+</View>
+            <Text style={{color: Colors.defaultDark, 
+            fontWeight: 'bold',
+            fontFamily:Colors.fontFamily,
+            paddingRight:110,
+            fontSize:25
+            }}> Sign Up
+           </Text>
+    </View>
+    {/* ++++++++++++++++ BODY  +++++++++++++++++++++++++++ */}
           <ScrollView>
-            <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-              <Text style={styles.textfooter}> Full Name </Text>
-              <View style={styles.action}>
-                <FontAwesomeIcons name="user-circle" color="black" size={25} />
-                <TextInput
+<View style={{marginTop: perfectSize(30)}}>
+          <View>
+          <Text style={styles.textfooter}>Full Name</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesome name="user-circle" color="black" size={20} 
+              style={{marginTop:12, paddingLeft:12}}
+            />
+            <TextInput
                   placeholder="Jane Doe"
                   style={styles.textInput}
                   autoCapitalize="words"
@@ -334,12 +348,28 @@ export default function SignUp({ navigation }) {
                   onChangeText={(username) => displayName(username)}
                   onBlur={() => emptyFieldVlidator(userName)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
-              </View>
-              <Text style={{ color: "red" }}> {nameError}</Text>
-              <Text style={styles.textfooter}>Email</Text>
-              <View style={styles.action}>
-                <FontAwesomeIcons name="user-o" color="black" size={25} />
+                <Text style={{ color: "red" ,paddingRight:20, marginTop:20 }}> 
+                {emptyField} </Text>
+          </View>
+          </View>
+      </Neomorph>        
+        </View>  
+        <Text style={{ color: "red" ,alignSelf:'center'}}> {nameError}</Text>  
+        </View> 
+{/* ************************************************************ */}
+        <View>
+          <Text style={styles.textfooter}>Email</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="envelope" color="black" size={20}
+            style={{marginTop:12, paddingLeft:12}} />
                 <TextInput
                   placeholder="xyz@xyz.com"
                   style={styles.textInput}
@@ -348,19 +378,33 @@ export default function SignUp({ navigation }) {
                   onChangeText={(email) => textInputchange(email)}
                   onBlur={() => emptyFieldVlidator(email)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
+                <Text style={{ color: "red" ,paddingRight:20, marginTop:20 }}> 
+                {emptyField} </Text>
                 {checkTextInputChange ? (
-                  <Feather name="check-circle" color="blue" size={25} />
+                  <Feather name="check-circle" color="blue" size={25} 
+                    style={{marginTop:12, paddingRight:12}}
+                  />
                 ) : null}
-              </View>
-              <Text style={{ color: "red" }}> {emailError}</Text>
-              <Text style={styles.textfooter}> Age </Text>
-              <View style={styles.action}>
-                <FontAwesomeIcons
-                  name="calendar-check-o"
-                  color="black"
-                  size={25}
-                />
+          </View>
+          </View>
+      </Neomorph>        
+        </View> 
+        <Text style={{ color: "red" ,alignSelf:'center'}}> {emailError}</Text>   
+        </View>
+ {/* ************************************************************ */}  
+  <View>
+          <Text style={styles.textfooter}>Age</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="calendar-check-o" color="black" size={20}
+            style={{marginTop:12, paddingLeft:12}} />
                 <TextInput
                   placeholder="Your Age"
                   keyboardType="numeric"
@@ -374,14 +418,30 @@ export default function SignUp({ navigation }) {
                   }}
                   onBlur={() => emptyFieldVlidator(age)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
-              </View>
-              <Text style={{ color: "red" }}> {ageError}</Text>
-              <Text style={styles.textfooter}> Weight </Text>
-              <View style={styles.action}>
-                <FontAwesomeIcons name="smile-o" color="black" size={25} />
+                <Text style={{ color: "red" ,paddingRight:20, marginTop:20 }}> 
+                {emptyField} </Text>
+          </View>
+          </View>
+      </Neomorph>        
+        </View> 
+        <Text style={{ color: "red" ,alignSelf:'center'}}> {ageError}</Text>   
+        </View>
+ {/* ************************************************************ */}  
 
-                <TextInput
+ <View>
+          <Text style={styles.textfooter}>Weight</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="smile-o" color="black" size={20}
+            style={{marginTop:12, paddingLeft:12}} />
+                 <TextInput
                   placeholder="Your Weight In KG"
                   style={styles.textInput}
                   keyboardType="numeric"
@@ -391,76 +451,88 @@ export default function SignUp({ navigation }) {
                   }}
                   onBlur={() => emptyFieldVlidator(weight)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
-              </View>
-              <Text style={{ color: "red" }}> {weightValid} </Text>
-              <Text style={styles.textfooter}> Height </Text>
-              <View style={styles.action}>
-                <FontAwesomeIcons name="street-view" color="black" size={25} />
-
-                <TextInput
-                  placeholder="5.3"
+                <Text style={{ color: "red" ,paddingRight:20, marginTop:20 }}> 
+                {emptyField} </Text>
+          </View>
+          </View>
+      </Neomorph>        
+        </View> 
+        <Text style={{ color: "red",alignSelf:'center' }}> {weightValid} </Text>  
+        </View>
+ {/* ************************************************************ */}  
+ 
+ <View>
+          <Text style={styles.textfooter}>Height</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="street-view" color="black" size={20}
+            style={{marginTop:12, paddingLeft:12}} />
+                 <TextInput
+                  placeholder="5.3'"
                   keyboardType="numeric"
                   style={styles.textInput}
                   autoCapitalize="none"
                   onChangeText={setHeight}
                   onBlur={() => emptyFieldVlidator(height)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
-              </View>
-              <Text style={{ color: "red" }}> {heightValid} </Text>
-              <Text style={styles.textfooter}> Gender </Text>
-              <Text style={styles.textfooter}> {gender} </Text>
-              <View style={styles.button}>
-                <TouchableOpacity onPress={() => setShowModal(true)}>
-                  <LinearGradient
-                    colors={["#B9BBDF", "#B9BBDF"]}
-                    style={styles.selectButton}
-                  >
-                    <Text style={[styles.textSign, { color: "black" }]}>
-                      {" "}
-                      Select{" "}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-              <Modal visible={showModal} transparent={false}>
-                <View style={{ width: "80%", height: "30%", paddingLeft: 40 }}>
-                  <Picker
-                    style={styles.picker}
-                    // style={{ height: 10, width: 300 }}
-                    selectedValue={gender}
-                    onValueChange={(itemValue) => setGender(itemValue)}
-                  >
-                    <Picker.Item label="Male" value="Male" />
-                    <Picker.Item label="Female" value="Female" />
-                  </Picker>
-                </View>
-                {/* <Pressable onPress={() => setShowModal(false)}>
-                  <Text style>Submit</Text>
-                </Pressable> */}
-                <View style={styles.button}>
-                  <TouchableOpacity onPress={() => setShowModal(false)}>
-                    <LinearGradient
-                      colors={["#484C7F", "#484C7F"]}
-                      style={styles.modalButton}
-                    >
-                      <Text style={[styles.textSign, { color: "white" }]}>
-                        {" "}
-                        Submit{" "}
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              </Modal>
-              <Text style={[styles.textfooter, { marginTop: 20 }]}>
-                {" "}
-                Password
-              </Text>
+                <Text style={{ color: "red" ,paddingRight:20, marginTop:20 }}> 
+                {emptyField} </Text>
+          </View>
+          </View>
+      </Neomorph>        
+        </View> 
+        <Text style={{ color: "red" ,alignSelf:'center'}}> {heightValid} </Text>  
+        </View>
+ {/* ************************************************************ */}  
+          <View>
+          <Text style={styles.textfooter}> Gender </Text>
+          <View style={{flexDirection:'row', 
+          justifyContent:'space-evenly',
+           marginBottom:10,
+           marginTop:3}}>
+          <TouchableOpacity
+          title='Male'
+          onPress={()=>{setGender('Male') 
+          console.log(gender)}}>
+          <View>
+          <FontAwesome name='male' size={30}/>
+          <Text>Male</Text>
+          </View>
+          </TouchableOpacity>
 
-              <View style={styles.action}>
-                <FontAwesomeIcons name="lock" color="black" size={25} />
-                <TextInput
+          <TouchableOpacity
+          title='Female'
+          onPress={()=>{setGender('Female') 
+          console.log(gender)}}>
+          <View>
+          <FontAwesome name='female' size={30}/>
+        <Text>Female</Text>
+        </View>
+          </TouchableOpacity>
+          </View>
+          </View>
+{/* ************************************************************ */} 
+ <View>
+          <Text style={styles.textfooter}>Password</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
+          <View style={styles.action}>
+            <FontAwesomeIcons name="lock" color="black" size={20}
+            style={{marginTop:12, paddingLeft:12}} />
+                  <TextInput
                   placeholder="Your Password"
                   secureTextEntry={secureTextEntry ? true : false}
                   style={styles.textInput}
@@ -469,57 +541,78 @@ export default function SignUp({ navigation }) {
                   onChangeText={(password) => handllePasswordChange(password)}
                   onBlur={() => emptyFieldVlidator(password)}
                 />
-                <Text style={{ color: "red" }}> {emptyField} </Text>
+                
                 <TouchableOpacity onPress={UpdateSecureTextEntry}>
                   {secureTextEntry ? (
-                    <Feather name="eye-off" color="blue" size={20} />
+                    <Feather name="eye-off" color="blue" size={20}
+                    style={{paddingRight:20, marginTop:15 }} />
                   ) : (
-                    <Feather name="eye" color="blue" size={20} />
+                    <Feather name="eye" color="blue" size={20} 
+                      style={{ paddingRight:20, marginTop:15 }}
+                    />
                   )}
                 </TouchableOpacity>
-              </View>
-              <Text style={{ color: "red" }}> {passwordError} </Text>
-              <View style={styles.Button}>
-                <TouchableOpacity onPress={onRegister}>
-                  <LinearGradient
-                    colors={["#484C7F", "#484C7F"]}
-                    style={styles.login}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      REGISTER{" "}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                <Text style={{ color: "red" ,paddingRight:10, marginTop:20 }}> 
+                {emptyField} </Text>
+          </View>
+          </View>
+      </Neomorph>        
+        </View> 
+        <Text style={{ color: "red",alignSelf:'center' }}> {passwordError} </Text> 
+        </View>
+ {/* ************************************************************ */}  
+  
+</View> 
+              <View>
+              <TouchableOpacity
+              onPress={onRegister}
+            >
+              <LinearGradient
+                colors={[Colors.lilac, Colors.lilac]}
+                style={styles.login}
+              >
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
+                  Register
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+        </View>
+
+        <View style={{
+           flexDirection:'row',
+            justifyContent:'space-between',
+            alignSelf:'center',
+            marginTop:15}}>
+                
                 <TouchableOpacity
                   onPress={() => navigation.goBack()}
                   style={[
                     styles.signUp,
-                    { borderColor: "#5f9ea0", marginTop: 2 },
+                    // { borderColor: "#5f9ea0" },
                   ]}
                 >
                   <Text
-                    style={[styles.textSign, { color: "black", marginTop: 10 }]}
+                    style={[styles.textSign, {
+                    color:Colors.defaultDark
+                    ,marginBottom:20,
+                    fontSize:15 }]}
                   >
                     {" "}
                     Already a Registered User?LOGIN
                   </Text>
                 </TouchableOpacity>
-              </View>
-            </Animatable.View>
-
-            {/* </View> */}
+            </View>
           </ScrollView>
         </View>
-      </ScrollView>
-    </View>
+      
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B9BBDF",
+    backgroundColor: Colors.containerBg,
+    fontFamily:Colors.fontFamily
   },
   header: {
     flex: 5,
@@ -544,39 +637,48 @@ const styles = StyleSheet.create({
   textfooter: {
     color: "black",
     fontSize: 18,
-    marginTop: 5,
+    // marginTop: 5,
+    marginBottom:5,
     fontFamily: "IowanOldStyle-Roman",
+    alignSelf:'flex-start',
+    paddingLeft:45,
+    justifyContent:'space-between'
   },
   action: {
     flexDirection: "row",
-    marginTop: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#484C7F",
+    // marginTop: 5,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#484C7F",
     paddingBottom: 2,
     // paddingTop:40,
     alignSelf: "center",
+    justifyContent: 'space-evenly'
   },
   textInput: {
     flex: 1,
-    fontFamily: "IowanOldStyle-Roman",
-
-    //height: Platform.OS === 'android' ? 76 : 50,
-
     paddingLeft: 10,
     color: "black",
-    marginTop: 20,
+    marginTop: 12,
+    paddingBottom: 10,
+    fontFamily: Colors.fontFamily,
   },
   button: {
     alignItems: "center",
+    justifyContent:'center',
     // marginTop: 30,
   },
   login: {
-    width: "100%",
-    height: 50,
+    width: "80%",
+    height: 53,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
-    marginTop: 20,
+    alignSelf:'center',
+    // paddingLeft:20,
+    // paddingRight:20,
+    borderRadius: 25,
+    // marginTop: 20,
+    // marginBottom: 5,
+    // marginLeft:30
   },
   modalButton: {
     width: "100%",
@@ -608,4 +710,47 @@ const styles = StyleSheet.create({
     // borderColor: "grey",
     // borderWidth: 3,
   },
+
+  cardDesigns: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: perfectSize(8),
+    // borderWidth:1
+    },
+    menuItems: {
+      height: perfectSize(65),
+      width: perfectSize(380),
+      backgroundColor: Colors.containerBg,
+      shadowRadius: 6,
+      borderRadius: 23,
+      // alignItems: 'center',
+      borderColor:Colors.defaultDark,
+      borderRadius: 23,
+      borderWidth:1
+    },
+    
+    // // NEW................................................
+      
+    drawerHeader: {
+      // height: perfectSize(50),
+      // width: '100%',
+      marginTop: perfectSize(50),
+      flexDirection: 'row',
+      alignItems: 'center',
+      // alignSelf:'center',
+      // paddingLeft:100,
+      justifyContent: 'space-evenly'
+    },
+
+    BackIcons: {
+      height: perfectSize(50),
+      width: perfectSize(50),
+      backgroundColor: Colors.containerBg,
+      shadowRadius: 5,
+      borderRadius: 23,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+
 });

@@ -5,7 +5,7 @@ import notification, {
 import * as Animatable from "react-native-animatable";
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   GoogleSignin,
   statusCodes,
@@ -27,6 +27,11 @@ import {
   StatusBar,
 } from "react-native";
 import App from "../../App";
+import { Neomorph } from 'react-native-neomorph-shadows';
+import perfectSize from '../assets/themes/Screen';
+import Colors from '../assets/themes/Colors';
+
+
 export default function Login({ navigation }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState();
@@ -145,25 +150,6 @@ export default function Login({ navigation }) {
     }
   }
 
-  //-----------  Sign Out ---------------
-  signOut = async () => {
-    try {
-      await auth()
-        .signOut()
-        .then(() => alert("You are signed Out! "));
-      console.log("signOut");
-      setLoggedIn(false);
-      setPassword(null);
-      console.log("------------------------");
-      console.log(password);
-      setEmail("");
-      // setUserName(null);
-      navigation.navigate("Login");
-    } catch (error) {
-      // alert(error);
-      console.log(error);
-    }
-  };
   //--------- Email Text Input -------------
   const textInputchange = (email) => {
     if (email.length != 0) {
@@ -190,17 +176,39 @@ export default function Login({ navigation }) {
     // });
   };
   return (
+
     <View style={styles.container}>
-      {/* <StatusBar backgroundColor="#5f9ea0" barStyle="Light-content" /> */}
+
       <ImageBackground
-        source={require("../assets/images/berriesSmoll.jpg")}
+        // source={require("../assets/images/berriesSmoll.jpg")}
         style={styles.image}
       >
-        <View style={styles.header}></View>
-        <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <View style={styles.drawerHeader}>
+      <Text style={{
+        color: Colors.defaultDark, 
+                fontWeight: 'bold',
+                fontFamily:Colors.fontFamily,
+                // paddingRight:150,
+                fontSize:25
+                }}> Log In
+                </Text>
+        </View>
+
+      <View style={{marginTop: perfectSize(30)}}>
+          <View>
           <Text style={styles.textfooter}>Email</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
           <View style={styles.action}>
-            <FontAwesomeIcons name="user-o" color="black" size={20} />
+            <FontAwesome name="user-o" color="black" size={20} 
+              style={{marginTop:12, paddingLeft:12}}
+            />
             <TextInput
               placeholder="Your Email"
               style={styles.textInput}
@@ -209,27 +217,56 @@ export default function Login({ navigation }) {
               onChangeText={(email) => textInputchange(email)}
             />
             {checkTextInputChange ? (
-              <Feather name="check-circle" color="blue" size={20} />
+              <Feather name="check-circle" color="blue" size={20} 
+              style={{marginTop:13, paddingRight:12}}/>
             ) : null}
           </View>
-          <Text style={[styles.textfooter, { marginTop: 35 }]}> Password</Text>
+          </View>
+      </Neomorph>        
+        </View>    
+        </View> 
+
+{/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+
+        <View>
+          <Text style={styles.textfooter}>Password</Text>
+      <View style={styles.cardDesigns}>    
+          <Neomorph 
+          // lightShadowColor="#D0E6A5"
+          // darkShadowColor="#D0E6A5" // <- set this
+              swapShadows
+              style={styles.menuItems}
+          >
+            <View>
           <View style={styles.action}>
-            <FontAwesomeIcons name="lock" color="black" size={20} />
+            <FontAwesome name="lock" color="black" size={20} 
+              style={{marginTop:12, paddingLeft:12}}
+            />
             <TextInput
               placeholder="Your Password"
-              secureTextEntry={secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={(password) => handllePasswordChange(password)}
             />
             <TouchableOpacity onPress={UpdateSecureTextEntry}>
               {secureTextEntry ? (
-                <Feather name="eye-off" color="blue" size={20} />
+                <Feather name="eye-off" color="blue" size={20} 
+                style={{marginTop:13, paddingRight:12}} />
               ) : (
-                <Feather name="eye" color="blue" size={20} />
+                <Feather name="eye" color="blue" size={20}
+                style={{marginTop:13, paddingRight:12}} />
               )}
             </TouchableOpacity>
           </View>
+
+          </View>
+      </Neomorph>        
+        </View>    
+        </View> 
+
+        </View>
+
           <View style={{ marginTop: 20 }}>
             <TouchableOpacity
               onPress={
@@ -238,45 +275,60 @@ export default function Login({ navigation }) {
               }
             >
               <LinearGradient
-                colors={["#484C7F", "#484C7F"]}
+                colors={[Colors.lilac, Colors.lilac]}
                 style={styles.login}
               >
-                <Text style={[styles.textSign, { color: "white" }]}>
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
                   {" "}
                   LOGIN{" "}
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
+
+{/* ++++++++++++++++++++++++++++++++++++++++++ */}
+              <Text 
+              style={{
+                flexDirection:'row',
+            justifyContent:'space-between',
+            alignSelf:'center',
+            marginTop:30,
+            color: "#484C7F",
+            fontSize:16
+            }}>
+               or </Text>
+         <View style={{
+           flexDirection:'row',
+            justifyContent:'space-between',
+            alignSelf:'center',
+            marginTop:20}}>
+            
             <TouchableOpacity
               onPress={() => navigation.navigate("SignUp")}
               style={[styles.signUp, { borderColor: "#5f9ea0", marginTop: 2 }]}
             >
-              <LinearGradient
+              {/* <LinearGradient
                 colors={["#EEEEEE", "#EEEEEE"]}
                 style={styles.login}
-              >
-                <Text style={[styles.textSign, { color: "#484C7F" }]}>
-                  {" "}
-                  Not a registered User?SIGN UP
+              > */}
+              
+              <Text style={[styles.textSign, { color: "#484C7F" }]}>         
+                   Sign Up {" "}
                 </Text>
-              </LinearGradient>
+              
+              {/* </LinearGradient> */}
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate("HomePage")}
               style={[{ borderColor: "#5f9ea0", borderWidth: 0, marginTop: 0 }]}
             >
-              <LinearGradient
-                colors={["#484C7F", "#484C7F"]}
-                style={styles.login}
-              >
-                <Text style={[styles.textSign, { color: "white" }]}>
-                  {" "}
-                  Continue without LOGIN{" "}
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
+                  
+                | {" "}Continue without LOGIN
                 </Text>
-              </LinearGradient>
             </TouchableOpacity>
+            </View>
           </View>
-        </Animatable.View>
+        {/* </Animatable.View> */}
       </ImageBackground>
     </View>
   );
@@ -285,9 +337,10 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B9BBDF",
-    // opacity: 0.8,
+    backgroundColor: Colors.containerBg,
+    fontFamily:Colors.fontFamily
   },
+
   header: {
     flex: 1,
     justifyContent: "flex-end",
@@ -309,28 +362,31 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     fontSize: 30,
-    fontFamily: "times new Roman",
+    fontFamily: Colors.fontFamily,
   },
   textfooter: {
     color: "black",
     fontSize: 18,
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
+    paddingLeft:50,
+    marginBottom:6
   },
   action: {
     flexDirection: "row",
-    marginTop: 2,
-    borderBottomWidth: 1,
-    borderBottomColor: "#484C7F",
+    // marginTop: 2,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#484C7F",
     paddingBottom: 10,
-    justifyContent: "center",
+    justifyContent: 'space-evenly',
   },
   textInput: {
     flex: 1,
     //height: Platform.OS === 'android' ? 76 : 50,
     paddingLeft: 10,
     paddingBottom: 10,
+    marginTop:12,
     color: "black",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   button: {
     alignItems: "center",
@@ -339,11 +395,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   login: {
-    width: "100%",
-    height: 60,
+    width: "85%",
+    height: 53,
+    // paddingLeft:20,
+    alignSelf:'center',
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20,
+    borderRadius: 25,
     marginBottom: 5,
   },
   errorMsg: {
@@ -353,11 +411,43 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   image: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
+cardDesigns: {
+flexDirection: 'row', 
+alignItems: 'center',
+justifyContent: 'space-around',
+marginBottom: perfectSize(20),
+// borderWidth:1
+},
+menuItems: {
+  height: perfectSize(65),
+  width: perfectSize(380),
+  backgroundColor: Colors.containerBg,
+  shadowRadius: 6,
+  borderRadius: 23,
+  // alignItems: 'center',
+  borderColor:Colors.defaultDark,
+  borderRadius: 23,
+  borderWidth:1
+},
+
+// // NEW................................................
+  
+drawerHeader: {
+  height: perfectSize(50),
+  width: '100%',
+  marginTop: perfectSize(130),
+  flexDirection: 'row',
+  alignItems: 'center',
+  alignSelf:'center',
+  // paddingLeft:100,
+  justifyContent: 'center'
+},
+
 });

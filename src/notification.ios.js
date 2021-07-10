@@ -35,6 +35,18 @@ const handleScheduleNotification = () => {
           "Did you have your breakfast? If not it is the time for your breakfast",
         fireDate: firedate.toISOString(),
       });
+      
+    }
+    else if (time == "11:01") {
+      // console.log('pushing...');
+      postNotification(time, date, uid);
+      PushNotificationIOS.scheduleLocalNotification({
+        alertTitle: " Drink Water",
+        alertBody:
+          "Stay Hydrated!!!!",
+        fireDate: firedate.toISOString(),
+      });
+      
     } else if (time == "12:01") {
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
@@ -50,7 +62,19 @@ const handleScheduleNotification = () => {
           "Did you have your lunch? If not it is the time for your lunch",
         fireDate: firedate.toISOString(),
       });
-    } else if (time == "16:01") {
+    }
+    else if (time == "15:01") {
+      // console.log('pushing...');
+      postNotification(time, date, uid);
+      PushNotificationIOS.scheduleLocalNotification({
+        alertTitle: " Drink Water",
+        alertBody:
+          "Stay Hydrated!!!!",
+        fireDate: firedate.toISOString(),
+      });
+      
+    }  
+    else if (time == "16:01") {
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
         alertTitle: "Snack Time",
@@ -89,6 +113,9 @@ const handleScheduleNotification = () => {
     if (hrs == 10 && mins == 1) {
       var res = getNotification("10:01", strDate, user);
     }
+    if (hrs == 11 && mins == 1) {
+      var res = getNotification("11:01", strDate, user);
+    }
 
     if (hrs == 12 && mins == 1) {
       var res = getNotification("12:01", strDate, user);
@@ -97,7 +124,9 @@ const handleScheduleNotification = () => {
     if (hrs >= 14 && mins == 1) {
       var res = getNotification("14:01", strDate, user);
     }
-
+    if (hrs == 15 && mins == 1) {
+      var res = getNotification("15:01", strDate, user);
+    }
     if (hrs == 16 && mins == 1) {
       var res = getNotification("16:01", strDate, user);
     }
