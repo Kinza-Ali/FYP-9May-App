@@ -28,6 +28,7 @@ import { error } from 'react-native-gifted-chat/lib/utils';
 
 export default function Trial({navigation}) {
      
+    const[weight, setWeight]= useState("");
  
      return (
      <View style={styles.container}>
@@ -54,35 +55,6 @@ export default function Trial({navigation}) {
            </View>
 
            {/* +++++++++++++++++++++++ BODY +++++++++++++++++++++++++++++++ */}
-
-       {/* <View style={{marginTop:20}}>
-             <Text style={styles.textfooter}>Current Password</Text>
-             <View style={styles.cardDesigns}>
-               <Neomorph
-                 swapShadows
-                 style={styles.menuItems}
-               >
-                 <View>
-                   <View style={styles.action}>
-                     <FontAwesomeIcons
-                       name="lock"
-                       color="black"
-                       size={20}
-                       style={{ marginTop: 12, paddingLeft: 12 }}
-                     />
-                     <TextInput
-                      value={currentPasswrord}
-                       placeholder="Enter Your Current Password"
-                       secureTextEntry={secureTextEntry ? true : false}
-                       style={styles.textInput}
-                       autoCapitalize="none"
-                    //    onChangeText={(password) =>setCurrentPassword(password)}
-                     />
-                   </View>
-                 </View>
-               </Neomorph>
-             </View>
-           </View> */}
  
            <View style={{marginTop:20}}>
              <Text style={styles.textfooter}>New Password</Text>
