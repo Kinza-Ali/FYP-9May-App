@@ -163,12 +163,27 @@ class ProfileNew extends Component {
     this.setState(data);
   }
 
-  getSelectList() {}
+  // getSelectList() {}
 
   // onRefresh = React.useCallback(() => {
   //     this.setState({refreshing:true});
   //     wait(2000).then(() => this.setState({refreshing:false}));
   //   }, []);
+
+
+  //-------------- Set Interval ---------------
+  time = setInterval(()=> {
+    this.setState({
+      checked1:false, 
+      checked2:false, 
+      checked3:false, 
+      checked4:false, 
+      checked5:false,
+      checked6:false})
+  },86400000);
+
+// testing: 100000
+// time 24 hrs=86400000
 
   render() {
     return (
@@ -267,35 +282,12 @@ class ProfileNew extends Component {
                       paddingRight: 20,
                     }}
                   >
-                    {/* {this.state.data.map((item,key) => {
-                        return (
-                            <View>
-                            <TouchableOpacity 
-                            style={{flexDirection:"row",
-                            alignItems:"center"}}
-                            // onPress={()=> {this.onChecked(item.id)}}
-                            > 
-                            <CheckBox
-                            // value= {item.checked}
-                            // onValueChange ={()=>{
-                            //     this.onChecked(item.id)
-                            // }}
-                            containerStyle={{backgroundColor:Colors.containerBg}}
-                            // title='Fasting Blood Sugar Test'
-                            checked={this.state.checked}
-                            onPress={() => this.setState({checked: !this.state.checked})}
-                            />
-                            </TouchableOpacity>
-                            <Text>{item}</Text>
-                            </View>
-                        );
-                    })} */}
                     <CheckBox
                       containerStyle={{ backgroundColor: Colors.containerBg }}
                       title="Check Fasting Blood Sugar"
                       checked={this.state.checked1}
                       onPress={() =>
-                        this.setState({ checked1: !this.state.checked1 })
+                        this.setState({ checked1: !this.state.checked1})
                       }
                     />
                     <CheckBox
@@ -339,27 +331,6 @@ class ProfileNew extends Component {
                       }
                     />
                   </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      paddingLeft: 20,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.setState({ showModal: false });
-                      }}
-                    >
-                      <FontAwesome
-                        name="times-circle"
-                        size={30}
-                        color="black"
-                      />
-                      <Text>Uncheck All</Text>
-                    </TouchableOpacity>
-                  </View>
-
                   <View
                     style={{
                       alignItems: "center",
@@ -370,6 +341,7 @@ class ProfileNew extends Component {
                       style={[
                         styles.crossIcons,
                         {
+                          marginTop:20,
                           borderRadius: perfectSize(30),
                           height: perfectSize(56),
                           width: perfectSize(56),

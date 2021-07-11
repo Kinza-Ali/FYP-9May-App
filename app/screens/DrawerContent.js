@@ -73,23 +73,34 @@ export function DrawerContent(props) {
             />
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <Icon name="account-edit-outline" color={color} size={size} />
               )}
-              label="Profile"
+              label="Edit Profile"
               onPress={() => {
-                props.navigation.navigate("Profile");
+                props.navigation.navigate("ProfileEdit");
               }}
             />
 
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="account-check-outline" color={color} size={size} />
+                <Icon name="account-outline" color={color} size={size} />
               )}
               label="About Us"
               onPress={() => {
                 props.navigation.navigate("AboutUs");
               }}
             />
+
+            <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="account-outline" color={color} size={size} />
+              )}
+              label="Trial"
+              onPress={() => {
+                props.navigation.navigate("Trial");
+              }}
+            />
+
             <Drawer.Section title="Preferences">
               <TouchableRipple
                 onPress={() => {

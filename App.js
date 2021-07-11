@@ -11,6 +11,9 @@ import DietPlan from "./app/screens/DietPlan";
 import HomeScreen from "./app/screens/HomeScreen";
 import LoginScreen from "./app/screens/Login";
 import AboutUs from "./app/screens/AboutUs";
+import ProfileEdit from "./app/screens/ProfileEdit";
+import Trial from "./app/screens/Trial";
+import ForgotPassword from "./app/screens/ForgotPassword";
 import Loader from "./app/screens/Loader";
 import Blogs from "./app/screens/Blogs";
 import Recipes from "./app/screens/Recipes";
@@ -55,6 +58,8 @@ const UserScreens = () => (
     <Drawer.Screen name="AboutUs" component={AboutUs} />
     <Drawer.Screen name="HomeScreen" component={HomeScreen} />
     <Drawer.Screen name="DietPlan" component={DietPlan} />
+    <Drawer.Screen name="ProfileEdit" component={ProfileEdit} />
+    <Drawer.Screen name="Trial" component={Trial} />
   </Drawer.Navigator>
 )
 
@@ -77,6 +82,7 @@ export default function App() {
         <RootStack.Screen name="Nutritionists" component={Nutritionists} />
         <RootStack.Screen name="SuccessStories" component={SuccessStories} />
         <RootStack.Screen name="Workouts" component={Workouts} />
+        <RootStack.Screen name="ForgotPassword" component={ForgotPassword}/>
         {/* ************ Workouts *********** */}
         <RootStack.Screen name="FullBody" component={FullBody} />
         <RootStack.Screen name="WarmUp" component={WarmUp} />

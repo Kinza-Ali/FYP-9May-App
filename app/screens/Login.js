@@ -141,6 +141,8 @@ export default function Login({ navigation }) {
   const handllePasswordChange = (password) => {
     setPassword(password);
   };
+
+  // -----------Update Secure Entry -------
   const UpdateSecureTextEntry = () => {
     console.log("function called");
     if (secureTextEntry) {
@@ -149,6 +151,19 @@ export default function Login({ navigation }) {
       setSecureTextEntry(true);
     }
   };
+
+  //------------ Forgot Pasword ----
+  const forgotPassword =() => {
+    auth().sendPasswordResetEmail(email)
+    .then((user)=>{
+      alert("please check your email!")
+    })
+    .catch((error)=>{
+      alert(error.message);
+    })
+  };
+
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -230,6 +245,7 @@ export default function Login({ navigation }) {
                     <TextInput
                       placeholder="Your Password"
                       style={styles.textInput}
+                      secureTextEntry={secureTextEntry ? true : false}
                       autoCapitalize="none"
                       autoCorrect={false}
                       onChangeText={(password) =>
@@ -242,14 +258,14 @@ export default function Login({ navigation }) {
                           name="eye-off"
                           color="blue"
                           size={20}
-                          style={{ marginTop: 13, paddingRight: 12 }}
+                          style={{ paddingRight: 20, marginTop: 15 }}
                         />
                       ) : (
                         <Feather
                           name="eye"
                           color="blue"
                           size={20}
-                          style={{ marginTop: 13, paddingRight: 12 }}
+                          style={{ paddingRight: 20, marginTop: 15 }}
                         />
                       )}
                     </TouchableOpacity>
@@ -260,6 +276,7 @@ export default function Login({ navigation }) {
           </View>
         </View>
 
+  {/* ++++++++++++++++++++++++++++++++++++++++++ */}
         <View style={{ marginTop: 20 }}>
           <TouchableOpacity onPress={this.signInUser}>
             <LinearGradient
@@ -273,13 +290,34 @@ export default function Login({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
 
+  {/* ++++++++++++++++++++++++++++++++++++++++++ */}
+
+        <View>
+        <TouchableOpacity 
+         onPress={() => navigation.navigate("ForgotPassword")}
+         >
+                <Text
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignSelf: "center",
+                    marginTop: 18,
+                    color: "#484C7F",
+                    fontSize: 15,
+                  }}
+                >
+                  Forgot Password ?{" "}
+                </Text>
+        </TouchableOpacity>
+        </View>
+
           {/* ++++++++++++++++++++++++++++++++++++++++++ */}
           <Text
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
               alignSelf: "center",
-              marginTop: 30,
+              marginTop: 25,
               color: "#484C7F",
               fontSize: 16,
             }}
@@ -291,7 +329,7 @@ export default function Login({ navigation }) {
               flexDirection: "row",
               justifyContent: "space-between",
               alignSelf: "center",
-              marginTop: 20,
+              marginTop: 15,
             }}
           >
             <TouchableOpacity
