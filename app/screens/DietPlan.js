@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  RefreshControl
 } from "react-native";
 import { Neomorph } from "react-native-neomorph-shadows";
 import perfectSize from "../assets/themes/Screen";
@@ -22,7 +23,15 @@ export default class DietPlan extends Component {
   };
   constructor(props) {
     super(props);
+    this.getDietPlan()
+  }
 
+  onRefresh = () => {
+    this.setState({refreshing:true});
+   this.getDietPlan()
+  }
+
+  getDietPlan=()=>{
     firestore()
       .collection("DietPlan")
       .doc(auth().currentUser.uid)
@@ -33,7 +42,9 @@ export default class DietPlan extends Component {
         snapshot.forEach((docSnap) => {
           this.setState({
             dietPlan: docSnap.data().DietPlan,
+            refreshing:false
           });
+
         });
       });
   }
@@ -83,7 +94,14 @@ export default class DietPlan extends Component {
           style={styles.image}
         >
           {/* <Animatable.View animation="fadeInUpBig" style={styles.footer}> */}
-          <ScrollView>
+          <ScrollView 
+          refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
+          >
             <View style={{ marginTop: perfectSize(40) }}>
               <View>
                 <View style={styles.cardDesigns}>

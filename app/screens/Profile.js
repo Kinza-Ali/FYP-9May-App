@@ -176,6 +176,7 @@ class Profile extends Component {
               BMR: docSnap.data().BMR,
               WaterIntake: docSnap.data().WaterIntake,
             },
+            refreshing:false
           });
         });
       });
@@ -212,10 +213,10 @@ class Profile extends Component {
 
   // getSelectList() {}
 
-  // onRefresh = () => {
-  //     this.setState({refreshing:true});
-  //     wait(2000).then(() => this.setState({refreshing:false}));
-  //   }
+  onRefresh = () => {
+      this.setState({refreshing:true});
+     this.getUser()
+    }
 
 
   //-------------- Set Interval ---------------
