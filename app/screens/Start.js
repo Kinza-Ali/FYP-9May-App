@@ -12,6 +12,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Start = ({ navigation }) => {
   // const { colors } = useTheme();
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 40,
     justifyContent: "center",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   text: {
     color: "grey",
@@ -144,6 +145,6 @@ const styles = StyleSheet.create({
   textSign: {
     color: "black",
     fontWeight: "bold",
-    fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
 });

@@ -63,7 +63,7 @@ const handleScheduleNotification = () => {
         fireDate: firedate.toISOString(),
       });
     }
-    else if (time == "15:01") {
+    else if (time == "11:01") {
       // console.log('pushing...');
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({

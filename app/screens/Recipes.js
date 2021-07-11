@@ -28,7 +28,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { error } from "react-native-gifted-chat/lib/utils";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://cfbe9d0112df.ngrok.io/api/recipes";
+const recipesUrl = "http://28ae251266d5.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -612,7 +612,94 @@ export default function Blogs({ navigation }) {
           </Modal>
         </View>
       ) : (
-        <Text> </Text>
+            <View>
+                 <Modal visible={showModalRecipe} transparent={false}>
+            <ScrollView
+              style={{
+                width: "100%",
+                height: "30%",
+                paddingLeft: 40,
+              }}
+            >
+              <Text style={styles.textSignModal}>{activeRecipe.dishName}</Text>
+              <Image
+                style={{
+                  marginTop: -30,
+                  width: 200,
+                  height: 135,
+                  alignSelf: "center",
+                }}
+                source={{ uri: activeRecipe.dishUrl }}
+              />
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    marginBottom: 10,
+                  })
+                }
+              >
+                {" "}
+                Ingredients:{" "}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    paddingLeft: 30,
+                  })
+                }
+              >
+                {activeRecipe.ingredients}
+                {"\n"}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    marginBottom: 10,
+                  })
+                }
+              >
+                {" "}
+                Method:{" "}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    paddingLeft: 30,
+                  })
+                }
+              >
+                {activeRecipe.method}
+                {"\n"}
+              </Text>
+
+              <View style={styles.button}>
+                <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
+                  <LinearGradient
+                    colors={["#484C7F", "#484C7F"]}
+                    style={styles.modalButton}
+                  >
+                    <Text style={[styles.textSign, { color: "white" }]}>
+                      {" "}
+                      Return{" "}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Modal>
+          </View>
       )}
       {loading ? (
         <ActivityIndicator />
@@ -696,7 +783,7 @@ export default function Blogs({ navigation }) {
                   outputRange: [0, 1],
                   extrapolate: "clamp",
                 });
-                                        return (
+                    return (
                   <View style={{ marginTop: perfectSize(90) }}>
                     <TouchableOpacity
                       onPress={() => {
@@ -767,12 +854,13 @@ export default function Blogs({ navigation }) {
                             outputRange: [0, 1],
                             extrapolate: "clamp",
                           });
-                                                  return (
+                              return (
                             <View style={{ marginTop: perfectSize(90) }}>
                               <TouchableOpacity
                                 onPress={() => {
                                   setActiveRecipe(item);
                                   setShowModalRecipe(true);
+                                  console.log("okkkkk");
                                 }}
                                 style={{
                                   justifyContent: "center",
