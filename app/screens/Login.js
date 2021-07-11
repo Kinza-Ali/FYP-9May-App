@@ -167,7 +167,7 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        // source={require("../assets/images/berriesSmoll.jpg")}
+        source={require("../assets/images/temp.jpg")}
         style={styles.image}
       >
         <View style={styles.drawerHeader}>
@@ -186,7 +186,7 @@ export default function Login({ navigation }) {
 
         <View style={{ marginTop: perfectSize(30) }}>
           <View>
-            <Text style={styles.textfooter}>Email</Text>
+            {/* <Text style={styles.textfooter}>Email</Text> */}
             <View style={styles.cardDesigns}>
               <Neomorph
                 // lightShadowColor="#D0E6A5"
@@ -226,7 +226,7 @@ export default function Login({ navigation }) {
           {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
 
           <View>
-            <Text style={styles.textfooter}>Password</Text>
+            {/* <Text style={styles.textfooter}>Password</Text> */}
             <View style={styles.cardDesigns}>
               <Neomorph
                 // lightShadowColor="#D0E6A5"

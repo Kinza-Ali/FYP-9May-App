@@ -25,9 +25,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Animatable from "react-native-animatable";
 import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { error } from "react-native-gifted-chat/lib/utils";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://localhost:3001/api/recipes";
+const recipesUrl = "http://cfbe9d0112df.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -98,11 +99,19 @@ export default function Blogs({ navigation }) {
       method,
       dishUrl,
       imgUrl,
+    })
+    .then(()=>{
+      setShowModal(false);
+      onRefresh();
+      console.log("==================");
+      console.log(response.response);
+      console.log(dishName + ingredients + method + dishUrl + imgUrl);
+      console.log("+++++++++++++++++++++");
+    })
+    .catch((error)=> {
+      console.log(error);
     });
-    console.log("==================");
-    console.log(response.response);
-    console.log(dishName + ingredients + method + dishUrl + imgUrl);
-    console.log("+++++++++++++++++++++");
+    
   };
 
   //....... UPDATE RECIPE
@@ -114,6 +123,8 @@ export default function Blogs({ navigation }) {
       dishUrl: recipe.dishUrl,
       imgUrl: recipe.imgUrl,
     });
+    setShowModalUpdate(false);
+    onRefresh();
     console.log("==================");
     console.log(response.response);
   };
@@ -122,127 +133,9 @@ export default function Blogs({ navigation }) {
   const deleteRecipe = async (id) => {
     var response = await methods.delete("recipes/" + id, {});
     alert("Successfully deleted");
+    onRefresh();
     console.log("==================");
     console.log(response);
-  };
-
-  //............ SWIPEABLE
-  const leftSwipe = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: "clamp",
-    });
-    // console.log(activeBlog._id)
-    // console.log("***************************")
-    return (
-      // <TouchableOpacity
-      // // onPress={props.handleDelete}
-      // activeOpacity={0.6}>
-      //   <View style={styles.deleteBox}>
-      //     <Animated.Text style={{transform: [{scale: scale}]}}>
-      //       Delete
-      //     </Animated.Text>
-      //    </View>
-      // </TouchableOpacity>
-      <View style={{ marginTop: perfectSize(50) }}>
-        <View>
-          <TouchableOpacity
-            onPress={() => deleteRecipe(activeBlog._id)}
-            style={{
-              // backgroundColor: "#B9BBDF",
-              // width: 50,
-              // height:50,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-              // borderRadius: 100,
-            }}
-          >
-            <FontAwesome
-              name="trash"
-              size={30}
-              // style={{borderRadius:100, color:"#B9BBDF" }}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ marginTop: perfectSize(40) }}>
-          <TouchableOpacity
-            onPress={() => {
-              setActiveBlog(item);
-              setShowModalUpdate(true);
-            }}
-            style={{
-              // backgroundColor: "#B9BBDF",
-              // width: 50,
-              // height:50,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-              // borderRadius: 100,
-            }}
-          >
-            <FontAwesome
-              name="edit"
-              size={30}
-              // style={{borderRadius:100, color:"#B9BBDF" }}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-
-  const rightSwipe = (progress, dragX) => {
-    // const scale = dragX.interpolate({
-    //   inputRange: [0, 100],
-    //   outputRange: [0, 1],
-    //   extrapolate: 'clamp',
-    // });
-    console.log(activeBlog._id);
-    console.log("***************************");
-    return (
-      // <TouchableOpacity
-      // // onPress={props.handleDelete}
-      // activeOpacity={0.6}>
-      //   <View style={styles.deleteBox}>
-      //     <Animated.Text style={{transform: [{scale: scale}]}}>
-      //       Delete
-      //     </Animated.Text>
-      //    </View>
-      // </TouchableOpacity>
-      <View style={{ marginTop: perfectSize(90) }}>
-        <TouchableOpacity
-          onPress={() => {
-            setActiveRecipe(item);
-            setShowModalRecipe(true);
-          }}
-          style={{
-            // backgroundColor: "#B9BBDF",
-            // width: 100,
-            // height:100,
-            justifyContent: "center",
-            alignItems: "center",
-            paddingRight: 20,
-            // padding: 10,
-            // borderRadius: 100,
-          }}
-        >
-          <FontAwesome
-            name="eye"
-            size={30}
-            // style={{borderRadius:100, color:"#B9BBDF" }}
-            color="black"
-          />
-          {/* <Text style={[styles.textSign, { color: "black" }]}>
-            Show Recipe
-          </Text> */}
-        </TouchableOpacity>
-      </View>
-    );
   };
 
   return (
@@ -738,13 +631,101 @@ export default function Blogs({ navigation }) {
                     <View style={{ marginTop: perfectSize(30) }}>
                       <View>
                         <Swipeable
-                          renderLeftActions={leftSwipe}
-                          renderRightActions={rightSwipe}
-                        >
+                          renderLeftActions={(dragX, progress) => {
+                            const scale = dragX.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+      extrapolate: "clamp",
+    });
+    // console.log(activeBlog._id)
+    // console.log("***************************")
+    return (
+      <View style={{ marginTop: perfectSize(50) }}>
+        <View>
+          <TouchableOpacity
+            onPress={() => deleteRecipe(item._id)}
+            style={{
+              // backgroundColor: "#B9BBDF",
+              // width: 50,
+              // height:50,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: 20,
+              // borderRadius: 100,
+            }}
+          >
+            <FontAwesome
+              name="trash"
+              size={30}
+              // style={{borderRadius:100, color:"#B9BBDF" }}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ marginTop: perfectSize(40) }}>
+          <TouchableOpacity
+            onPress={() => {
+              setActiveBlog(item);
+              setShowModalUpdate(true);
+            }}
+            style={{
+              // backgroundColor: "#B9BBDF",
+              // width: 50,
+              // height:50,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: 20,
+              // borderRadius: 100,
+            }}
+          >
+            <FontAwesome
+              name="edit"
+              size={30}
+              // style={{borderRadius:100, color:"#B9BBDF" }}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+       }}
+                renderRightActions={(dragX, progress)=> {
+                    const scale = dragX.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: [0, 1],
+                  extrapolate: "clamp",
+                });
+                                        return (
+                  <View style={{ marginTop: perfectSize(90) }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setActiveRecipe(item);
+                        setShowModalRecipe(true);
+                      }}
+                      style={{
+                        // backgroundColor: "#B9BBDF",
+                        // width: 100,
+                        // height:100,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        paddingRight: 20,
+                        // padding: 10,
+                        // borderRadius: 100,
+                      }}
+                    >
+                      <FontAwesome
+                        name="eye"
+                        size={30}
+                        color="black"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                );
+                    }}
+                  >
                           <View style={styles.cardDesigns}>
                             <Neomorph
-                              // lightShadowColor="#D0E6A5"
-                              // darkShadowColor="#D0E6A5" // <- set this
                               swapShadows
                               style={styles.menuItems}
                             >
@@ -780,11 +761,36 @@ export default function Blogs({ navigation }) {
                   <ScrollView>
                     <View style={{ marginTop: perfectSize(50) }}>
                       <View>
-                        <Swipeable renderRightActions={rightSwipe}>
+                        <Swipeable renderRightActions={(dragX, progress)=> {
+                            const scale = dragX.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: [0, 1],
+                            extrapolate: "clamp",
+                          });
+                                                  return (
+                            <View style={{ marginTop: perfectSize(90) }}>
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setActiveRecipe(item);
+                                  setShowModalRecipe(true);
+                                }}
+                                style={{
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  paddingRight: 20,
+                                }}
+                              >
+                                <FontAwesome
+                                  name="eye"
+                                  size={30}
+                                  color="black"
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                          }}>
                           <View style={styles.cardDesigns}>
                             <Neomorph
-                              // lightShadowColor="#D0E6A5"
-                              // darkShadowColor="#D0E6A5" // <- set this
                               swapShadows
                               style={styles.menuItems}
                             >
@@ -818,21 +824,6 @@ export default function Blogs({ navigation }) {
                 </View>
               )}
 
-              {/* <View style={styles.button}>
-                        <TouchableOpacity onPress={() => {
-                        setActiveRecipe(item)
-                        setShowModalRecipe(true)}}>
-                          <LinearGradient
-                            colors={["#484C7F", "#484C7F"]}
-                            style={styles.selectButton}
-                          >
-                            <Text style={[styles.textSign, { color: "white" }]}>
-                              Show Recipe
-                            </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </View> */}
-
               {isAdmin ? (
                 <View
                   style={[
@@ -843,57 +834,6 @@ export default function Blogs({ navigation }) {
                     },
                   ]}
                 >
-                  {/* <View
-                              style={
-                                {
-                                  // flex: 2,
-                                }
-                              }
-                            >
-                              <TouchableOpacity
-                        onPress={() => {
-                                  setActiveBlog(item)
-                                  setShowModalUpdate(true)
-                                }}
-                        style={{
-                          backgroundColor: "#B9BBDF",
-                          width: 50,
-                          height:50,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          // padding: 10,
-                          borderRadius: 100,
-                        }}
-                      >
-                        <FontAwesome name="edit" size={25} 
-                        // style={{borderRadius:100, color:"#B9BBDF" }}
-                         color="black" />
-                      </TouchableOpacity>
-                            </View>
-
-                            <View
-                              style={{
-                                // flex: 1,
-                                paddingLeft: 20,
-                              }}
-                            >
-                                <TouchableOpacity
-                         onPress={() => deleteRecipe(activeBlog._id)}
-                        style={{
-                          backgroundColor: "#B9BBDF",
-                          width: 50,
-                          height:50,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          // padding: 10,
-                          borderRadius: 100,
-                        }}
-                      >
-                        <FontAwesome name="trash" size={25} 
-                        // style={{borderRadius:100, color:"#B9BBDF" }}
-                         color="black" />
-                      </TouchableOpacity>
-                            </View> */}
                 </View>
               ) : (
                 <Text></Text>

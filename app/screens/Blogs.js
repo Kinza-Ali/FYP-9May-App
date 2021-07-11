@@ -22,7 +22,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 // import AsyncStorage from '@react-native-community/async-storage';
-const baseUrl = "http://localhost:3001/api/blogs/";
+const baseUrl = "http://cfbe9d0112df.ngrok.io/api/blogs/";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -99,6 +99,8 @@ export default function Blogs({ navigation }) {
       paragraph: blog.paragraph,
       blogUrl: blog.blogUrl,
     });
+    setShowModalUpdate(false);
+    onRefresh();
     console.log("==================");
 
     console.log(response.response);
@@ -116,63 +118,21 @@ export default function Blogs({ navigation }) {
         blogUrl
     );
     await methods.post("blogs", { title, paragraph, blogUrl });
+    setShowModal(false);
+    onRefresh();
     console.log("============" + title + "==========" + paragraph);
   };
   //------------ Delete Story Method ---------
   const deleteStory = async (id) => {
     var response = await methods.delete("blogs/" + id, {});
-    alert("Successfully deleted");
+    onRefresh();
+    // alert("Successfully deleted");
     console.log(response);
   };
 
   //--------- SWIPEABLE ----------------
   const leftSwipe = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: "clamp",
-    });
-    return (
-      // <TouchableOpacity
-      // // onPress={props.handleDelete}
-      // activeOpacity={0.6}>
-      //   <View style={styles.deleteBox}>
-      //     <Animated.Text style={{transform: [{scale: scale}]}}>
-      //       Delete
-      //     </Animated.Text>
-      //    </View>
-      // </TouchableOpacity>
-      <View style={{ marginTop: perfectSize(100) }}>
-        <View>
-          <TouchableOpacity
-            onPress={() => deleteRecipe(activeBlog._id)}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-            }}
-          >
-            <FontAwesome name="trash" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ marginTop: perfectSize(30) }}>
-          <TouchableOpacity
-            onPress={() => {
-              setActiveBlog(item);
-              setShowModalUpdate(true);
-            }}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-            }}
-          >
-            <FontAwesome name="edit" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+   
   };
 
   return (
@@ -488,7 +448,45 @@ export default function Blogs({ navigation }) {
           renderItem={({ item }) => (
             <View>
               {isAdmin ? (
-                <Swipeable renderLeftActions={leftSwipe}>
+                <Swipeable renderLeftActions={(progress,dragX)=> {
+                   const scale = dragX.interpolate({
+                    inputRange: [0, 100],
+                    outputRange: [0, 1],
+                    extrapolate: "clamp",
+                  });
+                  return (
+                    <View style={{ marginTop: perfectSize(100) }}>
+                      <View>
+                        <TouchableOpacity
+                          onPress={() => deleteStory(item._id)}
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            paddingLeft: 20,
+                          }}
+                        >
+                          <FontAwesome name="trash" size={30} color="black" />
+                        </TouchableOpacity>
+                      </View>
+
+                      <View style={{ marginTop: perfectSize(30) }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setActiveBlog(item);
+                            setShowModalUpdate(true);
+                          }}
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            paddingLeft: 20,
+                          }}
+                        >
+                          <FontAwesome name="edit" size={30} color="black" />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  );
+                }}>
                   <ScrollView>
                     <View style={{ marginTop: perfectSize(50) }}>
                       <View>

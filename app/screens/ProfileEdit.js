@@ -78,8 +78,43 @@ export default function ProfileEdit({ navigation }) {
 
     return (
     <View style={styles.container}>
+    {/* ************************************ DRAWER HEADER!!!!!  ************************** */}
+
+    <View style={styles.drawerHeader}>
+        <View style={{ 
+          // paddingRight: 50
+           }}>
+          <Neomorph
+            style={[
+              styles.BackIcons,
+              {
+                borderRadius: perfectSize(30),
+                height: perfectSize(56),
+                width: perfectSize(56),
+              },
+            ]}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome name="arrow-left" size={20} color="black" />
+            </TouchableOpacity>
+          </Neomorph>
+        </View>
+        <Text
+          style={{
+            color: Colors.defaultDark,
+            fontWeight: "bold",
+            fontFamily: Colors.fontFamily,
+            paddingRight: 50,
+            fontSize: 25,
+          }}
+        >
+          {" "}
+          Update Password
+        </Text>
+      </View>
+
     <View style={{marginTop:30}}>
-    <View>
+    {/* <View>
             <Neomorph
               style={[
                 styles.BackIcons,
@@ -98,7 +133,7 @@ export default function ProfileEdit({ navigation }) {
                 <FontAwesome name="arrow-left" size={20} color="black" />
               </TouchableOpacity>
             </Neomorph>
-          </View>
+          </View> */}
       <View style={{marginTop:20}}>
             <Text style={styles.textfooter}>Current Password</Text>
             <View style={styles.cardDesigns}>

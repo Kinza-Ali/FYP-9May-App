@@ -15,7 +15,7 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 // import { get } from "react-native/Libraries/Utilities/PixelRatio";
 // import AsyncStorage from '@react-native-community/async-storage';
-const blogUrl = "http://192.168.18.3:3001/api/blogs";
+const blogUrl = "http://cfbe9d0112df.ngrok.io/api/blogs";
 
 export default function AdminBlog({ navigation, props }) {
   const [loading, setLoading] = useState(true);
