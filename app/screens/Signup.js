@@ -89,7 +89,8 @@ export default function SignUp({ navigation }) {
         var value = this.formula(gender);
         // console.log(BMI + "BMI");
         //---------- firetstore collection
-        firestore().collection("Users").add({
+        firestore().collection("Users").doc(auth().currentUser.uid)
+        .set({
           // token: auth().currentUser.accessToken,
           uid: auth().currentUser.uid,
           name: userName,

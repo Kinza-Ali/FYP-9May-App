@@ -77,7 +77,7 @@ export function DrawerContent(props) {
               )}
               label="Edit Profile"
               onPress={() => {
-                props.navigation.navigate("ProfileEdit");
+                props.navigation.navigate("Trial");
               }}
             />
 
@@ -91,7 +91,7 @@ export function DrawerContent(props) {
               }}
             />
 
-            <DrawerItem
+            {/* <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
@@ -99,7 +99,7 @@ export function DrawerContent(props) {
               onPress={() => {
                 props.navigation.navigate("Trial");
               }}
-            />
+            /> */}
 
             <Drawer.Section title="Preferences">
               <TouchableRipple

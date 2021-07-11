@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Modal,
+  RefreshControl
 } from "react-native";
 import { Neomorph } from "react-native-neomorph-shadows";
 import perfectSize from "../assets/themes/Screen";
@@ -19,11 +20,12 @@ import firestore from "@react-native-firebase/firestore";
 import asyncStorage from "@react-native-community/async-storage";
 import { ScrollView } from "react-native";
 
-class ProfileNew extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.getUser();
   }
+  
   state = {
     user: {
       name: "",
@@ -69,7 +71,52 @@ class ProfileNew extends Component {
       "Do Workout/Yoga/Medidation",
       "Stay Hydrated",
     ],
+    refreshing:false
   };
+
+// onRefresh = async() => {
+//     this.setState({refreshing: true});
+//       await firestore()
+//       .collection("Users")
+//       .where("email", "==", email)
+//       .get()
+//       .then((snapshot) => {
+//         snapshot.forEach((docSnap) => {
+//           this.setState({
+//             user: {
+//               name: docSnap.data().name,
+//               age: docSnap.data().age,
+//               weight: docSnap.data().weight,
+//               height: docSnap.data().height,
+//               gender: docSnap.data().gender,
+//               email: docSnap.data().email,
+//               BMI: docSnap.data().BMI,
+//               IBF: docSnap.data().IBF,
+//               IBW: docSnap.data().IBW,
+//               BMR: docSnap.data().BMR,
+//               WaterIntake: docSnap.data().WaterIntake,
+//             },
+//           });
+//         });
+//       })
+//       .then(() => {
+//         this.setState({refreshing: false});
+//       });
+//     await firestore()
+//       .collection("DietPlan")
+//       .doc(auth().currentUser.uid)
+//       .collection("userDietPlan")
+//       .where("email", "==", email)
+//       .get()
+//       .then((snapshot) => {
+//         snapshot.forEach((docSnap) => {
+//           this.setState({
+//             calorieCount: docSnap.data().calorieCount,
+//           });
+//         });
+//       })
+    
+//   };
 
   readData = async () => {
     try {
@@ -165,10 +212,10 @@ class ProfileNew extends Component {
 
   // getSelectList() {}
 
-  // onRefresh = React.useCallback(() => {
+  // onRefresh = () => {
   //     this.setState({refreshing:true});
   //     wait(2000).then(() => this.setState({refreshing:false}));
-  //   }, []);
+  //   }
 
 
   //-------------- Set Interval ---------------
@@ -365,9 +412,12 @@ class ProfileNew extends Component {
           </View>
         </View>
         <ScrollView
-        //  refreshControl={
-        //   <RefreshControl refreshing={this.state.refreshing} onRefresh={() => onRefresh} />
-        // }
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
         >
           <View style={styles.user}>
             <Image
@@ -700,7 +750,7 @@ class ProfileNew extends Component {
     );
   }
 }
-export default ProfileNew;
+export default Profile;
 
 const styles = StyleSheet.create({
   container: {

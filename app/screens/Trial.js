@@ -71,55 +71,43 @@ export default function Trial({ navigation }) {
 
   //----------Email and Password authentication with firebase
 
-  createUser = () => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("User account created & signed in!");
+  const onUpdate = () => {
+    // auth()
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then(() => {
+    //     console.log("User account created & signed in!");
 
-        // eslint-disable-next-line prettier/prettier
-        auth()
-          .currentUser.updateProfile({ displayName: userName.trim() })
-          .then(() => {
-            console.log(auth().currentUser);
-          });
+    //     // eslint-disable-next-line prettier/prettier
+    //     auth()
+    //       .currentUser.updateProfile({ displayName: userName.trim() })
+    //       .then(() => {
+    //         console.log(auth().currentUser);
+    //       });
 
-        navigation.navigate("UserScreens");
+    //     navigation.navigate("UserScreens");
 
         var value = this.formula(gender);
         // console.log(BMI + "BMI");
         //---------- firetstore collection
-        firestore().collection("Users").add({
-          // token: auth().currentUser.accessToken,
-          uid: auth().currentUser.uid,
-          name: userName,
-          email: email,
+        firestore().collection("Users").doc(auth().currentUser.uid)
+        .update({
           age: age,
           weight: weight,
           height: height,
-          gender: gender,
-          role: "user",
           BMI: value.BMI,
           IBF: value.IBF,
           IBW: value.IBW,
           BMR: value.BMR,
           WaterIntake: value.WaterIntake,
-        });
+        })
+        .then(()=>{
+          alert("Profile Updated! \n Please generate your New Diet Plan. ")
+          
+        })
         // this.formula();
-      })
       .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          console.log("That email address is already in use!");
-          alert("That email address is already in use!");
-        }
-
-        if (error.code === "auth/invalid-email") {
-          alert("That email address is invalid!");
-          console.log("That email address is invalid!");
-        }
         console.error(error);
       });
-    setLoggedIn(true);
   };
 
   //-------------------------------------
@@ -131,51 +119,53 @@ export default function Trial({ navigation }) {
   }
 
   //----------- Google Sign Out ---------------
-  signOut = async () => {
-    try {
-      auth()
-        .signOut()
-        .then(() => alert("You are signed Out! "));
-      console.log("signOut");
-      setLoggedIn(false);
-    } catch (error) {
-      alert(error);
-    }
-    setUserName(null);
-  };
+  // signOut = async () => {
+  //   try {
+  //     auth()
+  //       .signOut()
+  //       .then(() => alert("You are signed Out! "));
+  //     console.log("signOut");
+  //     setLoggedIn(false);
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  //   setUserName(null);
+  // };
+
   //--------- Email Text Input -------------
-  const textInputchange = (email) => {
-    if (email.length != 0) {
-      setEmail(email), setcheckTextInputChange(true);
-    } else {
-      setcheckTextInputChange(false);
-    }
-  };
+  // const textInputchange = (email) => {
+  //   if (email.length != 0) {
+  //     setEmail(email), setcheckTextInputChange(true);
+  //   } else {
+  //     setcheckTextInputChange(false);
+  //   }
+  // };
   // ------- Display User Name -----------
-  const displayName = (username) => {
-    if (username.length !== 0) {
-      setUserName(username);
-    }
-  };
+  // const displayName = (username) => {
+  //   if (username.length !== 0) {
+  //     setUserName(username);
+  //   }
+  // };
   // ---------- Password input Field ---
-  const handllePasswordChange = (password) => {
-    setPassword(password);
-  };
+  // const handllePasswordChange = (password) => {
+  //   setPassword(password);
+  // };
   // ---------- Confirm Password input Field ---
-  const handleConfirmPasswordChange = (confirmPassword) => {
-    setConfirmPassword(confirmPassword);
-  };
+  // const handleConfirmPasswordChange = (confirmPassword) => {
+  //   setConfirmPassword(confirmPassword);
+  // };
   //-------- Update Security Text Entry -----
-  const UpdateSecureTextEntry = () => {
-    if (secureTextEntry) {
-      setSecureTextEntry(false);
-    } else {
-      setSecureTextEntry(true);
-    }
-  };
-  const UpdateConfirmSecureTextEntry = () => {
-    setConfirmSecureTextEntry(false);
-  };
+  // const UpdateSecureTextEntry = () => {
+  //   if (secureTextEntry) {
+  //     setSecureTextEntry(false);
+  //   } else {
+  //     setSecureTextEntry(true);
+  //   }
+  // };
+  // const UpdateConfirmSecureTextEntry = () => {
+  //   setConfirmSecureTextEntry(false);
+  // };
+
   // ------ Empty Field Check ----
   const emptyFieldVlidator = (value) => {
     if (value == "") {
@@ -185,40 +175,25 @@ export default function Trial({ navigation }) {
     }
   };
   //---- register -------
-  const onRegister = () => {
-    console.log;
-    // let regx = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
-    let regx = /^(?!\s)([a-z ,.'-]+)$/i;
-    let eregx = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
+  const onConfirm = () => {
     let numregx = /^[0-9]+$/;
-    // let nregx = /^[0-9]+$/;
     let heightregx = /\d+(\.\d{1})/;
-    let isValid = regx.test(userName);
-
-    let emailValid = eregx.test(email);
     let weightValid = numregx.test(weight);
     let heightValid = heightregx.test(height);
-    if (!isValid) {
-      setNameError("Name Must be alphabets and should be Full name");
-    } else if (!emailValid) {
-      setEmailError("Enter Correct Email");
-    } else if (password.length < 8) {
-      setPasswordError("Pasword must be 8 character long");
-    } else if (age < 18) {
+     if (age < 18) {
       setAgeError("Age must be greater than 18");
     } else if (!weightValid) {
       setWeightValid("Enter numbers only");
     } else if (!heightValid) {
       setHeightValid("Enter height in feet and inches");
     } else {
-      this.createUser();
+      onUpdate();
     }
   };
-  // const [pickerValue, setPickerValue] = useState();
+  
   //--------------- Formulae Calculation ------------
   formula = (gender) => {
-    // // console.log(this.state.prediction.diabetesType);
-    // console.log(gender);
+
     var heightFeet = height.split(".");
     var heightInch = height.split(".")[1];
 
@@ -273,27 +248,28 @@ export default function Trial({ navigation }) {
     IBW = Math.round(IBW, 2);
     return { IBW, IBF, BMR, WaterIntake, BMI };
   };
+
   // -------- Save Data ---------------------------
-  saveData = async () => {
-    try {
-      await asyncStorage.setItem("name", userName);
-      await asyncStorage.setItem("gender", gender);
-      await asyncStorage.setItem("age", age);
-      await asyncStorage.setItem("height", height);
-      await asyncStorage.setItem("weight", weight);
-      await asyncStorage.setItem("BMI", JSON.stringify(BMI));
-      // await asyncStorage.setItem(
-      //   "calorieCount",
-      //   JSON.stringify(this.state.calorieCount)
-      // );
-      console.log(JSON.stringify(calorieCount));
-      await asyncStorage.setItem("IBF", JSON.stringify(IBF));
-      await asyncStorage.setItem("IBW", JSON.stringify(IBW));
-      await asyncStorage.setItem("WaterIntake", JSON.stringify(WaterIntake));
-    } catch (e) {
-      alert("Failed to save the data to the storage");
-    }
-  };
+  // saveData = async () => {
+  //   try {
+  //     await asyncStorage.setItem("name", userName);
+  //     await asyncStorage.setItem("gender", gender);
+  //     await asyncStorage.setItem("age", age);
+  //     await asyncStorage.setItem("height", height);
+  //     await asyncStorage.setItem("weight", weight);
+  //     await asyncStorage.setItem("BMI", JSON.stringify(BMI));
+  //     // await asyncStorage.setItem(
+  //     //   "calorieCount",
+  //     //   JSON.stringify(this.state.calorieCount)
+  //     // );
+  //     console.log(JSON.stringify(calorieCount));
+  //     await asyncStorage.setItem("IBF", JSON.stringify(IBF));
+  //     await asyncStorage.setItem("IBW", JSON.stringify(IBW));
+  //     await asyncStorage.setItem("WaterIntake", JSON.stringify(WaterIntake));
+  //   } catch (e) {
+  //     alert("Failed to save the data to the storage");
+  //   }
+  // };
 
   //-------------------------------------------------
   return (
@@ -502,7 +478,7 @@ export default function Trial({ navigation }) {
           {/* *************************CONFIRM *********************************** */}
         </View>
         <View>
-          <TouchableOpacity onPress={onRegister}>
+          <TouchableOpacity onPress={onConfirm}>
             <LinearGradient
               colors={[Colors.lilac, Colors.lilac]}
               style={styles.login}
