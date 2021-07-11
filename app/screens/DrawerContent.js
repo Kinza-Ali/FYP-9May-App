@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Avatar,
@@ -6,21 +6,15 @@ import {
   Text,
   TouchableRipple,
   Switch,
-  Title
+  Title,
 } from "react-native-paper";
-
-import { Neomorph } from 'react-native-neomorph-shadows';
-import perfectSize from '../assets/themes/Screen';
-import Images from '../assets/themes/Images';
-import Colors from '../assets/themes/Colors';
+import Colors from "../assets/themes/Colors";
 import auth from "@react-native-firebase/auth";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import asyncStorage from "@react-native-community/async-storage";
 export function DrawerContent(props) {
-
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
-  // const {LogOut} = React.useContext(AuthContext);
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
@@ -59,12 +53,11 @@ export function DrawerContent(props) {
                 size={40}
                 backgroundColor={Colors.containerBg}
               />
-              <View style={{  flexDirection: "column" }}>
+              <View style={{ flexDirection: "column" }}>
                 <Title style={styles.title}>
                   {" "}
                   {auth().currentUser.displayName}
                 </Title>
-                {/* <Caption style={styles.caption}>@123user</Caption> */}
               </View>
             </View>
           </View>
@@ -130,14 +123,14 @@ export function DrawerContent(props) {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     backgroundColor: Colors.backgroundColor,
-    fontFamily:Colors.fontFamily
+    fontFamily: Colors.fontFamily,
   },
   drawerContent: {
     backgroundColor: Colors.backgroundColor,
-    fontFamily:Colors.fontFamily
+    fontFamily: Colors.fontFamily,
   },
   userInfoSection: {
     paddingLeft: 20,
@@ -146,8 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
-    fontFamily: Colors.fontFamily
-    // fontFamily: "IowanOldStyle-Roman",
+    fontFamily: Colors.fontFamily,
   },
   caption: {
     fontSize: 14,

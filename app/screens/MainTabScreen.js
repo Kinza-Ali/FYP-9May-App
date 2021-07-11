@@ -3,26 +3,24 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import perfectSize from '../assets/themes/Screen';
-import Images from '../assets/themes/Images';
-import Colors from '../assets/themes/Colors';
-
-
-import HomeScreen from './HomeScreen';
-import Recipes from './Recipes';
-import Workouts from './Workouts';
-import Profile from './Profile';
-import Nutritionists from './Nutritionists';
-import Blogs from './Blogs';
-import ChatbotScreen from './Chatbot';
-import FullBody from './FullBody';
-import Arms from './Arms';
-import Abs from './Abs';
-import Facial from './Facial';
-import Legs from './Legs';
-import WarmUp from './WarmUp';
-import Shoulders from './Shoulders';
-import SuccessStories from './SuccessStories';
+import perfectSize from "../assets/themes/Screen";
+import Images from "../assets/themes/Images";
+import Colors from "../assets/themes/Colors";
+import HomeScreen from "./HomeScreen";
+import Recipes from "./Recipes";
+import Workouts from "./Workouts";
+import Profile from "./Profile";
+import Nutritionists from "./Nutritionists";
+import Blogs from "./Blogs";
+import ChatbotScreen from "./Chatbot";
+import FullBody from "./FullBody";
+import Arms from "./Arms";
+import Abs from "./Abs";
+import Facial from "./Facial";
+import Legs from "./Legs";
+import WarmUp from "./WarmUp";
+import Shoulders from "./Shoulders";
+import SuccessStories from "./SuccessStories";
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -39,7 +37,7 @@ const MainTabScreen = () => (
       component={HomeStackScreen}
       options={{
         tabBarLabel: "Home",
-        tabBarColor:Colors.containerBg,
+        tabBarColor: Colors.containerBg,
 
         tabBarIcon: ({ color }) => (
           <Icon name="ios-home" color={color} size={26} />
@@ -51,7 +49,7 @@ const MainTabScreen = () => (
       component={Profile}
       options={{
         tabBarLabel: "Profile",
-        tabBarColor:Colors.containerBg,
+        tabBarColor: Colors.containerBg,
 
         tabBarIcon: ({ color }) => (
           <Icon name="ios-person" color={color} size={26} />
@@ -63,8 +61,7 @@ const MainTabScreen = () => (
       component={Recipes}
       options={{
         tabBarLabel: "Recipes",
-        tabBarColor:Colors.containerBg,
-
+        tabBarColor: Colors.containerBg,
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="chef-hat" color={color} size={26} />
         ),
@@ -75,10 +72,10 @@ const MainTabScreen = () => (
       component={Blogs}
       options={{
         tabBarLabel: "Blogs",
-        tabBarColor:Colors.containerBg,
+        tabBarColor: Colors.containerBg,
 
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-book" color={color} size={26}/>
+          <Icon name="ios-book" color={color} size={26} />
         ),
       }}
     />
@@ -90,7 +87,6 @@ const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator
     screenOptions={{
       headerShown: false,
-      
     }}
   >
     <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
@@ -104,7 +100,7 @@ const HomeStackScreen = ({ navigation }) => (
 const WorkoutStackScreen = ({ navigation }) => (
   <WorkoutStack.Navigator
     screenOptions={{
-      headerShown: false
+      headerShown: false,
     }}
   >
     <WorkoutStack.Screen

@@ -1,28 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../env";
 import uuid from "react-native-uuid";
-import asyncStorage from "@react-native-community/async-storage";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import HomeScreen from "./HomeScreen";
 import axios from "axios";
-import Breakfast from "./Breakfast";
-import { color } from "react-native-reanimated";
 import { handleScheduleNotification } from "../../src/notification.ios";
-import { Neomorph } from 'react-native-neomorph-shadows';
-import perfectSize from '../assets/themes/Screen';
-import Images from '../assets/themes/Images';
-import Colors from '../assets/themes/Colors';
+import { Neomorph } from "react-native-neomorph-shadows";
+import perfectSize from "../assets/themes/Screen";
+import Images from "../assets/themes/Images";
+import Colors from "../assets/themes/Colors";
 
-
-//Bot Image
-// const botAvatar = require("../assets/images/bot.png");
-//Bot User
 const BOT = {
   _id: 2,
   name: "Mr Bot",
@@ -99,7 +91,6 @@ class Chatbot extends Component {
             id,
             messages: [
               {
-                //id of the message
                 _id: 2,
                 text: `Hello, ${this.props.route.params.name}. I am Mr.Bot,your automated Nutriguide`,
                 createdAt: new Date().getTime(),
@@ -127,7 +118,6 @@ class Chatbot extends Component {
 
   constructor(props) {
     super(props);
-    // var oldEmail="";
     firestore()
       .collection("DietPlan")
       .doc(auth().currentUser.uid)
@@ -137,19 +127,15 @@ class Chatbot extends Component {
       .then((snapshot) => {
         snapshot.forEach((docSnap) => {
           this.setState({
-            // dietPlan: docSnap.data().DietPlan,
-            // console.log("%%%%%%%%%%%");
-            // console.log(docSnap.data().email);
             oldEmail: docSnap.data().email,
           });
           console.log(this.state.oldEmail);
         });
       });
     console.log("--------------");
-    // console.log(this.state.oldEmail);
     this.getUser();
   }
-  //-------- Get user Info
+  //-------- Get user Info -----------
   getUser = async () => {
     const email = auth().currentUser.email;
     await firestore()
@@ -183,7 +169,7 @@ class Chatbot extends Component {
     } else {
       genderVal = 0;
     }
-    // Push Notifications
+    // ------------ Push Notifications ----------
     handleScheduleNotification();
     // post request....
     await this.post("http://3b199b91829f.ngrok.io/dietplan", {
@@ -245,7 +231,6 @@ class Chatbot extends Component {
             .doc(auth().currentUser.uid)
             .collection("userDietPlan")
             .add({
-              // token: auth().currentUser.accessToken,
               email: auth().currentUser.email,
               DietPlan: this.state.dietPlan,
               createdAt: new Date().getTime(),
@@ -255,58 +240,102 @@ class Chatbot extends Component {
               console.log("User added!");
             });
           console.log(res.data);
-          const dietPlanParsed = res.data
-      console.log("************** DIET PLAN *************")
-      // console.log(text)
-      console.log(dietPlanParsed.Breakfast)
-      console.log(dietPlanParsed.Lunch)
-      console.log(dietPlanParsed.Dinner)
-      console.log(dietPlanParsed.Snacks)
-      console.log("************** DIET PLAN *************")
-      let breakfast = ""
-      let lunch = ""
-      let dinner = ""
-      let snacks = ""
-      Object.keys(dietPlanParsed.Breakfast).map((item,index) => {
-        if(index === 0) {
-          breakfast = breakfast + "Breakfast: \n" + item + ": " + dietPlanParsed.Breakfast[item] + " grams\n"
-          
-        }else{
-          breakfast = breakfast + item + ": " + dietPlanParsed.Breakfast[item] +  " grams\n"
-        }
-      })
-      console.log(breakfast)
-      Object.keys(dietPlanParsed.Lunch).map((item, index) => {
-        if(index === 0) {
-          lunch = lunch + "\nLunch: \n" + item + ": " + dietPlanParsed.Lunch[item] + " grams"+ "\n"
-          
-        }else{
-          lunch = lunch + item + ": " + dietPlanParsed.Lunch[item] + " grams"+ "\n"
-        }
-      })
-      console.log(lunch)
-      Object.keys(dietPlanParsed.Snacks).map((item, index) => {
-        if(index === 0) {
-          snacks = snacks + "\nSnacks: \n" + item + ": " + dietPlanParsed.Snacks[item] + " grams"+ "\n"
-          
-        }else{
-          snacks = snacks + item + ": " + dietPlanParsed.Snacks[item] + " grams"+ "\n"
-          console.log(index)
-        }
-      })
-      console.log(snacks)
-      Object.keys(dietPlanParsed.Dinner).map((item, index) => {
-        if(index === 0) {
-          dinner = dinner + "\nDinner: \n" + item + ": " + dietPlanParsed.Dinner[item] + " grams"+ "\n"
-          
-        }else{
-          dinner = dinner + item + ": " + dietPlanParsed.Dinner[item] + " grams"+ "\n"
-        }
-      })
-      console.log(dinner)
+          const dietPlanParsed = res.data;
+          // console.log("************** DIET PLAN *************");
+          // // console.log(text)
+          // console.log(dietPlanParsed.Breakfast);
+          // console.log(dietPlanParsed.Lunch);
+          // console.log(dietPlanParsed.Dinner);
+          // console.log(dietPlanParsed.Snacks);
+          // console.log("************** DIET PLAN *************");
+          let breakfast = "";
+          let lunch = "";
+          let dinner = "";
+          let snacks = "";
+          Object.keys(dietPlanParsed.Breakfast).map((item, index) => {
+            if (index === 0) {
+              breakfast =
+                breakfast +
+                "Breakfast: \n" +
+                item +
+                ": " +
+                dietPlanParsed.Breakfast[item] +
+                " grams\n";
+            } else {
+              breakfast =
+                breakfast +
+                item +
+                ": " +
+                dietPlanParsed.Breakfast[item] +
+                " grams\n";
+            }
+          });
+          console.log(breakfast);
+          Object.keys(dietPlanParsed.Lunch).map((item, index) => {
+            if (index === 0) {
+              lunch =
+                lunch +
+                "\nLunch: \n" +
+                item +
+                ": " +
+                dietPlanParsed.Lunch[item] +
+                " grams" +
+                "\n";
+            } else {
+              lunch =
+                lunch +
+                item +
+                ": " +
+                dietPlanParsed.Lunch[item] +
+                " grams" +
+                "\n";
+            }
+          });
+          console.log(lunch);
+          Object.keys(dietPlanParsed.Snacks).map((item, index) => {
+            if (index === 0) {
+              snacks =
+                snacks +
+                "\nSnacks: \n" +
+                item +
+                ": " +
+                dietPlanParsed.Snacks[item] +
+                " grams" +
+                "\n";
+            } else {
+              snacks =
+                snacks +
+                item +
+                ": " +
+                dietPlanParsed.Snacks[item] +
+                " grams" +
+                "\n";
+              console.log(index);
+            }
+          });
+          console.log(snacks);
+          Object.keys(dietPlanParsed.Dinner).map((item, index) => {
+            if (index === 0) {
+              dinner =
+                dinner +
+                "\nDinner: \n" +
+                item +
+                ": " +
+                dietPlanParsed.Dinner[item] +
+                " grams" +
+                "\n";
+            } else {
+              dinner =
+                dinner +
+                item +
+                ": " +
+                dietPlanParsed.Dinner[item] +
+                " grams" +
+                "\n";
+            }
+          });
+          console.log(dinner);
           this.sendBotResponse(breakfast + lunch + snacks + dinner);
-          // }
-          // this.setState({ Breakfastupd: this.state.Breakfast });
         })
         .catch((err) => {
           reject(err);
@@ -349,15 +378,27 @@ class Chatbot extends Component {
           type: "radio",
           keepIt: true,
           values: [
-            { title: "Type1 (Diabetes Mellitus)", value: "Type 1*1", _id: uuid.v4() },
-            { title: "Type2 (Adult On-Set Diabetes)", value: "Type 2*2", _id: uuid.v4() },
-            { title: "Type3 (GDM-Gestational Diabetes Mellitus )", value: "Type 3*3", _id: uuid.v4() },
+            {
+              title: "Type1 (Diabetes Mellitus)",
+              value: "Type 1*1",
+              _id: uuid.v4(),
+            },
+            {
+              title: "Type2 (Adult On-Set Diabetes)",
+              value: "Type 2*2",
+              _id: uuid.v4(),
+            },
+            {
+              title: "Type3 (GDM-Gestational Diabetes Mellitus )",
+              value: "Type 3*3",
+              _id: uuid.v4(),
+            },
           ],
         },
       };
     } else if (text == "second question") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+        //  _id: this.state.messages.length + 1,
         text: "Do you take any external insulin injection?",
         createdAt: new Date().getTime(),
         user: BOT,
@@ -372,7 +413,7 @@ class Chatbot extends Component {
       };
     } else if (text == "third question") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+        //  _id: this.state.messages.length + 1,
         text: "What’s your Lifestyle like?",
         createdAt: new Date().getTime(),
         user: BOT,
@@ -405,7 +446,7 @@ class Chatbot extends Component {
       };
     } else if (text == "fourth question") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+        // _id: this.state.messages.length + 1,
         text: "Have you had any symptoms of high blood sugar lately? ",
         createdAt: new Date().getTime(),
         user: BOT,
@@ -428,7 +469,7 @@ class Chatbot extends Component {
       };
     } else if (text == "fifth question") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+        //  _id: this.state.messages.length + 1,
         text: "What's your style of eating like?",
         createdAt: new Date().getTime(),
         user: BOT,
@@ -456,8 +497,8 @@ class Chatbot extends Component {
       };
     } else if (text == "sixth question") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
-        text:"Do you check your blood sugar regularly? ",
+        //_id: this.state.messages.length + 1,
+        text: "Do you check your blood sugar regularly? ",
         createdAt: new Date().getTime(),
         user: BOT,
         quickReplies: {
@@ -482,7 +523,7 @@ class Chatbot extends Component {
       "Thank you for your response, you will be getting your diet plan in a while."
     ) {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+        // _id: this.state.messages.length + 1,
         text: "You will be getting your Diet plan in a while",
         createdAt: new Date().getTime(),
         user: BOT,
@@ -614,7 +655,6 @@ class Chatbot extends Component {
       });
       this.setState({ prediction: prediction });
       this.calulateCalorieCount();
-      // console.log("stateCalorie" + this.state.calorieCount);
     } else {
       var joined = this.state.answers.concat(message);
       this.setState({ answers: joined });
@@ -644,27 +684,32 @@ class Chatbot extends Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#fff",
-      fontFamily:Colors.fontFamily }}>
-        <View style={{ paddingTop: 20,paddingLeft:10}}>
-        <Neomorph 
-        style={
-            [styles.BackIcons,
-        {borderRadius: perfectSize(30), 
-        height: perfectSize(56), width: perfectSize(56)}]}
-            >
-        <TouchableOpacity
-            // style={{paddingRight:150}}
-            onPress={() => {
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff",
+          fontFamily: Colors.fontFamily,
+        }}
+      >
+        <View style={{ paddingTop: 20, paddingLeft: 10 }}>
+          <Neomorph
+            style={[
+              styles.BackIcons,
+              {
+                borderRadius: perfectSize(30),
+                height: perfectSize(56),
+                width: perfectSize(56),
+              },
+            ]}
+          >
+            <TouchableOpacity
+              onPress={() => {
                 this.props.navigation.goBack();
-            }}
+              }}
             >
-           
-             <FontAwesome name="arrow-left" size={20} color="black" 
-            // style={{color: Colors.headerTextColor}}
-                />
-        </TouchableOpacity>
-        </Neomorph>
+              <FontAwesome name="arrow-left" size={20} color="black" />
+            </TouchableOpacity>
+          </Neomorph>
         </View>
 
         <GiftedChat
@@ -681,15 +726,13 @@ class Chatbot extends Component {
 export default Chatbot;
 
 const styles = StyleSheet.create({
-    
   BackIcons: {
     height: perfectSize(50),
     width: perfectSize(50),
     backgroundColor: Colors.containerBg,
     shadowRadius: 5,
     borderRadius: 23,
-    alignItems: 'center',
-    justifyContent: 'center',
-},
-
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

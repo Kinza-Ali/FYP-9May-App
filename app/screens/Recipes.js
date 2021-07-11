@@ -14,20 +14,20 @@ import {
   Image,
   Modal,
   TextInput,
-  Animated
+  Animated,
 } from "react-native";
 
-import { Neomorph } from 'react-native-neomorph-shadows';
-import perfectSize from '../assets/themes/Screen';
-import Colors from '../assets/themes/Colors';
-import LinearGradient from 'react-native-linear-gradient';
+import { Neomorph } from "react-native-neomorph-shadows";
+import perfectSize from "../assets/themes/Screen";
+import Colors from "../assets/themes/Colors";
+import LinearGradient from "react-native-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as Animatable from "react-native-animatable";
 import asyncStorage from "@react-native-community/async-storage";
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Swipeable from "react-native-gesture-handler/Swipeable";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://6d1af125ba51.ngrok.io/api/recipes";
+const recipesUrl = "http://localhost:3001/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -50,8 +50,7 @@ export default function Blogs({ navigation }) {
   //-----------
   const [refreshing, setRefreshing] = React.useState(false);
   const [activeBlog, setActiveBlog] = React.useState("");
-  const [activeRecipe, setActiveRecipe]= React.useState("");
-
+  const [activeRecipe, setActiveRecipe] = React.useState("");
 
   // Pull to refresh method
   const onRefresh = React.useCallback(() => {
@@ -81,7 +80,6 @@ export default function Blogs({ navigation }) {
   //fetching data from blogs api
   // console.log(isAdmin);
 
-
   useEffect(() => {
     readData();
     fetch(recipesUrl)
@@ -92,7 +90,7 @@ export default function Blogs({ navigation }) {
   }, []);
   //.......
 
- //....... ADD RECIPE
+  //....... ADD RECIPE
   addRecipe = async () => {
     var response = await methods.post("recipes", {
       dishName,
@@ -101,707 +99,726 @@ export default function Blogs({ navigation }) {
       dishUrl,
       imgUrl,
     });
-    console.log('==================');
+    console.log("==================");
     console.log(response.response);
-    console.log(dishName + ingredients+ method+ dishUrl+imgUrl)
-    console.log('+++++++++++++++++++++');
+    console.log(dishName + ingredients + method + dishUrl + imgUrl);
+    console.log("+++++++++++++++++++++");
   };
 
-
-//....... UPDATE RECIPE
+  //....... UPDATE RECIPE
   const updateRecipe = async (recipe) => {
     var response = await methods.put("recipes/" + recipe._id, {
       dishName: recipe.dishName,
-      ingredients:recipe.ingredients,
-      method:recipe.method,
-      dishUrl:recipe.dishUrl,
-      imgUrl:recipe.imgUrl,
+      ingredients: recipe.ingredients,
+      method: recipe.method,
+      dishUrl: recipe.dishUrl,
+      imgUrl: recipe.imgUrl,
     });
-    console.log('==================');
+    console.log("==================");
     console.log(response.response);
   };
 
-
-//....... DELETE RECIPE
+  //....... DELETE RECIPE
   const deleteRecipe = async (id) => {
     var response = await methods.delete("recipes/" + id, {});
     alert("Successfully deleted");
-    console.log('==================');
+    console.log("==================");
     console.log(response);
   };
 
-//............ SWIPEABLE
-const leftSwipe = (progress, dragX) => {
-  const scale = dragX.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
-  });
-  // console.log(activeBlog._id)
-  // console.log("***************************")
-  return (
-    // <TouchableOpacity 
-    // // onPress={props.handleDelete} 
-    // activeOpacity={0.6}>
-    //   <View style={styles.deleteBox}>
-    //     <Animated.Text style={{transform: [{scale: scale}]}}>
-    //       Delete
-    //     </Animated.Text>
-    //    </View>
-    // </TouchableOpacity>
-    <View style={{marginTop: perfectSize(50)}}>
-    <View>
-    <TouchableOpacity
-      onPress={() => deleteRecipe(activeBlog._id)}
-    style={{
-      // backgroundColor: "#B9BBDF",
-      // width: 50,
-      // height:50,
-      justifyContent: "center",
-      alignItems: "center",
-      paddingLeft: 20,
-      // borderRadius: 100,
-    }}
-  >
-    <FontAwesome name="trash" size={30} 
-    // style={{borderRadius:100, color:"#B9BBDF" }}
-      color="black" />
-  </TouchableOpacity>
-  </View>
-  
-  <View style={{marginTop: perfectSize(40)}}>
-  <TouchableOpacity
-      onPress={() => {
-                setActiveBlog(item)
-                setShowModalUpdate(true)
-              }}
-      style={{
-        // backgroundColor: "#B9BBDF",
-        // width: 50,
-        // height:50,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingLeft: 20,
-        // borderRadius: 100,
-      }}
-    >
-      <FontAwesome name="edit" size={30} 
-      // style={{borderRadius:100, color:"#B9BBDF" }}
-        color="black" />
-    </TouchableOpacity>
-    </View>
-    </View>
-  );
-};
+  //............ SWIPEABLE
+  const leftSwipe = (progress, dragX) => {
+    const scale = dragX.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 1],
+      extrapolate: "clamp",
+    });
+    // console.log(activeBlog._id)
+    // console.log("***************************")
+    return (
+      // <TouchableOpacity
+      // // onPress={props.handleDelete}
+      // activeOpacity={0.6}>
+      //   <View style={styles.deleteBox}>
+      //     <Animated.Text style={{transform: [{scale: scale}]}}>
+      //       Delete
+      //     </Animated.Text>
+      //    </View>
+      // </TouchableOpacity>
+      <View style={{ marginTop: perfectSize(50) }}>
+        <View>
+          <TouchableOpacity
+            onPress={() => deleteRecipe(activeBlog._id)}
+            style={{
+              // backgroundColor: "#B9BBDF",
+              // width: 50,
+              // height:50,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: 20,
+              // borderRadius: 100,
+            }}
+          >
+            <FontAwesome
+              name="trash"
+              size={30}
+              // style={{borderRadius:100, color:"#B9BBDF" }}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
 
-const rightSwipe = (progress, dragX) => {
-  // const scale = dragX.interpolate({
-  //   inputRange: [0, 100],
-  //   outputRange: [0, 1],
-  //   extrapolate: 'clamp',
-  // });
-  console.log(activeBlog._id)
-  console.log("***************************")
-  return (
-    // <TouchableOpacity 
-    // // onPress={props.handleDelete} 
-    // activeOpacity={0.6}>
-    //   <View style={styles.deleteBox}>
-    //     <Animated.Text style={{transform: [{scale: scale}]}}>
-    //       Delete
-    //     </Animated.Text>
-    //    </View>
-    // </TouchableOpacity>
-    <View 
-    style={{marginTop: perfectSize(90)}}
-    >
-      <TouchableOpacity onPress={() => {
-      setActiveRecipe(item)
-      setShowModalRecipe(true)}}
-      style={{
-        // backgroundColor: "#B9BBDF",
-        // width: 100,
-        // height:100,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingRight: 20,
-        // padding: 10,
-        // borderRadius: 100,
-      }}
-      >
-      <FontAwesome name="eye" size={30} 
-    // style={{borderRadius:100, color:"#B9BBDF" }}
-      color="black" />
+        <View style={{ marginTop: perfectSize(40) }}>
+          <TouchableOpacity
+            onPress={() => {
+              setActiveBlog(item);
+              setShowModalUpdate(true);
+            }}
+            style={{
+              // backgroundColor: "#B9BBDF",
+              // width: 50,
+              // height:50,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: 20,
+              // borderRadius: 100,
+            }}
+          >
+            <FontAwesome
+              name="edit"
+              size={30}
+              // style={{borderRadius:100, color:"#B9BBDF" }}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
+  const rightSwipe = (progress, dragX) => {
+    // const scale = dragX.interpolate({
+    //   inputRange: [0, 100],
+    //   outputRange: [0, 1],
+    //   extrapolate: 'clamp',
+    // });
+    console.log(activeBlog._id);
+    console.log("***************************");
+    return (
+      // <TouchableOpacity
+      // // onPress={props.handleDelete}
+      // activeOpacity={0.6}>
+      //   <View style={styles.deleteBox}>
+      //     <Animated.Text style={{transform: [{scale: scale}]}}>
+      //       Delete
+      //     </Animated.Text>
+      //    </View>
+      // </TouchableOpacity>
+      <View style={{ marginTop: perfectSize(90) }}>
+        <TouchableOpacity
+          onPress={() => {
+            setActiveRecipe(item);
+            setShowModalRecipe(true);
+          }}
+          style={{
+            // backgroundColor: "#B9BBDF",
+            // width: 100,
+            // height:100,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingRight: 20,
+            // padding: 10,
+            // borderRadius: 100,
+          }}
+        >
+          <FontAwesome
+            name="eye"
+            size={30}
+            // style={{borderRadius:100, color:"#B9BBDF" }}
+            color="black"
+          />
           {/* <Text style={[styles.textSign, { color: "black" }]}>
             Show Recipe
           </Text> */}
-      </TouchableOpacity>
-    </View>
-  );
-};
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
-    
-        <View style={styles.container}>
-          
-          <View style={styles.drawerHeader}>
-            <Neomorph 
-            style={
-                [styles.BackIcons,
-            {borderRadius: perfectSize(30), 
-            height: perfectSize(56), 
-            width: perfectSize(56)  }]}
+    <View style={styles.container}>
+      <View style={styles.drawerHeader}>
+        <Neomorph
+          style={[
+            styles.BackIcons,
+            {
+              borderRadius: perfectSize(30),
+              height: perfectSize(56),
+              width: perfectSize(56),
+            },
+          ]}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <FontAwesome name="arrow-left" size={20} color="black" />
+          </TouchableOpacity>
+        </Neomorph>
+        <Text
+          style={{
+            color: Colors.defaultDark,
+            fontWeight: "bold",
+            fontFamily: Colors.fontFamily,
+            paddingRight: 140,
+            fontSize: 25,
+          }}
+        >
+          {" "}
+          Recipes
+        </Text>
+      </View>
+      {isAdmin ? (
+        <View>
+          <View
+            style={{
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+              paddingRight: 20,
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => setShowModal(true)}
+              style={{
+                backgroundColor: "#B9BBDF",
+                width: 60,
+                height: 60,
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 10,
+                borderRadius: 100,
+              }}
+            >
+              <FontAwesome name="plus" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+          <Modal visible={showModalUpdate} transparent={false}>
+            <ScrollView
+              style={{
+                width: "100%",
+                height: "30%",
+                paddingLeft: 40,
+              }}
+            >
+              <View style={styles.drawerHeader}>
+                <Neomorph
+                  style={[
+                    styles.BackIcons,
+                    {
+                      borderRadius: perfectSize(30),
+                      height: perfectSize(56),
+                      width: perfectSize(56),
+                    },
+                  ]}
                 >
-                <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              >
-                <FontAwesome name="arrow-left" size={20} color="black" />
-              </TouchableOpacity>
-                  
-            </Neomorph>  
-                <Text style={{color: Colors.defaultDark, 
-                fontWeight: 'bold',
-                fontFamily:Colors.fontFamily,
-                paddingRight:140,
-                fontSize:25
-                }}> Recipes
+                  <TouchableOpacity onPress={() => setShowModalUpdate(false)}>
+                    <FontAwesome name="arrow-left" size={20} color="black" />
+                  </TouchableOpacity>
+                </Neomorph>
+                <Text
+                  style={{
+                    color: Colors.defaultDark,
+                    fontWeight: "bold",
+                    fontFamily: Colors.fontFamily,
+                    paddingRight: 80,
+                    fontSize: 25,
+                  }}
+                >
+                  {" "}
+                  Edit Recipes
                 </Text>
+              </View>
+
+              <View style={styles.action}>
+                <TextInput
+                  placeholder={activeBlog.dishName}
+                  defaultValue={activeBlog.dishName}
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    let objectLol = { ...activeBlog };
+                    objectLol.dishName = text;
+                    setActiveBlog(objectLol);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  placeholder="Add Ingredients"
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  defaultValue={activeBlog.ingredients}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    let objectLol = { ...activeBlog };
+                    objectLol.ingredients = text;
+                    setActiveBlog(objectLol);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  defaultValue={activeBlog.method}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    let objectLol = { ...activeBlog };
+                    objectLol.method = text;
+                    console.log("TESTING ********");
+                    console.log(objectLol);
+                    console.log("TESTING ********");
+                    setActiveBlog(objectLol);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  defaultValue={activeBlog.dishUrl}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    let objectLol = { ...activeBlog };
+                    objectLol.dishUrl = text;
+                    console.log("TESTING ********");
+                    console.log(objectLol);
+                    console.log("TESTING ********");
+                    setActiveBlog(objectLol);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  defaultValue={activeBlog.imgUrl}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    let objectLol = { ...activeBlog };
+                    objectLol.imgUrl = text;
+                    console.log("TESTING ********");
+                    console.log(objectLol);
+                    console.log("TESTING ********");
+                    setActiveBlog(objectLol);
+                  }}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() => updateRecipe(activeBlog)}
+                style={[
+                  styles.signUp,
+                  {
+                    borderColor: "#484C7F",
+                    marginTop: 20,
+                    borderColor: "#484C7F",
+                    borderWidth: 0,
+
+                    paddingRight: 100,
+                    margin: 20,
+                    width: "170%",
+                    paddingLeft: 100,
+                    marginTop: 20,
+                  },
+                ]}
+              >
+                <LinearGradient
+                  colors={["#484C7F", "#484C7F"]}
+                  style={styles.login}
+                >
+                  <Text
+                    style={[
+                      styles.textSign,
+                      {
+                        color: "white",
+                        fontFamily: Colors.fontFamily,
+                      },
+                    ]}
+                  >
+                    {" "}
+                    Update Recipe{" "}
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </ScrollView>
+          </Modal>
+
+          {/* ADD RECIPES MODAL */}
+
+          <Modal visible={showModal} transparent={false}>
+            <ScrollView
+              style={{
+                width: "100%",
+                height: "30%",
+
+                alignSelf: "center",
+              }}
+            >
+              <View style={styles.drawerHeader}>
+                <Neomorph
+                  style={[
+                    styles.BackIcons,
+                    {
+                      borderRadius: perfectSize(30),
+                      height: perfectSize(56),
+                      width: perfectSize(56),
+                    },
+                  ]}
+                >
+                  <TouchableOpacity onPress={() => setShowModal(false)}>
+                    <FontAwesome name="arrow-left" size={20} color="black" />
+                  </TouchableOpacity>
+                </Neomorph>
+                <Text
+                  style={{
+                    color: Colors.defaultDark,
+                    fontWeight: "bold",
+                    fontFamily: Colors.fontFamily,
+                    paddingRight: 80,
+                    fontSize: 25,
+                  }}
+                >
+                  {" "}
+                  Add Recipes
+                </Text>
+              </View>
+
+              <View style={styles.action}>
+                <TextInput
+                  placeholder="Add Dish Name"
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setDishName(text);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  placeholder="Add Ingredients"
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setIngredients(text);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  placeholder="Add Method"
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setMethod(text);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  placeholder="Add Dish URL"
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setDishUrl(text);
+                  }}
+                />
+              </View>
+              <View style={styles.action}>
+                <TextInput
+                  style={{
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                  placeholder="Add Image URL"
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setImgUrl(text);
+                  }}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={this.addRecipe}
+                style={[
+                  styles.signUp,
+                  {
+                    //   borderColor: "#484C7F",
+                    //   borderWidth: 0,
+                    marginTop: 10,
+                    //   paddingRight: 100,
+                    //   margin: 20,
+                    //   width: "170%",
+                    //   paddingLeft: 60,
+                    //   marginTop: 20,
+                  },
+                ]}
+              >
+                <LinearGradient
+                  colors={["#484C7F", "#484C7F"]}
+                  style={styles.login}
+                >
+                  <Text
+                    style={[
+                      styles.textSign,
+                      {
+                        color: "white",
+                        fontFamily: Colors.fontFamily,
+                        // padding: 20,
+                      },
+                    ]}
+                  >
+                    {" "}
+                    Add Recipe{" "}
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </ScrollView>
+          </Modal>
+
+          {/* SHOW RECIPE */}
+
+          <Modal visible={showModalRecipe} transparent={false}>
+            <ScrollView
+              style={{
+                width: "100%",
+                height: "30%",
+                paddingLeft: 40,
+              }}
+            >
+              <Text style={styles.textSignModal}>{activeRecipe.dishName}</Text>
+              <Image
+                style={{
+                  marginTop: -30,
+                  width: 200,
+                  height: 135,
+                  alignSelf: "center",
+                }}
+                source={{ uri: activeRecipe.dishUrl }}
+              />
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    marginBottom: 10,
+                  })
+                }
+              >
+                {" "}
+                Ingredients:{" "}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    paddingLeft: 30,
+                  })
+                }
+              >
+                {activeRecipe.ingredients}
+                {"\n"}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    marginBottom: 10,
+                  })
+                }
+              >
+                {" "}
+                Method:{" "}
+              </Text>
+              <Text
+                style={
+                  (styles.InputField,
+                  {
+                    fontFamily: Colors.fontFamily,
+                    paddingLeft: 30,
+                  })
+                }
+              >
+                {activeRecipe.method}
+                {"\n"}
+              </Text>
+
+              <View style={styles.button}>
+                <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
+                  <LinearGradient
+                    colors={["#484C7F", "#484C7F"]}
+                    style={styles.modalButton}
+                  >
+                    <Text style={[styles.textSign, { color: "white" }]}>
+                      {" "}
+                      Return{" "}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Modal>
         </View>
-            {isAdmin ? (
-              <View>
-                    <View
-                      style={{
-                        justifyContent: "flex-end",
-                        alignItems: "flex-end",
-                        paddingRight: 20,
-                        marginBottom: 10,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => setShowModal(true)}
-                        style={{
-                          backgroundColor: "#B9BBDF",
-                          width: 60,
-                          height: 60,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: 10,
-                          borderRadius: 100,
-                        }}
-                      >
-                        <FontAwesome name="plus" size={30} color="black" />
-                      </TouchableOpacity>
-                    </View>
-                    <Modal
-                              visible={showModalUpdate}
-                              transparent={false}
+      ) : (
+        <Text> </Text>
+      )}
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={data}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          keyExtractor={({ id }, index) => id}
+          renderItem={({ item }) => (
+            <View>
+              {isAdmin ? (
+                <View>
+                  <ScrollView>
+                    <View style={{ marginTop: perfectSize(30) }}>
+                      <View>
+                        <Swipeable
+                          renderLeftActions={leftSwipe}
+                          renderRightActions={rightSwipe}
+                        >
+                          <View style={styles.cardDesigns}>
+                            <Neomorph
+                              // lightShadowColor="#D0E6A5"
+                              // darkShadowColor="#D0E6A5" // <- set this
+                              swapShadows
+                              style={styles.menuItems}
                             >
-                              <ScrollView
+                              <View
                                 style={{
-                                  width: "100%",
-                                  height: "30%",
-                                  paddingLeft: 40,
+                                  flexDirection: "column",
+                                  paddingLeft: 20,
+                                  marginTop: 15,
                                 }}
                               >
-                              <View style={styles.drawerHeader}>
-                              <Neomorph 
-                              style={
-                                  [styles.BackIcons,
-                              {borderRadius: perfectSize(30), 
-                              height: perfectSize(56), 
-                              width: perfectSize(56)  }]}
-                                  >
-                                  <TouchableOpacity
-                                  onPress={() => setShowModalUpdate(false)}
-                                >
-                                  <FontAwesome name="arrow-left" size={20} color="black" />
-                                </TouchableOpacity>
-                                    
-                              </Neomorph>  
-                                  <Text style={{color: Colors.defaultDark, 
-                                  fontWeight: 'bold',
-                                  fontFamily:Colors.fontFamily,
-                                  paddingRight:80,
-                                  fontSize:25
-                                  }}> Edit Recipes
-                                  </Text>
-                          </View>
-                                
-                                <View style={styles.action}>
-                                  <TextInput
-                                    placeholder={activeBlog.dishName}
-                                    defaultValue={activeBlog.dishName}
-                                    style={{
-                                      fontFamily: Colors.fontFamily,
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.dishName = text
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    placeholder="Add Ingredients"
-                                    style={{
-                                      fontFamily:Colors.fontFamily,
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={activeBlog.ingredients}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.ingredients = text
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    style={{
-                                      fontFamily: Colors.fontFamily,
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={activeBlog.method}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.method = text
-                                      console.log("TESTING ********")
-                                      console.log(objectLol)
-                                      console.log("TESTING ********")
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    style={{
-                                      fontFamily:Colors.fontFamily,
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={activeBlog.dishUrl}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.dishUrl = text
-                                      console.log("TESTING ********")
-                                      console.log(objectLol)
-                                      console.log("TESTING ********")
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <View style={styles.action}>
-                                  <TextInput
-                                    style={{
-                                      fontFamily: Colors.fontFamily,
-                                      fontSize: 20,
-                                      paddingBottom: 20,
-                                      paddingTop: 20,
-                                    }}
-                                    defaultValue={activeBlog.imgUrl}
-                                    autoCapitalize="none"
-                                    onChangeText={(text) => {
-                                      let objectLol = {...activeBlog}
-                                      objectLol.imgUrl = text
-                                      console.log("TESTING ********")
-                                      console.log(objectLol)
-                                      console.log("TESTING ********")
-                                      setActiveBlog(objectLol);
-                                    }}
-                                  />
-                                </View>
-                                <TouchableOpacity
-                                  onPress={() => updateRecipe(activeBlog)}
-                                  style={[
-                                    styles.signUp,
-                                    {
-                                      borderColor: "#484C7F",
-                                      marginTop: 20,
-                                      borderColor: "#484C7F",
-                                      borderWidth: 0,
-
-                                      paddingRight: 100,
-                                      margin: 20,
-                                      width: "170%",
-                                      paddingLeft: 100,
-                                      marginTop: 20,
-                                    },
-                                  ]}
-                                >
-                                  <LinearGradient
-                                    colors={["#484C7F", "#484C7F"]}
-                                    style={styles.login}
-                                  >
-                                    <Text
-                                      style={[
-                                        styles.textSign,
-                                        {
-                                          color: "white",
-                                          fontFamily: Colors.fontFamily,
-                                        },
-                                      ]}
-                                    >
-                                      {" "}
-                                      Update Recipe{" "}
-                                    </Text>
-                                  </LinearGradient>
-                                </TouchableOpacity>
-                                
-                              </ScrollView>
-                            </Modal>
-                  
-                {/* ADD RECIPES MODAL */}
-
-                    <Modal visible={showModal} transparent={false}>
-                      <ScrollView
-                        style={{
-                          width: "100%",
-                          height: "30%",
-
-                          alignSelf: "center",
-                        }}
-                      >
-                      <View style={styles.drawerHeader}>
-                              <Neomorph 
-                              style={
-                                  [styles.BackIcons,
-                              {borderRadius: perfectSize(30), 
-                              height: perfectSize(56), 
-                              width: perfectSize(56)  }]}
-                                  >
-                                  <TouchableOpacity
-                                  onPress={() => setShowModal(false)}
-                                >
-                                  <FontAwesome name="arrow-left" size={20} color="black" />
-                                </TouchableOpacity>
-                                    
-                              </Neomorph>  
-                                  <Text style={{color: Colors.defaultDark, 
-                                  fontWeight: 'bold',
-                                  fontFamily:Colors.fontFamily,
-                                  paddingRight:80,
-                                  fontSize:25
-                                  }}> Add Recipes
-                                  </Text>
-                          </View>
-                       
-                        <View style={styles.action}>
-                          <TextInput
-                            placeholder="Add Dish Name"
-                            style={{
-                              fontFamily: Colors.fontFamily,
-                              fontSize: 20,
-                              paddingBottom: 20,
-                              paddingTop: 20,
-                            }}
-                            autoCapitalize="none"
-                            onChangeText={(text) => {
-                        
-                              setDishName(text);
-                            }}
-                          />
-                        </View>
-                        <View style={styles.action}>
-                          <TextInput
-                            placeholder="Add Ingredients"
-                            style={{
-                              fontFamily: Colors.fontFamily,
-                              fontSize: 20,
-                              paddingBottom: 20,
-                              paddingTop: 20,
-                            }}
-                            autoCapitalize="none"
-                            onChangeText={(text) => {
-                              setIngredients(text);
-                            }}
-                          />
-                        </View>
-                        <View style={styles.action}>
-                          <TextInput
-                            style={{
-                              fontFamily: Colors.fontFamily,
-                              fontSize: 20,
-                              paddingBottom: 20,
-                              paddingTop: 20,
-                            }}
-                            placeholder="Add Method"
-                            autoCapitalize="none"
-                            onChangeText={(text) => {
-                              setMethod(text);
-                            }}
-                          />
-                        </View>
-                        <View style={styles.action}>
-                          <TextInput
-                            style={{
-                              fontFamily: Colors.fontFamily,
-                              fontSize: 20,
-                              paddingBottom: 20,
-                              paddingTop: 20,
-                            }}
-                            placeholder="Add Dish URL"
-                            autoCapitalize="none"
-                            onChangeText={(text) => {
-                              setDishUrl(text);
-                            }}
-                          />
-                        </View>
-                        <View style={styles.action}>
-                          <TextInput
-                            style={{
-                              fontFamily:Colors.fontFamily,
-                              fontSize: 20,
-                              paddingBottom: 20,
-                              paddingTop: 20,
-                            }}
-                            placeholder="Add Image URL"
-                            autoCapitalize="none"
-                            onChangeText={(text) => {
-                              setImgUrl(text);
-                            }}
-                          />
-                        </View>
-                        <TouchableOpacity
-                          onPress={this.addRecipe}
-                          style={[
-                            styles.signUp,
-                            {
-                            //   borderColor: "#484C7F",
-                            //   borderWidth: 0,
-                              marginTop: 10,
-                            //   paddingRight: 100,
-                            //   margin: 20,
-                            //   width: "170%",
-                            //   paddingLeft: 60,
-                            //   marginTop: 20,
-                            },
-                          ]}
-                        >
-                          <LinearGradient
-                            colors={["#484C7F", "#484C7F"]}
-                            style={styles.login}
-                          >
-                            <Text
-                              style={[
-                                styles.textSign,
-                                {
-                                  color: "white",
-                                  fontFamily: Colors.fontFamily,
-                                  // padding: 20,
-                                },
-                              ]}
-                            >
-                            {" "}
-                              Add Recipe{" "}
-                            </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      </ScrollView>
-                    </Modal>
-
-                    {/* SHOW RECIPE */}
-
-                    <Modal visible={showModalRecipe} transparent={false}>
-                        <ScrollView
-                          style={{
-                            width: "100%",
-                            height: "30%",
-                            paddingLeft: 40,
-                          }}
-                        >
-                          <Text style={styles.textSignModal}>
-                            {activeRecipe.dishName}
-                          </Text>
-                          <Image
-                            style={{
-                              marginTop: -30,
-                              width: 200,
-                              height: 135,
-                              alignSelf: "center",
-                            }}
-                            source={{ uri: activeRecipe.dishUrl }}
-                          />
-                          <Text
-                            style={
-                              (styles.InputField,
-                              {
-                                fontFamily: Colors.fontFamily,
-                                fontWeight: "bold",
-                                fontSize: 16,
-                                marginBottom: 10,
-                              })
-                            }
-                          >
-                            {" "}
-                            Ingredients:{" "}
-                          </Text>
-                          <Text
-                            style={
-                              (styles.InputField,
-                              {
-                                fontFamily: Colors.fontFamily,
-                                paddingLeft: 30,
-                              })
-                            }
-                          >
-                            {activeRecipe.ingredients}
-                            {"\n"}
-                          </Text>
-                          <Text
-                            style={
-                              (styles.InputField,
-                              {
-                                fontFamily: Colors.fontFamily,
-                                fontWeight: "bold",
-                                fontSize: 16,
-                                marginBottom: 10,
-                              })
-                            }
-                          >
-                            {" "}
-                            Method:{" "}
-                          </Text>
-                          <Text
-                            style={
-                              (styles.InputField,
-                              {
-                                fontFamily: Colors.fontFamily,
-                                paddingLeft: 30,
-                              })
-                            }
-                          >
-                            {activeRecipe.method}
-                            {"\n"}
-                          </Text>
-
-                          <View style={styles.button}>
-                            <TouchableOpacity
-                              onPress={() => setShowModalRecipe(false)}
-                            >
-                              <LinearGradient
-                                colors={["#484C7F", "#484C7F"]}
-                                style={styles.modalButton}
-                              >
-                                <Text
-                                  style={[styles.textSign, { color: "white" }]}
-                                >
-                                  {" "}
-                                  Return{" "}
+                                <Text style={styles.textSign}>
+                                  {item.dishName}
                                 </Text>
-                              </LinearGradient>
-                            </TouchableOpacity>
+                                <Image
+                                  style={{
+                                    marginTop: 2,
+                                    width: 200,
+                                    height: 135,
+                                    alignSelf: "center",
+                                  }}
+                                  source={{ uri: item.dishUrl }}
+                                />
+                              </View>
+                            </Neomorph>
                           </View>
-                        </ScrollView>
-                      </Modal>
-                  </View>
+                        </Swipeable>
+                      </View>
+                    </View>
+                  </ScrollView>
+                </View>
               ) : (
-                <Text> </Text>
+                <View>
+                  <ScrollView>
+                    <View style={{ marginTop: perfectSize(50) }}>
+                      <View>
+                        <Swipeable renderRightActions={rightSwipe}>
+                          <View style={styles.cardDesigns}>
+                            <Neomorph
+                              // lightShadowColor="#D0E6A5"
+                              // darkShadowColor="#D0E6A5" // <- set this
+                              swapShadows
+                              style={styles.menuItems}
+                            >
+                              <View
+                                style={{
+                                  flexDirection: "column",
+                                  paddingLeft: 20,
+                                  marginTop: 15,
+                                }}
+                              >
+                                <Text style={styles.textSign}>
+                                  {item.dishName}
+                                </Text>
+
+                                <Image
+                                  style={{
+                                    marginTop: 2,
+                                    width: 200,
+                                    height: 135,
+                                    alignSelf: "center",
+                                  }}
+                                  source={{ uri: item.dishUrl }}
+                                />
+                              </View>
+                            </Neomorph>
+                          </View>
+                        </Swipeable>
+                      </View>
+                    </View>
+                  </ScrollView>
+                </View>
               )}
-              {loading ? (
-                <ActivityIndicator />
-              ) : (
-                <FlatList
-                  data={data}
-                  refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-                  keyExtractor={({ id }, index) => id}
-                  renderItem={({ item }) => (
-                    <View>
 
-
-                      {isAdmin? 
-                    (
-                      <View>
-                      <ScrollView>
-        <View style={{marginTop: perfectSize(30)}}>
-          <View>
-          <Swipeable renderLeftActions={leftSwipe}
-                      renderRightActions={rightSwipe}>
-            <View style={styles.cardDesigns}>    
-                      <Neomorph 
-                      // lightShadowColor="#D0E6A5"
-                      // darkShadowColor="#D0E6A5" // <- set this
-                          swapShadows
-                          style={styles.menuItems}
-                      >
-                     <View style={{flexDirection:'column', paddingLeft:20, marginTop:15}}>
-                      <Text style={styles.textSign}>{item.dishName}</Text>
-                      <Image
-                        style={{
-                          marginTop: 2,
-                          width: 200,
-                          height: 135,
-                          alignSelf: "center",
-                        }}
-                        source={{ uri: item.dishUrl }}
-                      />
-                      
-                      </View> 
-                      </Neomorph>        
-        </View>  
-        </Swipeable>                    
-          </View>          
-          </View>
-        </ScrollView>
-                      </View>
-                    ): 
-                    (
-                      <View>
-                      <ScrollView>
-        <View style={{marginTop: perfectSize(50)}}>
-          <View>
-          <Swipeable 
-                      renderRightActions={rightSwipe}>
-            <View style={styles.cardDesigns}>    
-                      <Neomorph 
-                      // lightShadowColor="#D0E6A5"
-                      // darkShadowColor="#D0E6A5" // <- set this
-                          swapShadows
-                          style={styles.menuItems}
-                      >
-                     <View style={{flexDirection:'column', paddingLeft:20, marginTop:15}}>
-                      <Text style={styles.textSign}>{item.dishName}</Text>
-
-                      
-                      <Image
-                        style={{
-                          marginTop: 2,
-                          width: 200,
-                          height: 135,
-                          alignSelf: "center",
-                        }}
-                        source={{ uri: item.dishUrl }}
-                      />
-                      
-                      </View> 
-                      </Neomorph>        
-        </View>  
-        </Swipeable>                    
-          </View>          
-          </View>
-        </ScrollView>
-                      </View>
-                      )}
-
-                      
-
-                      {/* <View style={styles.button}>
+              {/* <View style={styles.button}>
                         <TouchableOpacity onPress={() => {
                         setActiveRecipe(item)
                         setShowModalRecipe(true)}}>
@@ -816,17 +833,17 @@ const rightSwipe = (progress, dragX) => {
                         </TouchableOpacity>
                       </View> */}
 
-                      {isAdmin ? (
-                        <View
-                            style={[
-                              {
-                                // flexDirection: "row",
-                                marginTop: 10,
-                                // padding: 20,
-                              },
-                            ]}
-                          >
-                            {/* <View
+              {isAdmin ? (
+                <View
+                  style={[
+                    {
+                      // flexDirection: "row",
+                      marginTop: 10,
+                      // padding: 20,
+                    },
+                  ]}
+                >
+                  {/* <View
                               style={
                                 {
                                   // flex: 2,
@@ -877,16 +894,15 @@ const rightSwipe = (progress, dragX) => {
                          color="black" />
                       </TouchableOpacity>
                             </View> */}
-                          </View>
-                      ) : (
-                        <Text></Text>
-                      )}
-                      </View>
-                  )}
-                />
+                </View>
+              ) : (
+                <Text></Text>
               )}
-        </View>
-    
+            </View>
+          )}
+        />
+      )}
+    </View>
   );
 }
 
@@ -894,7 +910,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.containerBg,
-    fontFamily:Colors.fontFamily
+    fontFamily: Colors.fontFamily,
   },
   header: {
     flex: 1,
@@ -925,7 +941,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "#484C7F",
     paddingBottom: 2,
-    alignSelf:"center"
+    alignSelf: "center",
   },
   textInput: {
     flex: 1,
@@ -986,7 +1002,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-    alignSelf:'center'
+    alignSelf: "center",
   },
   text: {
     fontSize: 18,
@@ -998,7 +1014,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 30,
     marginLeft: 30,
-    fontFamily:Colors.fontFamily,
+    fontFamily: Colors.fontFamily,
     lineHeight: 25,
   },
 
@@ -1027,178 +1043,174 @@ const styles = StyleSheet.create({
     // paddingBottom: -80,
   },
 
+  // NEW................................................
 
+  drawerHeader: {
+    height: perfectSize(50),
+    width: "100%",
+    marginTop: perfectSize(50),
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 20,
+    justifyContent: "space-between",
+  },
+  user: {
+    height: perfectSize(50),
+    width: "100%",
+    // marginTop: perfectSize(50),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  headerText: {
+    color: Colors.defaultDark,
+    fontSize: perfectSize(15),
+    alignSelf: "center",
+  },
+  headerEndSection: {
+    height: perfectSize(60),
+    width: perfectSize(60),
+    borderRadius: perfectSize(30),
+    backgroundColor: "#B9BBDF",
+    shadowRadius: 20,
+    // borderRadius: perfectSize(23),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  headerNotificationIcon: {
+    height: perfectSize(25),
+    width: perfectSize(25),
+    tintColor: Colors.defaultDark,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    borderRadius: 23,
+  },
+  headerDate: {
+    fontFamily: Colors.fontFamily,
+    color: Colors.defaultDark,
+    fontSize: perfectSize(22),
+    // textAlign: 'right',
+    right: perfectSize(60),
+    // marginTop: perfectSize(23)
+  },
+  menuItems: {
+    height: perfectSize(240),
+    width: perfectSize(380),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 6,
+    borderRadius: 23,
+    // alignItems: 'center',
+    borderColor: Colors.defaultDark,
+    borderRadius: 23,
+    // borderWidth:1
+  },
+  menuItemsSnacks: {
+    height: perfectSize(120),
+    width: perfectSize(400),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 12,
+    borderRadius: 23,
+    // alignItems: 'center',
+    borderColor: Colors.defaultDark,
+    borderRadius: 23,
+    // borderWidth:1
+  },
+  menuIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.backgroundColor,
+    shadowRadius: 10,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ModalIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.backgroundColor,
+    // shadowRadius: 10,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  BackIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 5,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  crossIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.redDotColor,
+    shadowRadius: 5,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ageIcons: {
+    height: perfectSize(50),
+    width: perfectSize(100),
+    borderRadius: perfectSize(18),
+    backgroundColor: Colors.backgroundColor,
+    shadowRadius: 10,
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  icon: {
+    height: perfectSize(25),
+    width: perfectSize(25),
+    marginBottom: 4,
+  },
+  Modalicon: {
+    height: perfectSize(150),
+    width: perfectSize(150),
+    marginBottom: 4,
+    marginTop: 100,
+    borderRadius: 150,
+    borderColor: "#D7E1F3",
+    borderWidth: 10,
+  },
+  dietIcon: {
+    height: perfectSize(60),
+    width: perfectSize(60),
+    marginBottom: 4,
+  },
+  textIcon: {
+    fontFamily: Colors.fontFamily,
+    fontWeight: "bold",
+    fontSize: perfectSize(22),
+    marginTop: perfectSize(5),
+  },
 
-
-// NEW................................................
-  
-drawerHeader: {
-  height: perfectSize(50),
-  width: '100%',
-  marginTop: perfectSize(50),
-  flexDirection: 'row',
-  alignItems: 'center',
-  paddingLeft:20,
-  justifyContent: 'space-between'
-},
-user :{
-  height: perfectSize(50),
-  width: '100%',
-  // marginTop: perfectSize(50),
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-evenly'
-},
-headerText: {
-  color: Colors.defaultDark,
-  fontSize: perfectSize(15),
-  alignSelf:'center'
-},
-headerEndSection: {
-  height: perfectSize(60), 
-  width: perfectSize(60), 
-  borderRadius: perfectSize(30),
-  backgroundColor: '#B9BBDF', 
-  shadowRadius: 20, 
-  // borderRadius: perfectSize(23),
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-evenly'
-},
-headerNotificationIcon: {
-  height: perfectSize(25),
-  width: perfectSize(25), 
-  tintColor: Colors.defaultDark
-},
-dot: {
-  height: 10,
-  width: 10, 
-  borderRadius: 23, 
-},
-headerDate: {
-  fontFamily: Colors.fontFamily,
-  color: Colors.defaultDark,
-  fontSize: perfectSize(22),
-  // textAlign: 'right',
-  right: perfectSize(60),
-  // marginTop: perfectSize(23)
-},
-menuItems: {
-  height: perfectSize(240),
-  width: perfectSize(380),
-  backgroundColor: Colors.containerBg,
-  shadowRadius: 6,
-  borderRadius: 23,
-  // alignItems: 'center',
-  borderColor:Colors.defaultDark,
-  borderRadius: 23,
-  // borderWidth:1
-},
-menuItemsSnacks:{
-  height: perfectSize(120),
-  width: perfectSize(400),
-  backgroundColor: Colors.containerBg,
-  shadowRadius: 12,
-  borderRadius: 23,
-  // alignItems: 'center',
-  borderColor:Colors.defaultDark,
-  borderRadius: 23,
-  // borderWidth:1
-},
-menuIcons: {
-  height: perfectSize(50),
-  width: perfectSize(50),
-  backgroundColor: Colors.backgroundColor,
-  shadowRadius: 10,
-  borderRadius: 23,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-ModalIcons: {
-  height: perfectSize(50),
-  width: perfectSize(50),
-  backgroundColor: Colors.backgroundColor,
-  // shadowRadius: 10,
-  borderRadius: 23,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-BackIcons: {
-  height: perfectSize(50),
-  width: perfectSize(50),
-  backgroundColor: Colors.containerBg,
-  shadowRadius: 5,
-  borderRadius: 23,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-crossIcons: {
-  height: perfectSize(50),
-  width: perfectSize(50),
-  backgroundColor: Colors.redDotColor,
-  shadowRadius: 5,
-  borderRadius: 23,
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-ageIcons: {
-  height: perfectSize(50),
-  width: perfectSize(100),
-  borderRadius: perfectSize(18),
-  backgroundColor: Colors.backgroundColor,
-  shadowRadius: 10,
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  flexDirection:'row',
-},
-icon: {
-  height: perfectSize(25),
-  width: perfectSize(25),
-  marginBottom:4
-},
-Modalicon: {
-  height: perfectSize(150),
-  width: perfectSize(150),
-  marginBottom:4,
-  marginTop:100,
-  borderRadius:150,
-  borderColor:'#D7E1F3',
-  borderWidth:10
-},
-dietIcon:{
-  height: perfectSize(60),
-  width: perfectSize(60),
-  marginBottom:4 
-},
-textIcon: {
-  fontFamily:Colors.fontFamily,
-  fontWeight: 'bold',
-   fontSize: perfectSize(22),
-    marginTop: perfectSize(5)
-},
-
-footer: {
-  height: perfectSize(50),
-  width: perfectSize(300),
-  backgroundColor: Colors.backgroundColor,
-  shadowRadius: 10,
-  borderRadius: 23,
-  marginTop: perfectSize(23),
-  alignSelf: 'center',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  flexDirection: 'row'
-},
-footerIcon: {
-  height: perfectSize(18),
-  width: perfectSize(18),
-  tintColor: Colors.headerTextColor
-},
-cardDesigns: {
-flexDirection: 'row', 
-alignItems: 'center',
-justifyContent: 'space-around',
-marginBottom: perfectSize(10)
-}
-  
+  footer: {
+    height: perfectSize(50),
+    width: perfectSize(300),
+    backgroundColor: Colors.backgroundColor,
+    shadowRadius: 10,
+    borderRadius: 23,
+    marginTop: perfectSize(23),
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  footerIcon: {
+    height: perfectSize(18),
+    width: perfectSize(18),
+    tintColor: Colors.headerTextColor,
+  },
+  cardDesigns: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginBottom: perfectSize(10),
+  },
 });
