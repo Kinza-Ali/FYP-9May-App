@@ -22,7 +22,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 // import AsyncStorage from '@react-native-community/async-storage';
-const baseUrl = "http://28ae251266d5.ngrok.io/api/blogs/";
+const baseUrl = "http://localhost:3001/api/blogs/";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -131,9 +131,7 @@ export default function Blogs({ navigation }) {
   };
 
   //--------- SWIPEABLE ----------------
-  const leftSwipe = (progress, dragX) => {
-   
-  };
+  const leftSwipe = (progress, dragX) => {};
 
   return (
     <View style={styles.container}>
@@ -448,45 +446,47 @@ export default function Blogs({ navigation }) {
           renderItem={({ item }) => (
             <View>
               {isAdmin ? (
-                <Swipeable renderLeftActions={(progress,dragX)=> {
-                   const scale = dragX.interpolate({
-                    inputRange: [0, 100],
-                    outputRange: [0, 1],
-                    extrapolate: "clamp",
-                  });
-                  return (
-                    <View style={{ marginTop: perfectSize(100) }}>
-                      <View>
-                        <TouchableOpacity
-                          onPress={() => deleteStory(item._id)}
-                          style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            paddingLeft: 20,
-                          }}
-                        >
-                          <FontAwesome name="trash" size={30} color="black" />
-                        </TouchableOpacity>
-                      </View>
+                <Swipeable
+                  renderLeftActions={(progress, dragX) => {
+                    const scale = dragX.interpolate({
+                      inputRange: [0, 100],
+                      outputRange: [0, 1],
+                      extrapolate: "clamp",
+                    });
+                    return (
+                      <View style={{ marginTop: perfectSize(100) }}>
+                        <View>
+                          <TouchableOpacity
+                            onPress={() => deleteStory(item._id)}
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              paddingLeft: 20,
+                            }}
+                          >
+                            <FontAwesome name="trash" size={30} color="black" />
+                          </TouchableOpacity>
+                        </View>
 
-                      <View style={{ marginTop: perfectSize(30) }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            setActiveBlog(item);
-                            setShowModalUpdate(true);
-                          }}
-                          style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            paddingLeft: 20,
-                          }}
-                        >
-                          <FontAwesome name="edit" size={30} color="black" />
-                        </TouchableOpacity>
+                        <View style={{ marginTop: perfectSize(30) }}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setActiveBlog(item);
+                              setShowModalUpdate(true);
+                            }}
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              paddingLeft: 20,
+                            }}
+                          >
+                            <FontAwesome name="edit" size={30} color="black" />
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </View>
-                  );
-                }}>
+                    );
+                  }}
+                >
                   <ScrollView>
                     <View style={{ marginTop: perfectSize(50) }}>
                       <View>

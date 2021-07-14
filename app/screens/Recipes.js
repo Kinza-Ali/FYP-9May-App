@@ -28,7 +28,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { error } from "react-native-gifted-chat/lib/utils";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://28ae251266d5.ngrok.io/api/recipes";
+const recipesUrl = "http://localhost:3001/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -93,25 +93,25 @@ export default function Blogs({ navigation }) {
 
   //....... ADD RECIPE
   addRecipe = async () => {
-    var response = await methods.post("recipes", {
-      dishName,
-      ingredients,
-      method,
-      dishUrl,
-      imgUrl,
-    })
-    .then(()=>{
-      setShowModal(false);
-      onRefresh();
-      console.log("==================");
-      console.log(response.response);
-      console.log(dishName + ingredients + method + dishUrl + imgUrl);
-      console.log("+++++++++++++++++++++");
-    })
-    .catch((error)=> {
-      console.log(error);
-    });
-    
+    var response = await methods
+      .post("recipes", {
+        dishName,
+        ingredients,
+        method,
+        dishUrl,
+        imgUrl,
+      })
+      .then(() => {
+        setShowModal(false);
+        onRefresh();
+        console.log("==================");
+        console.log(response.response);
+        console.log(dishName + ingredients + method + dishUrl + imgUrl);
+        console.log("+++++++++++++++++++++");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   //....... UPDATE RECIPE
@@ -612,8 +612,8 @@ export default function Blogs({ navigation }) {
           </Modal>
         </View>
       ) : (
-            <View>
-                 <Modal visible={showModalRecipe} transparent={false}>
+        <View>
+          <Modal visible={showModalRecipe} transparent={false}>
             <ScrollView
               style={{
                 width: "100%",
@@ -699,7 +699,7 @@ export default function Blogs({ navigation }) {
               </View>
             </ScrollView>
           </Modal>
-          </View>
+        </View>
       )}
       {loading ? (
         <ActivityIndicator />
@@ -720,102 +720,99 @@ export default function Blogs({ navigation }) {
                         <Swipeable
                           renderLeftActions={(dragX, progress) => {
                             const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: "clamp",
-    });
-    // console.log(activeBlog._id)
-    // console.log("***************************")
-    return (
-      <View style={{ marginTop: perfectSize(50) }}>
-        <View>
-          <TouchableOpacity
-            onPress={() => deleteRecipe(item._id)}
-            style={{
-              // backgroundColor: "#B9BBDF",
-              // width: 50,
-              // height:50,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-              // borderRadius: 100,
-            }}
-          >
-            <FontAwesome
-              name="trash"
-              size={30}
-              // style={{borderRadius:100, color:"#B9BBDF" }}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
+                              inputRange: [0, 100],
+                              outputRange: [0, 1],
+                              extrapolate: "clamp",
+                            });
+                            // console.log(activeBlog._id)
+                            // console.log("***************************")
+                            return (
+                              <View style={{ marginTop: perfectSize(50) }}>
+                                <View>
+                                  <TouchableOpacity
+                                    onPress={() => deleteRecipe(item._id)}
+                                    style={{
+                                      // backgroundColor: "#B9BBDF",
+                                      // width: 50,
+                                      // height:50,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      paddingLeft: 20,
+                                      // borderRadius: 100,
+                                    }}
+                                  >
+                                    <FontAwesome
+                                      name="trash"
+                                      size={30}
+                                      // style={{borderRadius:100, color:"#B9BBDF" }}
+                                      color="black"
+                                    />
+                                  </TouchableOpacity>
+                                </View>
 
-        <View style={{ marginTop: perfectSize(40) }}>
-          <TouchableOpacity
-            onPress={() => {
-              setActiveBlog(item);
-              setShowModalUpdate(true);
-            }}
-            style={{
-              // backgroundColor: "#B9BBDF",
-              // width: 50,
-              // height:50,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingLeft: 20,
-              // borderRadius: 100,
-            }}
-          >
-            <FontAwesome
-              name="edit"
-              size={30}
-              // style={{borderRadius:100, color:"#B9BBDF" }}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-       }}
-                renderRightActions={(dragX, progress)=> {
-                    const scale = dragX.interpolate({
-                  inputRange: [0, 100],
-                  outputRange: [0, 1],
-                  extrapolate: "clamp",
-                });
-                    return (
-                  <View style={{ marginTop: perfectSize(90) }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setActiveRecipe(item);
-                        setShowModalRecipe(true);
-                      }}
-                      style={{
-                        // backgroundColor: "#B9BBDF",
-                        // width: 100,
-                        // height:100,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        paddingRight: 20,
-                        // padding: 10,
-                        // borderRadius: 100,
-                      }}
-                    >
-                      <FontAwesome
-                        name="eye"
-                        size={30}
-                        color="black"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                );
-                    }}
-                  >
+                                <View style={{ marginTop: perfectSize(40) }}>
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      setActiveBlog(item);
+                                      setShowModalUpdate(true);
+                                    }}
+                                    style={{
+                                      // backgroundColor: "#B9BBDF",
+                                      // width: 50,
+                                      // height:50,
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      paddingLeft: 20,
+                                      // borderRadius: 100,
+                                    }}
+                                  >
+                                    <FontAwesome
+                                      name="edit"
+                                      size={30}
+                                      // style={{borderRadius:100, color:"#B9BBDF" }}
+                                      color="black"
+                                    />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+                            );
+                          }}
+                          renderRightActions={(dragX, progress) => {
+                            const scale = dragX.interpolate({
+                              inputRange: [0, 100],
+                              outputRange: [0, 1],
+                              extrapolate: "clamp",
+                            });
+                            return (
+                              <View style={{ marginTop: perfectSize(90) }}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    setActiveRecipe(item);
+                                    setShowModalRecipe(true);
+                                  }}
+                                  style={{
+                                    // backgroundColor: "#B9BBDF",
+                                    // width: 100,
+                                    // height:100,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    paddingRight: 20,
+                                    // padding: 10,
+                                    // borderRadius: 100,
+                                  }}
+                                >
+                                  <FontAwesome
+                                    name="eye"
+                                    size={30}
+                                    color="black"
+                                  />
+                                </TouchableOpacity>
+                              </View>
+                            );
+                          }}
+                        >
                           <View style={styles.cardDesigns}>
-                            <Neomorph
-                              swapShadows
-                              style={styles.menuItems}
-                            >
+                            <Neomorph swapShadows style={styles.menuItems}>
                               <View
                                 style={{
                                   flexDirection: "column",
@@ -848,40 +845,39 @@ export default function Blogs({ navigation }) {
                   <ScrollView>
                     <View style={{ marginTop: perfectSize(50) }}>
                       <View>
-                        <Swipeable renderRightActions={(dragX, progress)=> {
+                        <Swipeable
+                          renderRightActions={(dragX, progress) => {
                             const scale = dragX.interpolate({
-                            inputRange: [0, 100],
-                            outputRange: [0, 1],
-                            extrapolate: "clamp",
-                          });
-                              return (
-                            <View style={{ marginTop: perfectSize(90) }}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  setActiveRecipe(item);
-                                  setShowModalRecipe(true);
-                                  console.log("okkkkk");
-                                }}
-                                style={{
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  paddingRight: 20,
-                                }}
-                              >
-                                <FontAwesome
-                                  name="eye"
-                                  size={30}
-                                  color="black"
-                                />
-                              </TouchableOpacity>
-                            </View>
-                          );
-                          }}>
+                              inputRange: [0, 100],
+                              outputRange: [0, 1],
+                              extrapolate: "clamp",
+                            });
+                            return (
+                              <View style={{ marginTop: perfectSize(90) }}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    setActiveRecipe(item);
+                                    setShowModalRecipe(true);
+                                    console.log("okkkkk");
+                                  }}
+                                  style={{
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    paddingRight: 20,
+                                  }}
+                                >
+                                  <FontAwesome
+                                    name="eye"
+                                    size={30}
+                                    color="black"
+                                  />
+                                </TouchableOpacity>
+                              </View>
+                            );
+                          }}
+                        >
                           <View style={styles.cardDesigns}>
-                            <Neomorph
-                              swapShadows
-                              style={styles.menuItems}
-                            >
+                            <Neomorph swapShadows style={styles.menuItems}>
                               <View
                                 style={{
                                   flexDirection: "column",
@@ -921,8 +917,7 @@ export default function Blogs({ navigation }) {
                       // padding: 20,
                     },
                   ]}
-                >
-                </View>
+                ></View>
               ) : (
                 <Text></Text>
               )}

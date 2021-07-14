@@ -27,7 +27,7 @@ import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { Avatar, Card } from "react-native-paper";
 // import AsyncStorage from '@react-native-community/async-storage';
-const blogUrl = "http://28ae251266d5.ngrok.io/api/successStories";
+const blogUrl = "http://localhost:3001/api/successStories";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
@@ -100,9 +100,7 @@ export default function Blogs({ navigation }) {
   };
 
   //............ SWIPEABLE
-  const leftSwipe = (progress, dragX) => {
-
-  };
+  const leftSwipe = (progress, dragX) => {};
 
   return (
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -409,8 +407,9 @@ export default function Blogs({ navigation }) {
           renderItem={({ item }) => (
             <View>
               {isAdmin ? (
-                <Swipeable renderLeftActions={(progress,dragX) => {
-                      const scale = dragX.interpolate({
+                <Swipeable
+                  renderLeftActions={(progress, dragX) => {
+                    const scale = dragX.interpolate({
                       inputRange: [0, 100],
                       outputRange: [0, 1],
                       extrapolate: "clamp",
@@ -462,7 +461,8 @@ export default function Blogs({ navigation }) {
                         </View>
                       </View>
                     );
-                }}>
+                  }}
+                >
                   <ScrollView>
                     <View style={{ marginTop: perfectSize(50) }}>
                       <View>

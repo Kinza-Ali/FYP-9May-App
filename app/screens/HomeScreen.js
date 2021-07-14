@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import auth from "@react-native-firebase/auth";
 import asyncStorage from "@react-native-community/async-storage";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  RefreshControl,
 } from "react-native";
 import { Neomorph } from "react-native-neomorph-shadows";
 import perfectSize from "../assets/themes/Screen";
@@ -16,6 +17,31 @@ import Images from "../assets/themes/Images";
 import Colors from "../assets/themes/Colors";
 
 const HomeScreen = ({ navigation }) => {
+  const [googleUser, setGoogleUser] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Pull to refresh method
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    readData().then(() => setRefreshing(false));
+  }, []);
+
+  // --------- Read Data --------
+  const readData = async () => {
+    try {
+      const googleUserVal = await asyncStorage.getItem("googleUser");
+      const profile = await asyncStorage.getItem("profile");
+      console.log("User Val" + googleUserVal);
+      setProfile(profile);
+      setGoogleUser(googleUserVal);
+      setRefreshing(false);
+      // console.log(profile);
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
+
   // --------Clear Storage
   const clearStorage = async () => {
     try {
@@ -58,13 +84,54 @@ const HomeScreen = ({ navigation }) => {
           HOME
         </Text>
       </View>
-
+      {/* ++++++++++++++++++++++++++++ Google User +++++++++++++++++++++++++++++++++++++ */}
+      <View>
+        {profile ? (
+          <Text></Text>
+        ) : (
+          <View style={styles.drawerHeader}>
+            {googleUser ? (
+              <View
+                style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              >
+                <Text
+                  style={{
+                    color: "red",
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 20,
+                  }}
+                >
+                  {" "}
+                  Please Fill Out your Profile
+                </Text>
+                <Neomorph
+                  style={[
+                    styles.BackIcons,
+                    {
+                      borderRadius: perfectSize(30),
+                      height: perfectSize(53),
+                      width: perfectSize(53),
+                      marginLeft: 30,
+                    },
+                  ]}
+                >
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("GoogleUser")}
+                  >
+                    <FontAwesome name="google" size={20} color="black" />
+                  </TouchableOpacity>
+                </Neomorph>
+              </View>
+            ) : undefined}
+          </View>
+        )}
+      </View>
       {/* ****************************** BODY ********************************** */}
 
       <ScrollView
-      //  refreshControl={
-      //   <RefreshControl refreshing={this.state.refreshing} onRefresh={() => onRefresh} />
-      // }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <View style={{ marginTop: perfectSize(100) }}>
           <View
