@@ -15,6 +15,7 @@ import {
   Modal,
   TextInput,
   Animated,
+  Linking
 } from "react-native";
 
 import { Neomorph } from "react-native-neomorph-shadows";
@@ -28,7 +29,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { error } from "react-native-gifted-chat/lib/utils";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://28ae251266d5.ngrok.io/api/recipes";
+const recipesUrl = "http://00c6c08ee5ba.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {
@@ -525,22 +526,40 @@ export default function Blogs({ navigation }) {
           {/* SHOW RECIPE */}
 
           <Modal visible={showModalRecipe} transparent={false}>
+          <View style={styles.drawerHeader}>
+          <Neomorph
+                  style={[
+                    styles.BackIcons,
+                    {
+                      borderRadius: perfectSize(30),
+                      height: perfectSize(56),
+                      width: perfectSize(56),
+                    },
+                  ]}
+                >
+                  <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
+                    <FontAwesome name="arrow-left" size={20} color="black" />
+                  </TouchableOpacity>
+                </Neomorph>
+          </View>
             <ScrollView
               style={{
                 width: "100%",
                 height: "30%",
-                paddingLeft: 40,
+                paddingLeft: 2,
+                paddingRight:5
               }}
             >
               <Text style={styles.textSignModal}>{activeRecipe.dishName}</Text>
               <Image
                 style={{
-                  marginTop: -30,
+                  marginTop: 10,
                   width: 200,
                   height: 135,
                   alignSelf: "center",
+                  marginBottom:20
                 }}
-                source={{ uri: activeRecipe.dishUrl }}
+                source={{ uri: activeRecipe.imgUrl}}
               />
               <Text
                 style={
@@ -594,42 +613,46 @@ export default function Blogs({ navigation }) {
                 {activeRecipe.method}
                 {"\n"}
               </Text>
-
-              <View style={styles.button}>
-                <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
-                  <LinearGradient
-                    colors={["#484C7F", "#484C7F"]}
-                    style={styles.modalButton}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Return{" "}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
             </ScrollView>
           </Modal>
         </View>
       ) : (
             <View>
-                 <Modal visible={showModalRecipe} transparent={false}>
+            <Modal visible={showModalRecipe} transparent={false}>
+          <View style={styles.drawerHeader}>
+          <Neomorph
+                  style={[
+                    styles.BackIcons,
+                    {
+                      borderRadius: perfectSize(30),
+                      height: perfectSize(56),
+                      width: perfectSize(56),
+                    },
+                  ]}
+                >
+                  <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
+                    <FontAwesome name="arrow-left" size={20} color="black" />
+                  </TouchableOpacity>
+                </Neomorph>
+          </View>
             <ScrollView
               style={{
                 width: "100%",
                 height: "30%",
-                paddingLeft: 40,
+                paddingLeft: 2,
+                paddingRight:5
               }}
             >
               <Text style={styles.textSignModal}>{activeRecipe.dishName}</Text>
               <Image
                 style={{
-                  marginTop: -30,
+                  marginTop: 10,
                   width: 200,
                   height: 135,
                   alignSelf: "center",
+                  marginBottom:20
                 }}
-                source={{ uri: activeRecipe.dishUrl }}
+                source={{ uri: activeRecipe.imgUrl}}
               />
               <Text
                 style={
@@ -683,20 +706,6 @@ export default function Blogs({ navigation }) {
                 {activeRecipe.method}
                 {"\n"}
               </Text>
-
-              <View style={styles.button}>
-                <TouchableOpacity onPress={() => setShowModalRecipe(false)}>
-                  <LinearGradient
-                    colors={["#484C7F", "#484C7F"]}
-                    style={styles.modalButton}
-                  >
-                    <Text style={[styles.textSign, { color: "white" }]}>
-                      {" "}
-                      Return{" "}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
             </ScrollView>
           </Modal>
           </View>
@@ -833,7 +842,7 @@ export default function Blogs({ navigation }) {
                                     height: 135,
                                     alignSelf: "center",
                                   }}
-                                  source={{ uri: item.dishUrl }}
+                                  source={{ uri: item.imgUrl}}
                                 />
                               </View>
                             </Neomorph>
@@ -900,7 +909,7 @@ export default function Blogs({ navigation }) {
                                     height: 135,
                                     alignSelf: "center",
                                   }}
-                                  source={{ uri: item.dishUrl }}
+                                  source={{ uri: item.imgUrl}}
                                 />
                               </View>
                             </Neomorph>

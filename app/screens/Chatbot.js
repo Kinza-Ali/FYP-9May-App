@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity ,RefreshControl} from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../env";
@@ -44,10 +44,18 @@ class Chatbot extends Component {
       IBW: "",
       BMR: 0,
       WaterIntake: "",
+      refreshing:false
     },
   };
 
   //.......................
+
+  onRefresh = () => {
+    this.setState({refreshing:true});
+  //  this.getDietPlan()
+  }
+
+
 
   componentDidMount() {
     //DialogFlow configurations
@@ -361,7 +369,7 @@ class Chatbot extends Component {
     let msg;
     if (text == "dietPlan") {
       msg = {
-        // _id: this.state.messages.length + 1,
+        _id: this.state.messages.length + 1,
 
         text: "Let me ask you some questions first.",
         createdAt: new Date().getTime(),
@@ -369,7 +377,7 @@ class Chatbot extends Component {
       };
     } else if (text == "begin questions") {
       msg = {
-        //     //   // _id: this.state.messages.length + 1,
+            //   // _id: this.state.messages.length + 1,
 
         text: "What kind of diabetes type do you have?",
         createdAt: new Date().getTime(),

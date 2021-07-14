@@ -144,7 +144,7 @@ export default function Login({ navigation }) {
 
   // -----------Update Secure Entry -------
   const UpdateSecureTextEntry = () => {
-    console.log("function called");
+    // console.log("function called");
     if (secureTextEntry) {
       setSecureTextEntry(false);
     } else {

@@ -47,13 +47,14 @@ export default function SignUp({ navigation }) {
   const [age, setAge] = useState([]);
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
-  const [gender, setGender] = useState("Male");
+  const [gender, setGender] = useState("");
   const [role, setRole] = useState(false);
   const [emptyField, setEmptyField] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [ageError, setAgeError] = useState("");
+  const [genderError, setGenderError] = useState("");
   const [BMI, setBMI] = useState();
   const [IBF, setIBF] = useState();
   const [IBW, setIBW] = useState();
@@ -211,7 +212,10 @@ export default function SignUp({ navigation }) {
       setWeightValid("Enter numbers only");
     } else if (!heightValid) {
       setHeightValid("Enter height in feet and inches");
-    } else {
+    }else if (gender == '') {
+      setGenderError("Select your gender");
+    } 
+    else {
       this.createUser();
     }
   };
@@ -608,6 +612,10 @@ export default function SignUp({ navigation }) {
                 </View>
               </TouchableOpacity>
             </View>
+            <Text style={{ color: "red", alignSelf: "center" }}>
+              {" "}
+              {genderError}
+            </Text>
           </View>
           {/* ************************************************************ */}
           <View>
