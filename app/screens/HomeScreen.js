@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
         </Text>
       </View>
       {/* ++++++++++++++++++++++++++++ Google User +++++++++++++++++++++++++++++++++++++ */}
-      <View>
+      {/* <View>
         {profile ? (
           <Text></Text>
         ) : (
@@ -125,7 +125,7 @@ const HomeScreen = ({ navigation }) => {
             ) : undefined}
           </View>
         )}
-      </View>
+      </View> */}
       {/* ****************************** BODY ********************************** */}
       <ScrollView
         refreshControl={

@@ -148,6 +148,12 @@ class Profile extends Component {
             calorieCount: docSnap.data().calorieCount,
           });
         });
+      })
+      .then(() => {
+        console.log(object);
+      })
+      .catch(() => {
+        alert("edit your profile from content menu");
       });
     if (this.state.user.BMI < 18.5) {
       this.setState({ userStatus: "Under Weight" });
