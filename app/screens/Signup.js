@@ -204,8 +204,8 @@ export default function SignUp({ navigation }) {
       setNameError("Name Must be alphabets and should be Full name");
     } else if (!emailValid) {
       setEmailError("Enter Correct Email");
-    } else if (password.length < 8) {
-      setPasswordError("Pasword must be 8 character long");
+    } else if (password.length < 6) {
+      setPasswordError("Pasword must be 6 character long");
     } else if (age < 18) {
       setAgeError("Age must be greater than 18");
     } else if (!weightValid) {

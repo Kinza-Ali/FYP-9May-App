@@ -113,6 +113,7 @@ export default function Trial({ navigation }) {
         age: age,
         weight: weight,
         height: height,
+        gender: gender,
         BMI: value.BMI,
         IBF: value.IBF,
         IBW: value.IBW,

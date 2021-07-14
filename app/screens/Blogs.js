@@ -22,7 +22,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import asyncStorage from "@react-native-community/async-storage";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 // import AsyncStorage from '@react-native-community/async-storage';
-const baseUrl = "http://00c6c08ee5ba.ngrok.io/api/blogs/";
+const baseUrl = "http://5140c5a59894.ngrok.io/api/blogs/";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));

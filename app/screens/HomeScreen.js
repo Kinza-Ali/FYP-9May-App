@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
         {profile ? (
           <Text></Text>
         ) : (
-          <View style={styles.drawerHeader}>
+          <View >
             {googleUser ? (
               <View
                 style={{ flexDirection: "row", justifyContent: "space-evenly" }}
@@ -98,29 +98,12 @@ const HomeScreen = ({ navigation }) => {
                   style={{
                     color: "red",
                     fontFamily: Colors.fontFamily,
-                    fontSize: 20,
+                    fontSize: 17,
                   }}
                 >
                   {" "}
-                  Please Fill Out your Profile
+                  Please Update your Profile if you havent.
                 </Text>
-                <Neomorph
-                  style={[
-                    styles.BackIcons,
-                    {
-                      borderRadius: perfectSize(30),
-                      height: perfectSize(53),
-                      width: perfectSize(53),
-                      marginLeft: 30,
-                    },
-                  ]}
-                >
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("GoogleUser")}
-                  >
-                    <FontAwesome name="google" size={20} color="black" />
-                  </TouchableOpacity>
-                </Neomorph>
               </View>
             ) : undefined}
           </View>
@@ -225,6 +208,31 @@ const HomeScreen = ({ navigation }) => {
             </Neomorph>
           </View>
           {/* {**************************************************************************}   */}
+        {/* ++++++++++++++++++++++++++++ Google User +++++++++++++++++++++++++++++++++++++ */}
+      <View style={{marginTop:20}}>
+        {profile ? (
+          <Text></Text>
+        ) : (
+          <View >
+            {googleUser ? (
+              <View
+                style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              >
+                <Text
+                  style={{
+                    color: "red",
+                    fontFamily: Colors.fontFamily,
+                    fontSize: 14,
+                  }}
+                >
+                  {" "}
+                  Please Update your Profile if you havent.
+                </Text>
+              </View>
+            ) : undefined}
+          </View>
+        )}
+      </View>
         </View>
       </ScrollView>
     </View>

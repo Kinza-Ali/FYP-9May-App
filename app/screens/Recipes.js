@@ -29,7 +29,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { error } from "react-native-gifted-chat/lib/utils";
 // import {handleScheduleNotification} from '../../src/notification.ios';
 // import AsyncStorage from '@react-native-community/async-storage';
-const recipesUrl = "http://00c6c08ee5ba.ngrok.io/api/recipes";
+const recipesUrl = "http://5140c5a59894.ngrok.io/api/recipes";
 
 // Time out for pull to refresh feature
 const wait = (timeout) => {

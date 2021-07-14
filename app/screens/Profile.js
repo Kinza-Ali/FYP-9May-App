@@ -135,6 +135,14 @@ class Profile extends Component {
             refreshing: false,
           });
         });
+      })
+      // .then(() => {
+      //   console.log(object);
+      // })
+      .catch((error) => {
+        if (error){
+        alert("edit your profile from content menu");
+        }
       });
     await firestore()
       .collection("DietPlan")
@@ -149,12 +157,7 @@ class Profile extends Component {
           });
         });
       })
-      .then(() => {
-        console.log(object);
-      })
-      .catch(() => {
-        alert("edit your profile from content menu");
-      });
+      
     if (this.state.user.BMI < 18.5) {
       this.setState({ userStatus: "Under Weight" });
     } else if ((BMI = 18.5 || BMI <= 24.5)) {
