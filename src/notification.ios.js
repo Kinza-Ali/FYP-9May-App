@@ -26,7 +26,7 @@ const handleScheduleNotification = () => {
     var data = JSON.parse(JSON.stringify(response)).data;
     if (data.length > 0) {
       // console.log('Notification sent');
-    } else if (time == "10:01") {
+    } else if (time == "10:18") {
       // console.log('pushing...');
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
@@ -37,7 +37,7 @@ const handleScheduleNotification = () => {
       });
       
     }
-    else if (time == "11:01") {
+    else if (time == "10:18") {
       // console.log('pushing...');
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
@@ -47,7 +47,7 @@ const handleScheduleNotification = () => {
         fireDate: firedate.toISOString(),
       });
       
-    } else if (time == "12:01") {
+    } else if (time == "01:09") {
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
         alertTitle: "First Snack Time",
@@ -110,15 +110,15 @@ const handleScheduleNotification = () => {
       date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 
     var user = auth().currentUser != undefined ? auth().currentUser.uid : "";
-    if (hrs == 10 && mins == 1) {
-      var res = getNotification("10:01", strDate, user);
+    if (hrs == 10 && mins == 18) {
+      var res = getNotification("10:18", strDate, user);
     }
-    if (hrs == 11 && mins == 1) {
-      var res = getNotification("11:01", strDate, user);
+    if (hrs == 10 && mins == 18) {
+      var res = getNotification("10:18", strDate, user);
     }
 
-    if (hrs == 12 && mins == 1) {
-      var res = getNotification("12:01", strDate, user);
+    if (hrs == 1 && mins == 9) {
+      var res = getNotification("01:09", strDate, user);
     }
 
     if (hrs >= 14 && mins == 1) {

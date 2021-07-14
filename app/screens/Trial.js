@@ -68,6 +68,15 @@ export default function Trial({ navigation }) {
     }
   };
 
+  //---------------Save data 
+  const saveData = async () => {
+    try {
+      const profile = await asyncStorage.setItem("profile", 'true');
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
+
   // ---------- ON Add profile ----
   addProfile = () => {
     var value = this.formula(gender);
@@ -93,6 +102,7 @@ export default function Trial({ navigation }) {
       .then(() => {
         alert("Profile Updated! \n Please generate your New Diet Plan. ");
         setGoogleUser(false);
+        saveData();
       })
       // this.formula();
       .catch((error) => {
