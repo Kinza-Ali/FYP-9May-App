@@ -1,125 +1,63 @@
-/* eslint-disable no-shadow */
 import React, { useState, useEffect } from "react";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import asyncStorage from "@react-native-community/async-storage";
-import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { RadioButton } from "react-native-paper";
-// import auth from '@react-native-firebase/auth'
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { Picker } from "@react-native-picker/picker";
-
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   Text,
-  SafeAreaView,
   View,
-  Button,
   TouchableOpacity,
-  Dimensions,
   StyleSheet,
   TextInput,
-  Platform,
-  StatusBar,
   ScrollView,
-  Modal,
-  Pressable,
 } from "react-native";
 import { Neomorph } from "react-native-neomorph-shadows";
 import perfectSize from "../assets/themes/Screen";
 import Colors from "../assets/themes/Colors";
-
-// import {NavigationContainer} from '@react-navigation/native';
-export default function Trial({ navigation }) {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState();
+export default function GoogleUser({ navigation }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checkTextInputChange, setcheckTextInputChange] = useState(false);
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
+  const [user, setUser] = useState();
   const [age, setAge] = useState([]);
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [gender, setGender] = useState("Male");
-  const [role, setRole] = useState(false);
   const [emptyField, setEmptyField] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [ageError, setAgeError] = useState("");
-  const [BMI, setBMI] = useState();
-  const [IBF, setIBF] = useState();
-  const [IBW, setIBW] = useState();
-  const [BMR, setBMR] = useState();
-  const [WaterIntake, setWaterIntake] = useState();
   const [heightValid, setHeightValid] = useState("");
   const [weightValid, setWeightValid] = useState("");
   const [checkedMale, setCheckedMale] = React.useState(false);
   const [checkedFemale, setCheckedFemale] = React.useState(false);
-  const [googleUser, setGoogleUser] = useState(false);
   //------------  Sign-In Configuration
   useEffect(() => {
-    readData();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   });
-  // --------- Read Data --------
-  const readData = async () => {
-    try {
-      const googleUserVal = await asyncStorage.getItem("googleUser");
-      setGoogleUser(googleUserVal);
-    } catch (e) {
-      alert("Failed to save the data to the storage");
-    }
-  };
 
   //----------Email and Password authentication with firebase
 
-  const onUpdate = () => {
-    // auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     console.log("User account created & signed in!");
-
-    //     // eslint-disable-next-line prettier/prettier
-    //     auth()
-    //       .currentUser.updateProfile({ displayName: userName.trim() })
-    //       .then(() => {
-    //         console.log(auth().currentUser);
-    //       });
-
-    //     navigation.navigate("UserScreens");
-
+  addProfile = () => {
     var value = this.formula(gender);
-    // console.log(BMI + "BMI");
     //---------- firetstore collection
-    firestore()
-      .collection("Users")
-      .doc(auth().currentUser.uid)
-      .update({
-        age: age,
-        weight: weight,
-        height: height,
-        BMI: value.BMI,
-        IBF: value.IBF,
-        IBW: value.IBW,
-        BMR: value.BMR,
-        WaterIntake: value.WaterIntake,
-      })
-      .then(() => {
-        alert("Profile Updated! \n Please generate your New Diet Plan. ");
-      })
-      // this.formula();
-      .catch((error) => {
-        console.error(error);
-      });
+    firestore().collection("Users").doc(auth().currentUser.uid).set({
+      uid: auth().currentUser.uid,
+      name: auth().currentUser.displayName,
+      email: auth().currentUser.email,
+      age: age,
+      weight: weight,
+      height: height,
+      gender: gender,
+      role: "user",
+      BMI: value.BMI,
+      IBF: value.IBF,
+      IBW: value.IBW,
+      BMR: value.BMR,
+      WaterIntake: value.WaterIntake,
+    });
+    this.saveData();
   };
 
   //-------------------------------------
@@ -139,7 +77,8 @@ export default function Trial({ navigation }) {
     }
   };
   //---- register -------
-  const onConfirm = () => {
+  const onRegister = () => {
+    console.log;
     let numregx = /^[0-9]+$/;
     let heightregx = /\d+(\.\d{1})/;
     let weightValid = numregx.test(weight);
@@ -151,10 +90,9 @@ export default function Trial({ navigation }) {
     } else if (!heightValid) {
       setHeightValid("Enter height in feet and inches");
     } else {
-      onUpdate();
+      this.addProfile();
     }
   };
-
   //--------------- Formulae Calculation ------------
   formula = (gender) => {
     var heightFeet = height.split(".");
@@ -211,6 +149,14 @@ export default function Trial({ navigation }) {
     IBW = Math.round(IBW, 2);
     return { IBW, IBF, BMR, WaterIntake, BMI };
   };
+  // -------- Save Data ---------------------------
+  saveData = async () => {
+    try {
+      await asyncStorage.setItem("profile", "true");
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
 
   //-------------------------------------------------
   return (
@@ -239,18 +185,18 @@ export default function Trial({ navigation }) {
             color: Colors.defaultDark,
             fontWeight: "bold",
             fontFamily: Colors.fontFamily,
-            paddingRight: 80,
+            paddingRight: 110,
             fontSize: 25,
           }}
         >
           {" "}
-          Update Profile
+          Add Profile
         </Text>
       </View>
       {/* ++++++++++++++++ BODY  +++++++++++++++++++++++++++ */}
       <ScrollView>
         <View style={{ marginTop: perfectSize(30) }}>
-          {/* ************************* AGE *********************************** */}
+          {/* ************************************************************ */}
           <View>
             <Text style={styles.textfooter}>Age</Text>
             <View style={styles.cardDesigns}>
@@ -269,7 +215,7 @@ export default function Trial({ navigation }) {
                       style={{ marginTop: 12, paddingLeft: 12 }}
                     />
                     <TextInput
-                      placeholder="Enter Your Age"
+                      placeholder="Your Age"
                       keyboardType="numeric"
                       // type = "number"
                       min="18"
@@ -295,7 +241,7 @@ export default function Trial({ navigation }) {
               {ageError}
             </Text>
           </View>
-          {/* ************************ WEIGHT ************************************ */}
+          {/* ************************************************************ */}
 
           <View>
             <Text style={styles.textfooter}>Weight</Text>
@@ -315,7 +261,7 @@ export default function Trial({ navigation }) {
                       style={{ marginTop: 12, paddingLeft: 12 }}
                     />
                     <TextInput
-                      placeholder="Enter Your Weight In KG"
+                      placeholder="Your Weight In KG"
                       style={styles.textInput}
                       keyboardType="numeric"
                       autoCapitalize="none"
@@ -338,7 +284,7 @@ export default function Trial({ navigation }) {
               {weightValid}{" "}
             </Text>
           </View>
-          {/* ************************ HEIGHT ************************************ */}
+          {/* ************************************************************ */}
 
           <View>
             <Text style={styles.textfooter}>Height</Text>
@@ -379,53 +325,75 @@ export default function Trial({ navigation }) {
               {heightValid}{" "}
             </Text>
           </View>
-
-          {/* ************************* NEW PASSWORD *********************************** */}
-          {googleUser ? undefined : (
-            <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignSelf: "center",
-                  marginTop: 15,
+          {/* ************************************************************ */}
+          <View>
+            <Text style={styles.textfooter}> Gender </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                marginBottom: 10,
+                marginTop: 3,
+              }}
+            >
+              <TouchableOpacity
+                title="Male"
+                onPress={() => {
+                  setGender("Male");
+                  setCheckedMale(true);
+                  setCheckedFemale(false);
+                  console.log(gender);
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("ProfileEdit")}
-                  style={[
-                    styles.signUp,
-                    // { borderColor: "#5f9ea0" },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.textSign,
-                      {
-                        color: Colors.defaultDark,
-                        marginBottom: 20,
-                        fontSize: 15,
-                      },
-                    ]}
-                  >
-                    {" "}
-                    Update Password {""}
-                    <FontAwesome name="arrow-right" size={16} color="#484C7F" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                <View>
+                  {checkedMale ? (
+                    <FontAwesome
+                      name="male"
+                      style={{ color: Colors.redDotColor }}
+                      size={30}
+                    />
+                  ) : (
+                    <FontAwesome name="male" size={30} />
+                  )}
+
+                  <Text>Male</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                title="Female"
+                onPress={() => {
+                  setGender("Female");
+                  setCheckedFemale(true);
+                  setCheckedMale(false);
+                  console.log(gender);
+                }}
+              >
+                <View>
+                  {checkedFemale ? (
+                    <FontAwesome
+                      name="female"
+                      style={{ color: Colors.redDotColor }}
+                      size={30}
+                    />
+                  ) : (
+                    <FontAwesome name="female" size={30} />
+                  )}
+                  <Text>Female</Text>
+                </View>
+              </TouchableOpacity>
             </View>
-          )}
-          {/* *************************CONFIRM *********************************** */}
+          </View>
+          {/* ************************************************************ */}
         </View>
         <View>
-          <TouchableOpacity onPress={onConfirm}>
+          <TouchableOpacity onPress={onRegister}>
             <LinearGradient
               colors={[Colors.lilac, Colors.lilac]}
               style={styles.login}
             >
               <Text style={[styles.textSign, { color: "#484C7F" }]}>
-                Confirm
+                Submit
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -464,7 +432,6 @@ const styles = StyleSheet.create({
   textfooter: {
     color: "black",
     fontSize: 18,
-    // marginTop: 5,
     marginBottom: 5,
     fontFamily: "IowanOldStyle-Roman",
     alignSelf: "flex-start",
@@ -473,11 +440,7 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: "row",
-    // marginTop: 5,
-    // borderBottomWidth: 1,
-    // borderBottomColor: "#484C7F",
     paddingBottom: 2,
-    // paddingTop:40,
     alignSelf: "center",
     justifyContent: "space-evenly",
   },
@@ -492,20 +455,14 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: 30,
   },
   login: {
-    width: "60%",
-    height: 50,
+    width: "80%",
+    height: 53,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    // paddingLeft:20,
-    // paddingRight:20,
     borderRadius: 25,
-    // marginTop: 20,
-    // marginBottom: 5,
-    // marginLeft:30
   },
   modalButton: {
     width: "100%",
@@ -532,10 +489,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   picker: {
-    // height: 105,
     width: 300,
-    // borderColor: "grey",
-    // borderWidth: 3,
   },
 
   cardDesigns: {
@@ -543,7 +497,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     marginBottom: perfectSize(8),
-    // borderWidth:1
   },
   menuItems: {
     height: perfectSize(65),
@@ -551,7 +504,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.containerBg,
     shadowRadius: 6,
     borderRadius: 23,
-    // alignItems: 'center',
     borderColor: Colors.defaultDark,
     borderRadius: 23,
     borderWidth: 1,
@@ -560,13 +512,9 @@ const styles = StyleSheet.create({
   // // NEW................................................
 
   drawerHeader: {
-    // height: perfectSize(50),
-    // width: '100%',
     marginTop: perfectSize(50),
     flexDirection: "row",
     alignItems: "center",
-    // alignSelf:'center',
-    // paddingLeft:100,
     justifyContent: "space-evenly",
   },
 

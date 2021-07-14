@@ -20,19 +20,18 @@ import Recipes from "./app/screens/Recipes";
 import SuccessStories from "./app/screens/SuccessStories";
 import SignUp from "./app/screens/Signup";
 import HomePage from "./app/screens/HomePage";
-import FullBody from './app/screens/FullBody';
-import Arms from './app/screens/Arms';
-import Abs from './app/screens/Abs';
-import Facial from './app/screens/Facial';
-import Legs from './app/screens/Legs';
-import WarmUp from './app/screens/WarmUp';
-import Shoulders from './app/screens/Shoulders';
-import Workouts from './app/screens/Workouts';
-import Nutritionists from './app/screens/Nutritionists';
+import FullBody from "./app/screens/FullBody";
+import Arms from "./app/screens/Arms";
+import Abs from "./app/screens/Abs";
+import Facial from "./app/screens/Facial";
+import Legs from "./app/screens/Legs";
+import WarmUp from "./app/screens/WarmUp";
+import Shoulders from "./app/screens/Shoulders";
+import Workouts from "./app/screens/Workouts";
+import Nutritionists from "./app/screens/Nutritionists";
+import GoogleUser from "./app/screens/GoogleUser";
 // ADMIN SCREENS FOR NAV ********
 import AdminScreen from "./app/screens/AdminScreen";
-
-
 
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,7 +46,7 @@ const AdminStack = () => (
     <RootStack.Screen name="Recipes" component={Recipes} />
     <RootStack.Screen name="SuccessStories" component={SuccessStories} />
   </RootStack.Navigator>
-)
+);
 
 const UserScreens = () => (
   <Drawer.Navigator
@@ -57,16 +56,20 @@ const UserScreens = () => (
     <Drawer.Screen name="MainTabScreen" component={MainTabScreen} />
     <Drawer.Screen name="AboutUs" component={AboutUs} />
     <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+    <Drawer.Screen name="GoogleUser" component={GoogleUser} />
     <Drawer.Screen name="DietPlan" component={DietPlan} />
     <Drawer.Screen name="ProfileEdit" component={ProfileEdit} />
     <Drawer.Screen name="Trial" component={Trial} />
   </Drawer.Navigator>
-)
+);
 
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Loader" screenOptions={{ headerShown: false }}>
+      <RootStack.Navigator
+        initialRouteName="Loader"
+        screenOptions={{ headerShown: false }}
+      >
         {/* ******** SPLASH SCREENS ******** */}
         <RootStack.Screen name="Loader" component={Loader} />
         {/* ******** AUTH SCREENS ******** */}
@@ -82,7 +85,7 @@ export default function App() {
         <RootStack.Screen name="Nutritionists" component={Nutritionists} />
         <RootStack.Screen name="SuccessStories" component={SuccessStories} />
         <RootStack.Screen name="Workouts" component={Workouts} />
-        <RootStack.Screen name="ForgotPassword" component={ForgotPassword}/>
+        <RootStack.Screen name="ForgotPassword" component={ForgotPassword} />
         {/* ************ Workouts *********** */}
         <RootStack.Screen name="FullBody" component={FullBody} />
         <RootStack.Screen name="WarmUp" component={WarmUp} />

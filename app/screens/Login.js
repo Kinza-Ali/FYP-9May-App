@@ -4,6 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {
   GoogleSignin,
+  GoogleSigninButton,
   statusCodes,
 } from "@react-native-community/google-signin";
 import auth from "@react-native-firebase/auth";
@@ -39,6 +40,7 @@ export default function Login({ navigation }) {
   const logIn = async () => {
     try {
       await asyncStorage.setItem("loggedIn", "true");
+      await asyncStorage.setItem("googleUser", "true");
     } catch (e) {
       alert("Failed to save the data to the storage");
     }
@@ -102,14 +104,14 @@ export default function Login({ navigation }) {
       await GoogleSignin.hasPlayServices();
       const { accessToken, idToken } = await GoogleSignin.signIn();
 
-      setLoggedIn(true);
+      logIn();
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,
         accessToken
       );
       await auth().signInWithCredential(credential);
-      navigation.navigate("HomeScreen");
+      navigation.replace("UserScreens");
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         alert("cancel");
@@ -153,16 +155,16 @@ export default function Login({ navigation }) {
   };
 
   //------------ Forgot Pasword ----
-  const forgotPassword =() => {
-    auth().sendPasswordResetEmail(email)
-    .then((user)=>{
-      alert("please check your email!")
-    })
-    .catch((error)=>{
-      alert(error.message);
-    })
+  const forgotPassword = () => {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then((user) => {
+        alert("please check your email!");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
-
 
   return (
     <View style={styles.container}>
@@ -276,7 +278,7 @@ export default function Login({ navigation }) {
           </View>
         </View>
 
-  {/* ++++++++++++++++++++++++++++++++++++++++++ */}
+        {/* ++++++++++++++++++++++++++++++++++++++++++ */}
         <View style={{ marginTop: 20 }}>
           <TouchableOpacity onPress={this.signInUser}>
             <LinearGradient
@@ -290,27 +292,50 @@ export default function Login({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
 
-  {/* ++++++++++++++++++++++++++++++++++++++++++ */}
+          {/* ++++++++++++++++++++++++++++++++++++++++++ */}
 
-        <View>
-        <TouchableOpacity 
-         onPress={() => navigation.navigate("ForgotPassword")}
-         >
-                <Text
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignSelf: "center",
-                    marginTop: 18,
-                    color: "#484C7F",
-                    fontSize: 15,
-                  }}
-                >
-                  Forgot Password ?{" "}
-                </Text>
-        </TouchableOpacity>
-        </View>
-
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
+              <Text
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignSelf: "center",
+                  marginTop: 18,
+                  color: "#484C7F",
+                  fontSize: 15,
+                }}
+              >
+                Forgot Password ?{" "}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+          <View style={{ alignSelf: "center", marginTop: 10 }}>
+            {/* <GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={this._signIn}
+            /> */}
+            <Neomorph
+              style={[
+                styles.BackIcons,
+                {
+                  borderRadius: perfectSize(30),
+                  height: perfectSize(53),
+                  width: perfectSize(53),
+                  marginLeft: 30,
+                },
+              ]}
+            >
+              <TouchableOpacity onPress={this._signIn}>
+                <FontAwesome name="google" size={20} color="black" />
+              </TouchableOpacity>
+            </Neomorph>
+          </View>
           {/* ++++++++++++++++++++++++++++++++++++++++++ */}
           <Text
             style={{
@@ -368,7 +393,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
-
+  BackIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 5,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   footer: {
     flex: 3,
     backgroundColor: "#EEEEEE",

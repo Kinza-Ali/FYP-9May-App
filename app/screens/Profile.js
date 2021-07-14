@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import { Neomorph } from "react-native-neomorph-shadows";
 import perfectSize from "../assets/themes/Screen";
@@ -25,7 +25,7 @@ class Profile extends Component {
     super(props);
     this.getUser();
   }
-  
+
   state = {
     user: {
       name: "",
@@ -71,52 +71,8 @@ class Profile extends Component {
       "Do Workout/Yoga/Medidation",
       "Stay Hydrated",
     ],
-    refreshing:false
+    refreshing: false,
   };
-
-// onRefresh = async() => {
-//     this.setState({refreshing: true});
-//       await firestore()
-//       .collection("Users")
-//       .where("email", "==", email)
-//       .get()
-//       .then((snapshot) => {
-//         snapshot.forEach((docSnap) => {
-//           this.setState({
-//             user: {
-//               name: docSnap.data().name,
-//               age: docSnap.data().age,
-//               weight: docSnap.data().weight,
-//               height: docSnap.data().height,
-//               gender: docSnap.data().gender,
-//               email: docSnap.data().email,
-//               BMI: docSnap.data().BMI,
-//               IBF: docSnap.data().IBF,
-//               IBW: docSnap.data().IBW,
-//               BMR: docSnap.data().BMR,
-//               WaterIntake: docSnap.data().WaterIntake,
-//             },
-//           });
-//         });
-//       })
-//       .then(() => {
-//         this.setState({refreshing: false});
-//       });
-//     await firestore()
-//       .collection("DietPlan")
-//       .doc(auth().currentUser.uid)
-//       .collection("userDietPlan")
-//       .where("email", "==", email)
-//       .get()
-//       .then((snapshot) => {
-//         snapshot.forEach((docSnap) => {
-//           this.setState({
-//             calorieCount: docSnap.data().calorieCount,
-//           });
-//         });
-//       })
-    
-//   };
 
   readData = async () => {
     try {
@@ -176,7 +132,7 @@ class Profile extends Component {
               BMR: docSnap.data().BMR,
               WaterIntake: docSnap.data().WaterIntake,
             },
-            refreshing:false
+            refreshing: false,
           });
         });
       });
@@ -214,24 +170,24 @@ class Profile extends Component {
   // getSelectList() {}
 
   onRefresh = () => {
-      this.setState({refreshing:true});
-     this.getUser()
-    }
-
+    this.setState({ refreshing: true });
+    this.getUser();
+  };
 
   //-------------- Set Interval ---------------
-  time = setInterval(()=> {
+  time = setInterval(() => {
     this.setState({
-      checked1:false, 
-      checked2:false, 
-      checked3:false, 
-      checked4:false, 
-      checked5:false,
-      checked6:false})
-  },86400000);
+      checked1: false,
+      checked2: false,
+      checked3: false,
+      checked4: false,
+      checked5: false,
+      checked6: false,
+    });
+  }, 86400000);
 
-// testing: 100000
-// time 24 hrs=86400000
+  // testing: 100000
+  // time 24 hrs=86400000
 
   render() {
     return (
@@ -335,7 +291,7 @@ class Profile extends Component {
                       title="Check Fasting Blood Sugar"
                       checked={this.state.checked1}
                       onPress={() =>
-                        this.setState({ checked1: !this.state.checked1})
+                        this.setState({ checked1: !this.state.checked1 })
                       }
                     />
                     <CheckBox
@@ -389,7 +345,7 @@ class Profile extends Component {
                       style={[
                         styles.crossIcons,
                         {
-                          marginTop:20,
+                          marginTop: 20,
                           borderRadius: perfectSize(30),
                           height: perfectSize(56),
                           width: perfectSize(56),
@@ -413,12 +369,12 @@ class Profile extends Component {
           </View>
         </View>
         <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
         >
           <View style={styles.user}>
             <Image
