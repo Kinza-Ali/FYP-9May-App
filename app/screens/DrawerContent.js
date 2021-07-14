@@ -34,8 +34,9 @@ export function DrawerContent(props) {
   const clearStorage = async () => {
     try {
       await asyncStorage.clear();
+      // alert("cleared");
     } catch (e) {
-      // alert("Failed to clear the async storage.");
+      alert("Failed to clear the async storage.");
     }
   };
   //----------------------

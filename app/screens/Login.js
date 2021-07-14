@@ -37,10 +37,17 @@ export default function Login({ navigation }) {
       alert("Failed to save the data to the storage");
     }
   };
-  const logIn = async () => {
+  const logInGoogle = async () => {
     try {
       await asyncStorage.setItem("loggedIn", "true");
       await asyncStorage.setItem("googleUser", "true");
+    } catch (e) {
+      alert("Failed to save the data to the storage");
+    }
+  };
+  const logIn = async () => {
+    try {
+      await asyncStorage.setItem("loggedIn", "true");
     } catch (e) {
       alert("Failed to save the data to the storage");
     }
@@ -104,7 +111,7 @@ export default function Login({ navigation }) {
       await GoogleSignin.hasPlayServices();
       const { accessToken, idToken } = await GoogleSignin.signIn();
 
-      logIn();
+      logInGoogle();
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,

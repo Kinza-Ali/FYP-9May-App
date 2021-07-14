@@ -36,37 +36,25 @@ import Colors from "../assets/themes/Colors";
 // import {NavigationContainer} from '@react-navigation/native';
 export default function Trial({ navigation }) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState();
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [checkTextInputChange, setcheckTextInputChange] = useState(false);
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
   const [age, setAge] = useState([]);
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [role, setRole] = useState(false);
+  const [gender, setGender] = useState("");
   const [emptyField, setEmptyField] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [ageError, setAgeError] = useState("");
-  const [BMI, setBMI] = useState();
-  const [IBF, setIBF] = useState();
-  const [IBW, setIBW] = useState();
-  const [BMR, setBMR] = useState();
   const [WaterIntake, setWaterIntake] = useState();
   const [heightValid, setHeightValid] = useState("");
   const [weightValid, setWeightValid] = useState("");
   const [checkedMale, setCheckedMale] = React.useState(false);
   const [checkedFemale, setCheckedFemale] = React.useState(false);
   const [googleUser, setGoogleUser] = useState(false);
+  const [genderError, setGenderError] = useState("");
   //------------  Sign-In Configuration
   useEffect(() => {
     readData();
+    console.log(googleUser);
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   });
@@ -80,23 +68,41 @@ export default function Trial({ navigation }) {
     }
   };
 
+  // ---------- ON Add profile ----
+  addProfile = () => {
+    var value = this.formula(gender);
+    //---------- firetstore collection
+    firestore()
+      .collection("Users")
+      .doc(auth().currentUser.uid)
+      .set({
+        uid: auth().currentUser.uid,
+        name: auth().currentUser.displayName,
+        email: auth().currentUser.email,
+        age: age,
+        weight: weight,
+        height: height,
+        gender: gender,
+        role: "user",
+        BMI: value.BMI,
+        IBF: value.IBF,
+        IBW: value.IBW,
+        BMR: value.BMR,
+        WaterIntake: value.WaterIntake,
+      })
+      .then(() => {
+        alert("Profile Updated! \n Please generate your New Diet Plan. ");
+        setGoogleUser(false);
+      })
+      // this.formula();
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   //----------Email and Password authentication with firebase
 
   const onUpdate = () => {
-    // auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     console.log("User account created & signed in!");
-
-    //     // eslint-disable-next-line prettier/prettier
-    //     auth()
-    //       .currentUser.updateProfile({ displayName: userName.trim() })
-    //       .then(() => {
-    //         console.log(auth().currentUser);
-    //       });
-
-    //     navigation.navigate("UserScreens");
-
     var value = this.formula(gender);
     // console.log(BMI + "BMI");
     //---------- firetstore collection
@@ -150,8 +156,14 @@ export default function Trial({ navigation }) {
       setWeightValid("Enter numbers only");
     } else if (!heightValid) {
       setHeightValid("Enter height in feet and inches");
+    } else if (gender == "") {
+      setGenderError("Select your gender");
     } else {
-      onUpdate();
+      if (googleUser) {
+        addProfile();
+      } else {
+        onUpdate();
+      }
     }
   };
 
@@ -248,140 +260,473 @@ export default function Trial({ navigation }) {
         </Text>
       </View>
       {/* ++++++++++++++++ BODY  +++++++++++++++++++++++++++ */}
-      <ScrollView>
-        <View style={{ marginTop: perfectSize(30) }}>
-          {/* ************************* AGE *********************************** */}
-          <View>
-            <Text style={styles.textfooter}>Age</Text>
-            <View style={styles.cardDesigns}>
-              <Neomorph
-                // lightShadowColor="#D0E6A5"
-                // darkShadowColor="#D0E6A5" // <- set this
-                swapShadows
-                style={styles.menuItems}
-              >
-                <View>
-                  <View style={styles.action}>
-                    <FontAwesomeIcons
-                      name="calendar-check-o"
-                      color="black"
-                      size={20}
-                      style={{ marginTop: 12, paddingLeft: 12 }}
-                    />
-                    <TextInput
-                      placeholder="Enter Your Age"
-                      keyboardType="numeric"
-                      // type = "number"
-                      min="18"
-                      max="70"
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={(age) => {
-                        setAge(age);
-                      }}
-                      onBlur={() => emptyFieldVlidator(age)}
-                    />
-                    <Text
-                      style={{ color: "red", paddingRight: 20, marginTop: 20 }}
-                    >
-                      {emptyField}{" "}
-                    </Text>
+      {googleUser ? (
+        <ScrollView>
+          <View style={{ marginTop: perfectSize(30) }}>
+            {/* ************************* AGE *********************************** */}
+            <View>
+              <Text style={styles.textfooter}>Age</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="calendar-check-o"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="Enter Your Age"
+                        keyboardType="numeric"
+                        // type = "number"
+                        min="18"
+                        max="70"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(age) => {
+                          setAge(age);
+                        }}
+                        onBlur={() => emptyFieldVlidator(age)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </Neomorph>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {ageError}
+              </Text>
             </View>
-            <Text style={{ color: "red", alignSelf: "center" }}>
-              {" "}
-              {ageError}
-            </Text>
-          </View>
-          {/* ************************ WEIGHT ************************************ */}
+            {/* ************************ WEIGHT ************************************ */}
 
-          <View>
-            <Text style={styles.textfooter}>Weight</Text>
-            <View style={styles.cardDesigns}>
-              <Neomorph
-                // lightShadowColor="#D0E6A5"
-                // darkShadowColor="#D0E6A5" // <- set this
-                swapShadows
-                style={styles.menuItems}
-              >
-                <View>
-                  <View style={styles.action}>
-                    <FontAwesomeIcons
-                      name="smile-o"
-                      color="black"
-                      size={20}
-                      style={{ marginTop: 12, paddingLeft: 12 }}
-                    />
-                    <TextInput
-                      placeholder="Enter Your Weight In KG"
-                      style={styles.textInput}
-                      keyboardType="numeric"
-                      autoCapitalize="none"
-                      onChangeText={(weight) => {
-                        setWeight(weight);
-                      }}
-                      onBlur={() => emptyFieldVlidator(weight)}
-                    />
-                    <Text
-                      style={{ color: "red", paddingRight: 20, marginTop: 20 }}
-                    >
-                      {emptyField}{" "}
-                    </Text>
+            <View>
+              <Text style={styles.textfooter}>Weight</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="smile-o"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="Enter Your Weight In KG"
+                        style={styles.textInput}
+                        keyboardType="numeric"
+                        autoCapitalize="none"
+                        onChangeText={(weight) => {
+                          setWeight(weight);
+                        }}
+                        onBlur={() => emptyFieldVlidator(weight)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </Neomorph>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {weightValid}{" "}
+              </Text>
             </View>
-            <Text style={{ color: "red", alignSelf: "center" }}>
-              {" "}
-              {weightValid}{" "}
-            </Text>
-          </View>
-          {/* ************************ HEIGHT ************************************ */}
+            {/* ************************ HEIGHT ************************************ */}
 
-          <View>
-            <Text style={styles.textfooter}>Height</Text>
-            <View style={styles.cardDesigns}>
-              <Neomorph
-                // lightShadowColor="#D0E6A5"
-                // darkShadowColor="#D0E6A5" // <- set this
-                swapShadows
-                style={styles.menuItems}
-              >
-                <View>
-                  <View style={styles.action}>
-                    <FontAwesomeIcons
-                      name="street-view"
-                      color="black"
-                      size={20}
-                      style={{ marginTop: 12, paddingLeft: 12 }}
-                    />
-                    <TextInput
-                      placeholder="5.3'"
-                      keyboardType="numeric"
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={setHeight}
-                      onBlur={() => emptyFieldVlidator(height)}
-                    />
-                    <Text
-                      style={{ color: "red", paddingRight: 20, marginTop: 20 }}
-                    >
-                      {emptyField}{" "}
-                    </Text>
+            <View>
+              <Text style={styles.textfooter}>Height</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="street-view"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="5.3'"
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={setHeight}
+                        onBlur={() => emptyFieldVlidator(height)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </Neomorph>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {heightValid}{" "}
+              </Text>
             </View>
-            <Text style={{ color: "red", alignSelf: "center" }}>
-              {" "}
-              {heightValid}{" "}
-            </Text>
-          </View>
+            {/* ++++++++++++++++++++++++++++++ Gender +++++++++++++++++++++++++++++++ */}
+            <View>
+              <Text style={styles.textfooter}> Gender </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  marginBottom: 10,
+                  marginTop: 3,
+                }}
+              >
+                <TouchableOpacity
+                  title="Male"
+                  onPress={() => {
+                    setGender("Male");
+                    setCheckedMale(true);
+                    setCheckedFemale(false);
+                    console.log(gender);
+                  }}
+                >
+                  <View>
+                    {checkedMale ? (
+                      <FontAwesome
+                        name="male"
+                        style={{ color: Colors.redDotColor }}
+                        size={30}
+                      />
+                    ) : (
+                      <FontAwesome name="male" size={30} />
+                    )}
 
-          {/* ************************* NEW PASSWORD *********************************** */}
-          {googleUser ? undefined : (
+                    <Text>Male</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  title="Female"
+                  onPress={() => {
+                    setGender("Female");
+                    setCheckedFemale(true);
+                    setCheckedMale(false);
+                    console.log(gender);
+                  }}
+                >
+                  <View>
+                    {checkedFemale ? (
+                      <FontAwesome
+                        name="female"
+                        style={{ color: Colors.redDotColor }}
+                        size={30}
+                      />
+                    ) : (
+                      <FontAwesome name="female" size={30} />
+                    )}
+                    <Text>Female</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {genderError}
+              </Text>
+            </View>
+            {/* ************************* NEW PASSWORD *********************************** */}
+            {/*       
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignSelf: "center",
+                  marginTop: 15,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("ProfileEdit")}
+                  style={[
+                    styles.signUp,
+                    // { borderColor: "#5f9ea0" },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.textSign,
+                      {
+                        color: Colors.defaultDark,
+                        marginBottom: 20,
+                        fontSize: 15,
+                      },
+                    ]}
+                  >
+                    {" "}
+                    Update Password {""}
+                    <FontAwesome name="arrow-right" size={16} color="#484C7F" />
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View> */}
+
+            {/* *************************CONFIRM *********************************** */}
+          </View>
+          <View>
+            <TouchableOpacity onPress={onConfirm}>
+              <LinearGradient
+                colors={[Colors.lilac, Colors.lilac]}
+                style={styles.login}
+              >
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
+                  Confirm
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      ) : (
+        <ScrollView>
+          <View style={{ marginTop: perfectSize(30) }}>
+            {/* ************************* AGE *********************************** */}
+            <View>
+              <Text style={styles.textfooter}>Age</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="calendar-check-o"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="Enter Your Age"
+                        keyboardType="numeric"
+                        // type = "number"
+                        min="18"
+                        max="70"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(age) => {
+                          setAge(age);
+                        }}
+                        onBlur={() => emptyFieldVlidator(age)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
+                  </View>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {ageError}
+              </Text>
+            </View>
+            {/* ************************ WEIGHT ************************************ */}
+
+            <View>
+              <Text style={styles.textfooter}>Weight</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="smile-o"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="Enter Your Weight In KG"
+                        style={styles.textInput}
+                        keyboardType="numeric"
+                        autoCapitalize="none"
+                        onChangeText={(weight) => {
+                          setWeight(weight);
+                        }}
+                        onBlur={() => emptyFieldVlidator(weight)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
+                  </View>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {weightValid}{" "}
+              </Text>
+            </View>
+            {/* ************************ HEIGHT ************************************ */}
+
+            <View>
+              <Text style={styles.textfooter}>Height</Text>
+              <View style={styles.cardDesigns}>
+                <Neomorph
+                  // lightShadowColor="#D0E6A5"
+                  // darkShadowColor="#D0E6A5" // <- set this
+                  swapShadows
+                  style={styles.menuItems}
+                >
+                  <View>
+                    <View style={styles.action}>
+                      <FontAwesomeIcons
+                        name="street-view"
+                        color="black"
+                        size={20}
+                        style={{ marginTop: 12, paddingLeft: 12 }}
+                      />
+                      <TextInput
+                        placeholder="5.3'"
+                        keyboardType="numeric"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={setHeight}
+                        onBlur={() => emptyFieldVlidator(height)}
+                      />
+                      <Text
+                        style={{
+                          color: "red",
+                          paddingRight: 20,
+                          marginTop: 20,
+                        }}
+                      >
+                        {emptyField}{" "}
+                      </Text>
+                    </View>
+                  </View>
+                </Neomorph>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {heightValid}{" "}
+              </Text>
+            </View>
+            {/* ++++++++++++++++++++++++++++++ Gender +++++++++++++++++++++++++++++++ */}
+            <View>
+              <Text style={styles.textfooter}> Gender </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  marginBottom: 10,
+                  marginTop: 3,
+                }}
+              >
+                <TouchableOpacity
+                  title="Male"
+                  onPress={() => {
+                    setGender("Male");
+                    setCheckedMale(true);
+                    setCheckedFemale(false);
+                    console.log(gender);
+                  }}
+                >
+                  <View>
+                    {checkedMale ? (
+                      <FontAwesome
+                        name="male"
+                        style={{ color: Colors.redDotColor }}
+                        size={30}
+                      />
+                    ) : (
+                      <FontAwesome name="male" size={30} />
+                    )}
+
+                    <Text>Male</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  title="Female"
+                  onPress={() => {
+                    setGender("Female");
+                    setCheckedFemale(true);
+                    setCheckedMale(false);
+                    console.log(gender);
+                  }}
+                >
+                  <View>
+                    {checkedFemale ? (
+                      <FontAwesome
+                        name="female"
+                        style={{ color: Colors.redDotColor }}
+                        size={30}
+                      />
+                    ) : (
+                      <FontAwesome name="female" size={30} />
+                    )}
+                    <Text>Female</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <Text style={{ color: "red", alignSelf: "center" }}>
+                {" "}
+                {genderError}
+              </Text>
+            </View>
+            {/* ************************* NEW PASSWORD *********************************** */}
+
             <View>
               <View
                 style={{
@@ -415,22 +760,23 @@ export default function Trial({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-          )}
-          {/* *************************CONFIRM *********************************** */}
-        </View>
-        <View>
-          <TouchableOpacity onPress={onConfirm}>
-            <LinearGradient
-              colors={[Colors.lilac, Colors.lilac]}
-              style={styles.login}
-            >
-              <Text style={[styles.textSign, { color: "#484C7F" }]}>
-                Confirm
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+
+            {/* *************************CONFIRM *********************************** */}
+          </View>
+          <View>
+            <TouchableOpacity onPress={onConfirm}>
+              <LinearGradient
+                colors={[Colors.lilac, Colors.lilac]}
+                style={styles.login}
+              >
+                <Text style={[styles.textSign, { color: "#484C7F" }]}>
+                  Confirm
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 }
