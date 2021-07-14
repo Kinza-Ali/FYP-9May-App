@@ -312,30 +312,7 @@ export default function Login({ navigation }) {
               </Text>
             </TouchableOpacity>
           </View>
-          {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-          <View style={{ alignSelf: "center", marginTop: 10 }}>
-            {/* <GoogleSigninButton
-              style={{ width: 192, height: 48 }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={this._signIn}
-            /> */}
-            <Neomorph
-              style={[
-                styles.BackIcons,
-                {
-                  borderRadius: perfectSize(30),
-                  height: perfectSize(53),
-                  width: perfectSize(53),
-                  marginLeft: 30,
-                },
-              ]}
-            >
-              <TouchableOpacity onPress={this._signIn}>
-                <FontAwesome name="google" size={20} color="black" />
-              </TouchableOpacity>
-            </Neomorph>
-          </View>
+         
           {/* ++++++++++++++++++++++++++++++++++++++++++ */}
           <Text
             style={{
@@ -349,6 +326,30 @@ export default function Login({ navigation }) {
           >
             or{" "}
           </Text>
+           {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+           <View style={{ alignSelf: "center", marginTop: 10 }}>
+            {/* <GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={this._signIn}
+            /> */}
+            <Neomorph
+              style={[
+                styles.BackIcons,
+                {
+                  borderRadius: perfectSize(30),
+                  height: perfectSize(43),
+                  width: perfectSize(43),
+                  // marginLeft: 10,
+                },
+              ]}
+            >
+              <TouchableOpacity onPress={this._signIn}>
+                <FontAwesome name="google" size={20} color="black" />
+              </TouchableOpacity>
+            </Neomorph>
+          </View>
           <View
             style={{
               flexDirection: "row",
