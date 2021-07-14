@@ -127,7 +127,6 @@ const HomeScreen = ({ navigation }) => {
         )}
       </View>
       {/* ****************************** BODY ********************************** */}
-
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

@@ -314,12 +314,27 @@ export default function Login({ navigation }) {
           </View>
           {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
           <View style={{ alignSelf: "center", marginTop: 10 }}>
-            <GoogleSigninButton
+            {/* <GoogleSigninButton
               style={{ width: 192, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={this._signIn}
-            />
+            /> */}
+            <Neomorph
+              style={[
+                styles.BackIcons,
+                {
+                  borderRadius: perfectSize(30),
+                  height: perfectSize(53),
+                  width: perfectSize(53),
+                  marginLeft: 30,
+                },
+              ]}
+            >
+              <TouchableOpacity onPress={this._signIn}>
+                <FontAwesome name="google" size={20} color="black" />
+              </TouchableOpacity>
+            </Neomorph>
           </View>
           {/* ++++++++++++++++++++++++++++++++++++++++++ */}
           <Text
@@ -378,7 +393,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
-
+  BackIcons: {
+    height: perfectSize(50),
+    width: perfectSize(50),
+    backgroundColor: Colors.containerBg,
+    shadowRadius: 5,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   footer: {
     flex: 3,
     backgroundColor: "#EEEEEE",
