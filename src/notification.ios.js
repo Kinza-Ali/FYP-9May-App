@@ -26,7 +26,7 @@ const handleScheduleNotification = () => {
     var data = JSON.parse(JSON.stringify(response)).data;
     if (data.length > 0) {
       // console.log('Notification sent');
-    } else if (time == "10:18") {
+    } else if (time == "10:30") {
       // console.log('pushing...');
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
@@ -37,7 +37,7 @@ const handleScheduleNotification = () => {
       });
       
     }
-    else if (time == "10:18") {
+    else if (time == "10:31") {
       // console.log('pushing...');
       postNotification(time, date, uid);
       PushNotificationIOS.scheduleLocalNotification({
@@ -110,11 +110,11 @@ const handleScheduleNotification = () => {
       date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 
     var user = auth().currentUser != undefined ? auth().currentUser.uid : "";
-    if (hrs == 10 && mins == 18) {
-      var res = getNotification("10:18", strDate, user);
+    if (hrs == 10 && mins == 30) {
+      var res = getNotification("10:30", strDate, user);
     }
-    if (hrs == 10 && mins == 18) {
-      var res = getNotification("10:18", strDate, user);
+    if (hrs == 10 && mins == 31) {
+      var res = getNotification("10:31", strDate, user);
     }
 
     if (hrs == 1 && mins == 9) {

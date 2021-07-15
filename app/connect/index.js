@@ -2,7 +2,7 @@ import axios from "axios";
 // import config from 'Constants/AppConfig';
 
 var axiosObj = axios.create({
-  baseURL: "http://5140c5a59894.ngrok.io/api/",
+  baseURL: "http://32bd3a008ef7.ngrok.io/api/",
   timeout: 180000,
 });
 
